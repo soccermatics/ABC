@@ -87,16 +87,12 @@
 \maketitle
 
 \begin{abstract}
-Imagine you have created an algorithm which assigns a score to a photograph based on how likely it is to contain a cat.  I propose the following steps to test performance of your model. First, you should set a threshold score such that when the algorithm is shown two randomly-chosen images --- one that has a score greater than the threshold (i.e. a picture labelled as containing a cat) and another from those pictures that really does contain a cat--- the probability that the image with the highest score is the one chosen from the set of real cat images is 50\%. This method thus sets a decision threshold, so that the set of positively labelled images are indistinguishable from the set of images which are truly positive. Once this threshold is established, as a second step, we measure performance by asking how often a randomly chosen picture from those labelled as containing a cat actually contains a cat. This measure is generally known as the recall, but we evaluate it specifically for the threshold chosen at the first step. The result is a single number measuring the performance of the algorithm. We explain, using an example, why this method avoids pitfalls inherent to, for example AUC, and is mathematically more pleasing and easier to explain than, for example, the F1-score.
+Imagine you have created an algorithm which assigns a score to a photograph based on how likely it is to contain a cat.  I propose the following steps to test performance of your model. First, you should set a threshold score such that when the algorithm is shown two randomly-chosen images --- one that has a score greater than the threshold (i.e. a picture labelled as containing a cat) and another from those pictures that really does contain a cat--- the probability that the image with the highest score is the one chosen from the set of real cat images is 50\%. This method thus sets a decision threshold, so that the set of positively labelled images are indistinguishable from the set of images which are positive. Once this threshold is established, as a second step, we measure performance by asking how often a randomly chosen picture from those labelled as containing a cat actually contains a cat. This measure is generally known as the recall, but we evaluate it specifically for the threshold chosen at the first step. The result is a single number measuring the performance of the algorithm. I explain, using an example, why this method avoids pitfalls inherent to, for example AUC, and is mathematically more pleasing and easier to explain in plain Englishg than, for example, the F1-score.
 \end{abstract}
-
-
 
 \section{Article Summary}
 
-The aim of this section is to describe the test in this paper as clearly as possible and to give an outline of the paper. The reader is encouraged to try the test on their own data set or on the artificial set we work with in this paper.
-
-Imagine you have created an algorithm (a machine learning model) that assigns a score to some characteristics of an object to make predictions about whether it belongs to one of two classes (positive and negative). For example, the input might be a picture and the output whether or not the picture contains a cat. The scores are continuous values which are larger if your algorithm evaluates the object as more likely to belong to the positive class (i.e if it labels the image as more likely to contain a cat). Such a scoring system explicitly underlies, for example, logistic regression, the output of a neural network and discriminant analysis. Other, non-parametric machine learning methods, such as $k$-nearest neighbours, don't have an explicit score, but often have a parameter (e.g. $k$) which can be tuned in a way that mimics a threshold. 
+Imagine you have created an algorithm (a machine learning model) that assigns a score, predicting whether it belongs to one of two classes (positive and negative). For example, the input might be a picture and the output whether or not the picture contains a cat. The scores are larger if your algorithm evaluates the object as more likely to belong to the positive class (i.e if it labels the image as more likely to contain a cat). Such a scoring system explicitly underlies, for example, logistic regression, the output of a neural network and discriminant analysis. Other, non-parametric machine learning methods, such as $k$-nearest neighbours, don't have an explicit score, but often have a parameter (e.g. $k$) which can be tuned in a way that mimics a threshold. 
 
 \begin{figure}[p]
 \centering
@@ -104,15 +100,15 @@ Imagine you have created an algorithm (a machine learning model) that assigns a 
 \caption{Illustration of the method described in this paper} \label{fig:methodill}
 \end{figure}
 
-The method then proceeds as follows. We start, in figure \ref{fig:methodill}a, with a data set in which every image is assigned a score. We now investigate what happens when we set a threshold score, $r$, above which we label the image as containing a cat (positive), below which we label the image as not containing a cat (negative). For any given threshold we compare those images  which we label as cats (given the threshold) with one containing real cats. Specifically, we choose (with replacement) $n$ real cats and $n$ labelled cats at random and compare scores (figure \ref{fig:methodill}b). Since some cats are in both sets, in some cases we will happen to pick the same two cats. If this occurs we pick two new cats for that comparison. This gives our measure $B(r)$, the probability a real cat scores more than a labelled cat for threshold $r$.
+The method I suggest is as follows. We start, in figure \ref{fig:methodill}a, with a data set in which every image is assigned a score. We first investigate what happens when we set a threshold score, $r$, above which we label the image as containing a cat (positive), below which we label the image as not containing a cat (negative). For any given threshold we compare those images which we label as cats (given the threshold) with those containing real cats. Specifically, we choose (with replacement) $n$ real cats and $n$ labelled cats at random and compare scores (figure \ref{fig:methodill}b). In cases where we happen to pick the same two images, we pick two new images for that particular comparison. This gives a measure $B(r)$: the probability a real cat scores more than a labelled cat for threshold $r$.
 
-We then identify a specific threshold score, $r_b$, such that if we were to choose one image that the algorithm classifies as containing a cat and a second image that really does contain a cat, then the probability that the score of the image containing the cat is the largest of the two scores is 50\%.This is the value $r_b$ such that $B(r_b) \approx 0.5$. In the example, in figure \ref{fig:methodill}b this is $r=65$. A smaller threshold gives $B(r_b) > 0.5$ and a larger threshold gives $B(r_b) < 0.5$ (figure \ref{fig:methodill}c). We call $r_b$ the {\it indistinguishability threshold}: because  that that set comprised of false positives (FP) and true positives (TP) is indistinguishable from the set of TPs and true negatives (TN). If we pick (at random) two images from our data set, one which is labelled as a cat (when $r=r_b$) and the other that is known to contain a cat, then the probability that the algorithm will score assign the  image with the cat the highest score is one half. 
+We then identify a specific threshold score, $r_b$, such that if we were to choose one image that the algorithm classifies as containing a cat and a second image that really does contain a cat, then the probability that the score of the image containing the cat is the largest of the two scores is 50\%.This is the value $r_b$ such that $B(r_b) \approx 0.5$. In the example, in figure \ref{fig:methodill}b this is $r=67$. A smaller threshold gives $B(r_b) > 0.5$ and a larger threshold gives $B(r_b) < 0.5$ (figure \ref{fig:methodill}c). We call $r_b$ the {\it indistinguishability threshold}: because the set comprised of false positives (FP) and true positives (TP) is indistinguishable from the set of TPs and true negatives (TN). If we pick (at random) two images from our data set, one which is labelled as a cat (when $r=r_b$) and the other that is known to contain a cat, then the probability that the algorithm will score assign the  image with the cat the highest score is one half. 
 
-To measure the performance of your algorithm, simply calculate the proportion of images the algorithm classifies as containing a cat do actually contain a cat. We denote this $C(r_b$), recall at the indistinguishability threshold.
+To measure the performance of your algorithm, simply calculate the proportion of images the algorithm classifies as containing a cat do actually contain a cat. We denote this $C(r_b$), {\it recall at the indistinguishability threshold}.
 
-In this paper, I explain why the test described above is useful. I discuss one variant (for tuning in situations where not finding cats can be costly), look at its relation to other methods and also speculate how this method could be used in an improved boosting method. But otherwise the main results, now presented, are an argument for the test described above. To make this argument, this paper presents a series of three tests, which take us toward our final test, described above. Each of these three tests can be explained in plain English (or any other language) with reference to the application area (e.g finding cats). 
+In this paper, I explain why the test described above is useful. I discuss one variant (for tuning in situations where not finding cats can be costly), look at its relation to other performance metrics and also speculate how this method could be used in an improved boosting method. But otherwise the main results, now presented, are an argument for the test described above. To make this argument, this paper presents a series of three tests. Each of these three tests can be explained in plain English (or any other language) with reference to the application area (e.g finding cats) and lead us toward the final of the three: $C(r_b$).
 
-\section{Artificial data}
+\section{Artificial Data}
 
 \begin{figure}[t]
 \centering
@@ -120,7 +116,9 @@ In this paper, I explain why the test described above is useful. I discuss one v
 \caption{The score distributions for the nine example data sets we look at here. Green are members of the negative class, yellow members of the positive class. The dotted line shows $r_b$, the solution $B(r)=1/2$ (see equation \ref{balanced})} \label{fig:Distribution}
 \end{figure}
 
-Throughout this article I use nine artificial data sets, as shown in figure \ref{fig:Distribution}. The positive class ($Y_i=1$) is created by first generating 1000 input values, $X_i$, with a mean $m_p=10$ and standard deviation $\sigma_p=2$. Similarly, the negative class ($Y_i=-1$) consists of 1000 'difficult' data points with values, $X_i$, which have mean scores (a,d,g) $m_n=5$; (b,e,h) $m_n=7$; (c,f,i) $m_n=9$ and (in all cases) standard deviation $\sigma_n=2$, along with (a,b,c) 10000; (d,e,f) 1000; (d,e,f) 100 'easy' data points, $X_i$, with mean 2 and standard deviation 2.  I then performed logistic regression on $X_i$ to predict $Y_i$ and calculated the log-likelihood for every individual point. These log-likelihoods are taken to be the scores, $S_i$, output by the model and are plotted in figure \ref{fig:Distribution}. 
+In this article I use nine artificial data sets, as shown in figure \ref{fig:Distribution}. The positive class ($Y_i=1$) is created by first generating 1000 input values, $X_i$, with a mean $m_p=10$ and standard deviation $\sigma_p=2$. Similarly, the negative class ($Y_i=-1$) consists of 1000 'difficult' data points with values, $X_i$, which have mean scores (a,d,g) $m_n=5$; (b,e,h) $m_n=7$; (c,f,i) $m_n=9$ and (in all cases) standard deviation $\sigma_n=2$, along with (a,b,c) 10000; (d,e,f) 1000; (d,e,f) 100 'easy' data points, $X_i$, with mean 2 and standard deviation 2.  I then performed logistic regression on $X_i$ to predict $Y_i$ and calculated the log-likelihood for every individual point. These log-likelihoods are taken to be the scores, $S_i$, output by the model and are plotted in figure \ref{fig:Distribution}. 
+
+The choice of these data sets is to give a range of difficulty levels. The data in the left column correspond to relatively easy classification tasks. The overlap between the green (negative) and yellow (positive) is small. The data in the right column is much much more difficult, with a large overlap in scores for negative and positive. The datasets at the bottom include a large number of `easy' to classify negative values, but the size of the overlap is only slightly increased over the datasets at the top. The data generation method and the code are available at: \href{https://github.com/soccermatics/ABC.git}{https://github.com/soccermatics/ABC.git}. 
 
 \section{Area Under the Curve} 
 
@@ -130,15 +128,15 @@ The sentence above summarises the nature of this test. We pick one member of the
 \[
 A = P(S_P>S_N)
 \]
-where $S_P$ is the score of a randomly chosen positive member and $S_N$ is the score of a randomly chosen negative member. This test tells us something useful about our model: the more often the algorithm passes the test, the better its performance. The value of $A$ can be measured directly, simply by randomly picking pairs of members of negative and positive classes and testing which scores higher. The test outcome is then the proportion of cases in which the positive member receives a higher value than the negative member.
+where $S_P$ is the score of a randomly chosen positive member and $S_N$ is the score of a randomly chosen negative member. The value of $A$ can be measured directly, simply by randomly picking pairs of members of negative and positive classes and testing which scores higher. The test outcome is then the proportion of cases in which the positive member receives a higher value than the negative member.
 
 We can also measure the paired comparison test over all our scores. Let $F_P(r)$ be the cumulative distribution of scores of the positive class, i.e. 
 \begin{equation}
-F_P(r) = P(S_P < r) = \int_{s=-\infty}^{r} f_P(r)  \label{eq:ScorefPr}
+F_P(r) = P(S_P < r) = \int_{s=-\infty}^{r} f_P(s) ds \label{eq:ScorefPr}
 \end{equation}
 where $f_P(r)$ is thus the probability density function of $S_P$. Likewise, we let $F_N(r)$ to be the cumulative distribution of scores the negative class, i.e. 
 \begin{equation}
-F_N(r) = P(S_N < r) = \int_{s=-\infty}^{r} f_N(r) \label{eq:ScorenPr}
+F_N(r) = P(S_N < r) = \int_{s=-\infty}^{r} f_N(s) ds \label{eq:ScorenPr}
 \end{equation}
 The value $A=P(S_P>S_N)$, can be written as the conditional probability distribution
 \begin{equation}
@@ -150,7 +148,7 @@ A = \int_{r=-\infty}^{\infty}  f_N(r)  \int_{s=r}^{\infty}  f_P(s) ds dr  = \int
 \end{equation}
 We can use this equation to calculate $A$ by numerical integration. 
 
-We can also use this formulation to note an important equivalence between our $A$ test and another commonly used measure of accuracy, namely, AUC (the area under the receiver operator curve). ROC curves plot the false positive rate against the true positive rate, as parametrised curves of $r$. Note that the true positive rate for a given threshold $r$ is given by $v(r)=1-F_P(r)$ and that the false positive rate for a given threshold $r$, is given by $u(r)=1-F_N(r)$. Then we see that
+More importantly, we can also use this formulation to note an important equivalence between the $A$ test and another commonly used measure of accuracy, namely, AUC (the area under the ROC/receiver operator curve). ROC curves plot the false positive rate against the true positive rate, as parametrised curves of $r$. Note that the true positive rate for a given threshold $r$ is given by $v(r)=1-F_P(r)$ and that the false positive rate for a given threshold $r$, is given by $u(r)=1-F_N(r)$. Then we see that
 \[
 A  =  \int_{r=-\infty}^{\infty} v(r) f_N(r) dr  
 \]
@@ -168,31 +166,27 @@ where $u^{-1}(r)$ denotes the inverse of $u(r)$. Thus $A$ is also the area under
 
 The ROC curves are shown in figure \ref{fig:AUC} for our nine data sets. The area under these curves, which is also $A$, is shown as text within the figure. The value of $A$ is close to one when either the scores for the negative and positive class are typically different (e.g. for the score distributions shown in figure \ref{fig:Distribution} a, d and g) or there are a large proportion of 'easy' to score negative members (e.g. for the score distributions shown in figure \ref{fig:Distribution} h and i). 
 
-These examples illustrate both the power and the limitation of $A$ as a measure. In the cases (a, d and g) where the score accurately distinguishes class members, $A$ reflects the fact it is more likely that the algorithm picks out the positive cases correctly. However, in the case where there is an overlap between the positive and 'difficult' negative class (e.g. cases c, h and i) then as we add more 'easy' cases (i.e. go from c to i) the accuracy of the model appears to increase, despite the fact that the difficult cases are equally difficult in each cases. We could see this as giving a possibility for `cheating': by adding more easier cases to our data set we can appear to be improving accuracy, as measured by $A$,
+These examples illustrate both the power and the limitation of $A$ as a measure. In the cases a, d and g – where the score accurately distinguishes class members – $A$ reflects the fact it is more likely that the algorithm picks out the positive cases correctly. But in the cases where there is an overlap between the positive and 'difficult' negative class (e.g. cases c, h and i) we see that as we add more 'easy' cases (i.e. go from c through f to i) the accuracy of the model appears to increase, despite the fact that the difficult cases are equally difficult in all three data sets. We could see this as giving a possibility for `cheating': by adding more easier cases to our data set we can appear to be improving accuracy, as measured by $A$, while no such improvement is actually occurring. 
 
-This is why we need to be very clear about what our test tells us: it tells us that if we pick one member of the positive class at random it has probability $A=0.965$ (in the case of figure \ref{fig:AUC}i) of having a higher score than one member of the negative class chosen at random. When there are a lot more 'easy'  to classify members of the negative class then a high value of $A$ is not surprising: most of the time we will randomly pick one of those members. So, in this case, an $A$ close to one tells us very little about how well our algorithm can distinguish more difficult cases. Our next two tests are designed to help us deal with such situations.
+This is why we need to be very clear about what the AUC test tells us: it tells us that if we pick one member of the positive class at random it has probability $A$ of having a higher score than one member of the negative class chosen at random. When there are a lot more 'easy'  to classify members of the negative class then a high value of $A$ is not surprising: most of the time we will randomly pick one of those members. Thus in figure \ref{fig:AUC}i  an $A$ close to one tells us very little about how well our algorithm can distinguish more difficult cases. 
 
 \section{Indistinguishability Threshold}
 
-{\bf How often is a member of the positive class scored higher than a member that has been labelled positive?} 
-
-We pick a random member of the positive class and we compare its score to the score of a random individual that has been labelled (predicted) positive. For example, in the cat labelling problem, we first pick randomly from all cats. We denote the score of this image as $S_P$. Then, for a given threshold $r$, we choose randomly from all the images with that score or above, irrespective of whether or not they contain a tumour. We denote this score of this image as $S_R$. We then calculate the probability 
+We now look at how often a member of the positive class scored higher than a member that has been labelled positive. To do this, we pick a random member of the positive class and we compare its score to the score of a random individual that has been labelled (predicted) positive. For example, in the cat labelling problem, we first pick randomly from all images containing cats and denote the score of this image as $S_P$. Then, for a given threshold $r$, we choose randomly from all the images with that score or above, irrespective of whether or not they contain a cat. We denote this score of this image as $S_R$. We then calculate the probability 
 \[
 B(r) = P(S_P>S_R | S_R>r) 
 \]
 or, in words, the probability that a random member of the positive class scores higher than a random member of the class we have labelled as positive (i.e. has a score greater than $r$). 
 
-Unlike the paired comparison of negatives and positives we made in the previous section, it is not immediately clear how comparing the positively labelled individuals to the positive class will help us. To gain some more intuition, let's think about what happens as we change the threshold $r$. When $r$ is very large then the positively labelled set will contain more positives than negatives, but very few members of either class. As a result $P(S_P>S_R | S_R>r)$ will be close to $0$. When $r$ is small (or negative), most images are labelled positive. Nearly all members of the positive class will be included in the positively labelled set, but so too will most members of the negative class (we will calculate an expression for this probability later in this section). Neither of these two situations is desirable. In the former, we will have a lot of false positive errors and very low recall (or sensitivity): a high proportion of those labelled positive will actually be negative. In the latter case, we will have a large proportion of false negatives but very high recall: most of those which are labelled positive are actually positive.
+Unlike the paired comparison of negatives and positives we made in the previous section, it is not immediately clear how this test will help us. To gain some more intuition, let's think about what happens as we change the threshold $r$. When $r$ is very large then the positively labelled set will contain more positives than negatives, but very few members of either class. As a result $P(S_P>S_R | S_R>r)$ will go towards $0$. When $r$ is small (or negative), most images are labelled positive. Nearly all members of the positive class will be included in the positively labelled set, but so too will most members of the negative class (we will calculate an expression for this probability later in this section). Neither of these two situations is desirable. In the former, we will have a lot of false positive errors and very low recall (or sensitivity): a high proportion of those labelled positive will actually be negative. In the latter case, we will have a large proportion of false negatives but very high recall: most of those which are labelled positive are actually positive.
 
-Can we use this probability to find a good balance? I suggest choosing $r_b$ such that
+I suggest choosing $r_b$ such that
  \begin{equation}
 B(r_b) = P(S_P>S_R | S_R>r_b) = 1/2 \label{balanced}
 \end{equation}
-This particular value of $r_b$ has a rather desirable property. It means that, as far as the classifier is concerned the images in the positive class are indistinguishable from those which we have labelled positive. If we pick a random member of the images we have classified as positive and a random member of the positives, these two images are equally likely to be classified as positive.
+because this particular value of $r_b$ has a rather desirable property. It means that, as far as the classifier is concerned the images in the positive class are indistinguishable from those which we have labelled positive. If we pick a random member of the images we have classified as positive and a random member of the positives, these two images are equally likely to be classified as positive. We can thus think of $r_b$ as being the threshold value at which the model cannot distinguish between true positives and labelled positives. The algorithm cannot distinguish reality from its own labelling. We thus refer to $r_b$ as the {\it indistinguishability threshold}.
 
-To understand why this is desirable, think about a situation where we have two separate test sets of images, $A$ and $B$, and we want to check whether or not they have a similar distribution of scores. A solution to this problem might be to pick members from both $A$ and $B$ at random and compare their scores. If (roughly) half of the time members of $A$ scored higher than members of $B$ we might say that the two groups are indistinguishable\footnote{There could still be differences between the distributions of the sets not identified by such a test. For example $A$ might have larger variance in scores than $B$}. This method is the basis of the sign test in statistics. In the same way,  by setting $r_b$ using equation \ref{balanced}, we are finding a threshold so that the positive class is indistinguishable from the set that is labelled positive. 
-
-The vertical dotted lines in figure \ref{fig:Distribution} shows the value of $r_b$ for our nine example score distribution sets. For all nine distributions the lines give a reasonable separation between the scores, lying roughly half way between the `difficult' negative cases and the positive cases. The reason for this point of separation is chosen is that balancing the positive class and the positive predictions requires setting a threshold score above the scores of the `easy' negative cases, since inclusion of these cases will mean that $B(r)>1/2$. It is only when it becomes harder to distinguish the `difficult' negatives from the positives that we have $B(r)=1/2$. 
+To understand why this is desirable, think about a situation where we have two separate test sets of images, $A$ and $B$, and we want to check whether or not they have a similar distribution of scores. A solution to this problem might be to pick members from both $A$ and $B$ at random and compare their scores. If (roughly) half of the time members of $A$ scored higher than members of $B$ we might say that the two groups are indistinguishable\footnote{There could still be differences between the distributions of the sets not identified by such a test. For example $A$ might have larger variance in scores than $B$}.  In the same way,  by setting $r_b$ using equation \ref{balanced}, we are finding a threshold so that the positive class is indistinguishable from the set that is labelled positive. The vertical dotted lines in figure \ref{fig:Distribution} shows the value of $r_b$ for our nine example score distribution sets. For all nine distributions the lines give a reasonable separation between the scores, lying roughly halfway between the `difficult' negative cases and the positive cases. 
 
 A common alternative to choosing $r=r_b$ is to instead choose $r$ such that
  \begin{equation}
@@ -210,7 +204,7 @@ which gives $r=0$ as the threshold. Looking again at the distribution of scores 
 
 The limitations of using equation \ref{standard2} to set a threshold are known, but often they are referred to as being ``caused by an unbalanced data set''. The implication is that too many members in the negative class have somehow misled us in to choosing a poor value of $r$. In my experience, students and even experienced practitioners, when confronted with this problem, either start to prune their data, removing `easy' members of the negative class, or oversample from the positive class in order to compensate. They might also draw an ROC curve and a Precision-Recall curve (see below) and try to justify, in an ad-hoc fashion, choosing a different value of the threshold $r$ on the basis of what they see in these curves.
 
-It is not the data set that is imbalanced. It is rather our way of looking at it that is wrong! Specifically, it is the arbitrary choice of $r=0$ that is imbalanced (and wrong). While both of the two measures --- $A$ and $B(r)$ --- that we have looked at so far have sensible, method independent interpretations that give us a measure performance, this is not the case for equation \ref{standard}, which is simply the score for which the probability of receiving a positive label equals that of receiving a negative label. In logistic regression, the model is adjusting to account for the fact that negative cases are more likely than positive cases: negative cases are the more likely outcome and it requires more evidence to persuade us otherwise. But in an application where, for example, we are scanning for a medical condition, the number of negatives (be it 90\% or 99.99999\% of the population) should not influence how we decide that a case is likely to be positive. 
+It is not the data set that is imbalanced. It is rather our way of looking at it that is wrong! Specifically, it is the arbitrary choice of $r=0$ that is imbalanced. While both of the two measures --- $A$ and $B(r)$ --- that we have looked at so far have sensible, method independent interpretations that give us a measure performance, this is not the case for equation \ref{standard}, which is simply the score for which the probability of receiving a positive label equals that of receiving a negative label. In logistic regression, the model is adjusting to account for the fact that negative cases are more likely than positive cases: negative cases are the more likely outcome and it requires more evidence to persuade us otherwise. But in an application where, for example, we are scanning for a medical condition, the number of negatives (be it 90\% or 99.99999\% of the population) should not influence how we decide that a case is likely to be positive. 
 
 \begin{figure}[t]
 \centering
@@ -238,7 +232,7 @@ P( R = + | S_R>r ) =   \frac{P v(r)}{N v(r) + P u(r)}  \mbox{ and }  P( R = - | 
 Furthermore,
 \begin{eqnarray}
 P(S_R < S_P | S_{R} > r ,  R = +   ) & = & \frac{P(S_R < S_P \cap S_{R} > r ,  R = +  )}{P(S_{R} > r ,  R = +  )} \nonumber \\
-& = & \frac{\int_{t=r}^\infty \int_{s=t}^\infty f_P(t) f_P(s) dt}{\int_{t=r}^\infty f_P(t) dt} \nonumber \\
+& = & \frac{\int_{t=r}^\infty \int_{s=t}^\infty f_P(t) f_P(s) dt}{\int_{t=r}^\infty f_P(t) ds dt} \nonumber \\
 & = & \frac{\int_{t=r}^\infty f_P(t) v(t) dt}{v(r)} \label{eqn:posstep}
 \end{eqnarray}
 Since the derivative of $v(r)$ is equal to $-f_P(t)$ we can change variable to $v$ in the integral in the numerator to get
@@ -264,10 +258,7 @@ B(-\infty) = \frac{P/2 + N A}{N + P}
 \]
 and decreases to zero as $r$ increases, so that $B(\infty) = 0$. The value $r_b$, the solution $B(r_b)=1/2$, is identified as the point in figure \ref{fig:Bplot} where $B(r)$ crosses the dotted line at $1/2$. This is also the value of $r_b$ plotted as the dotted line in figure \ref{fig:Bplot}. We will look in more detail at the function $B(r)$ in more detail in section \ref{sec:others} and compare it to other measures. 
 
-We can think of $r_b$ as being the threshold value at which the model cannot distinguish between true positives and labelled positives. The algorithm cannot distinguish reality from its own labelling. We thus refer to $r_b$ as the threshold for indistinguishability.
-
-
-\section{Recall at the Indistinguishability Threshold)}
+\section{Recall at the Indistinguishability Threshold}
 
 How often is our positive labelling correct when reality and labelling are indistinguishibile? To answer this question, we define $C(r)$ to be the recall: the probability that an individual with a score greater than $r$ is in the positive class, i.e. $P(R = + | S_R > r)$ , or the probability that a positive labelling is made correctly.  Using Bayes law, we can rewrite recall in terms of false positive rate and true positive rate. Specifically,
 \[
@@ -282,7 +273,7 @@ When $N$ is much larger than $P$ then $v(r)$ has to be significantly larger than
 \begin{figure}[t]
 \centering
 \includegraphics[scale=1]{Balance.pdf}
-\caption{Plot of $B(r)$ against the recall $C(r)$ (blue), true positive rate $v(r)$ (yellow) and false positive rate $u(r)$ (green) for our 9 example data sets. These curves are parameterised by $r$. The numerical values are $C(r_b)=$ }
+\caption{Plot of $B(r)$ against the recall $C(r)$ (blue), true positive rate $v(r)$ (yellow) and false positive rate $u(r)$ (green) for our 9 example data sets. These curves are parameterised by $r$. }
 \label{fig:balance}
 \end{figure}
 
@@ -330,14 +321,14 @@ B_+(r) =  \frac{P v(r)^2/2}{N v(r) + P u(r)} = \frac{1}{2} v(r) C(r)   \label{eq
 and 
 \begin{equation}
 B_-(r) = \frac{N \int_{t=r}^\infty f_N(t) u(t) dt }{N v(r) + P u(r)} 
- \label{eq:nehcomponentB}
+ \label{eq:negcomponentB}
 \end{equation}
 These terms are plotted in figure \ref{fig:Bplot2}. We now look at these two terms individually.
 
 \begin{figure}[t]
 \centering
 \includegraphics[scale=1]{Bplot2.pdf}
-\caption{Plot of $B(r)$ for our 9 example data sets. The black line is $B(r)$. The dotted line at $1/2$ indicates the value at which the model is balanced. The yellow line is the component $B_+(r)$ (equation \ref{eq:poscomponentB}) and the green line is $B_-(r)$ (equation \ref{eq:negcomponentB}).  The red line is the $F_1(r)$ score (equation \ref{eq:F1}.}
+\caption{Plot of $B(r)$ for our 9 example data sets. The black line is $B(r)$. The dotted line at $1/2$ indicates the value at which the model is balanced. The yellow line is the component $B_+(r)$ (equation \ref{eq:poscomponentB}) and the green line is $B_-(r)$ (equation \ref{eq:negcomponentB}).  The red line is the $F_1(r)$ score (equation \ref{eq:F1}).}
 \label{fig:Bplot2}
 \end{figure}
 
@@ -366,7 +357,9 @@ No messing about with ROC or precision-recall curve. No need to make a confusion
 
 Test $C(r_b)$ is my final test (the test described above) and asks, when the algorithm can no longer distinguish labelled cats from real cats, how often is a randomly chosen member that is labelled positive actually a member of the positive class? This is generally known as the recall and is commonly used to evaluate model performance. I argue that recall should be interpreted primarily in the context of $B(r)$. Either we report a single value of recall when our threshold is set for indistinguishability as a measure of performance (i.e. $C(r_b)$) or if we decide that our algorithm is used in a way where the indistinguishability property does not hold (i.e. $B(r) \neq 1/2$) and then we report the value of $B(r)$ along with the recall, $C(r)$. Thresholds which don't obey indistinguishability can be justified for applications. But I argue that, as a guideline $B(r)$ should be between 40\% and 60\%.  I go on to look at some of the other tests on offer, including the precision-recall curve and the F1-score and discuss how $B(r_b)$ might be used to help improve model boosting. 
 
+\section{Acknowledgements}
 
+Thanks to Daniel Daddeo
 
 \end{document}
 
