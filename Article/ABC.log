@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.11.17)  22 MAR 2023 11:53
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.11.17)  22 MAR 2023 12:04
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -423,10 +423,10 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 (/usr/local/texlive/2021/texmf-dist/tex/latex/microtype/mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
-<../Figures/Find Cats.pdf, id=4, 398.48875pt x 626.34pt>
-File: ../Figures/Find Cats.pdf Graphic file (type pdf)
-<use ../Figures/Find Cats.pdf>
-Package pdftex.def Info: ../Figures/Find Cats.pdf  used on input line 60.
+<Figures/Find Cats.pdf, id=40, 398.48875pt x 626.34pt>
+File: Figures/Find Cats.pdf Graphic file (type pdf)
+<use Figures/Find Cats.pdf>
+Package pdftex.def Info: Figures/Find Cats.pdf  used on input line 60.
 (pdftex.def)             Requested size: 398.48778pt x 626.33846pt.
 
 Overfull \hbox (8.48778pt too wide) in paragraph at lines 60--61
@@ -437,18 +437,6 @@ Overfull \hbox (8.48778pt too wide) in paragraph at lines 60--61
 LaTeX Warning: Float too large for page by 101.78242pt on input line 62.
 
 
-LaTeX Warning: Reference `fig:methodill' on page 1 undefined on input line 64.
-
-
-LaTeX Warning: Reference `fig:methodill' on page 1 undefined on input line 64.
-
-
-LaTeX Warning: Reference `fig:methodill' on page 1 undefined on input line 66.
-
-
-LaTeX Warning: Reference `fig:methodill' on page 1 undefined on input line 66.
-
-
 Overfull \hbox (2.61049pt too wide) has occurred while \output is active
 [] 
  []
@@ -457,90 +445,38 @@ Overfull \hbox (2.61049pt too wide) has occurred while \output is active
 
 
 {/usr/local/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-[2 <../Figures/Find Cats.pdf>]
-<../Figures/Distribution.pdf, id=121, 398.3386pt x 398.3386pt>
-File: ../Figures/Distribution.pdf Graphic file (type pdf)
-<use ../Figures/Distribution.pdf>
-Package pdftex.def Info: ../Figures/Distribution.pdf  used on input line 76.
+[2 <./Figures/Find Cats.pdf>]
+<Figures/Distribution.pdf, id=160, 398.3386pt x 398.3386pt>
+File: Figures/Distribution.pdf Graphic file (type pdf)
+<use Figures/Distribution.pdf>
+Package pdftex.def Info: Figures/Distribution.pdf  used on input line 76.
 (pdftex.def)             Requested size: 398.33762pt x 398.33762pt.
 
 Overfull \hbox (8.33762pt too wide) in paragraph at lines 76--77
  [][] 
  []
 
-
-LaTeX Warning: Reference `balanced' on page 3 undefined on input line 77.
-
-
-LaTeX Warning: Reference `balanced' on page 3 undefined on input line 77.
-
-
-LaTeX Warning: Reference `fig:Distribution' on page 3 undefined on input line 8
-0.
-
-
-LaTeX Warning: Reference `fig:Distribution' on page 3 undefined on input line 8
-0.
-
 [3] [4]
-
-LaTeX Warning: Reference `eq:AUCdef' on page 5 undefined on input line 120.
-
-<../Figures/AUC.pdf, id=141, 398.3386pt x 398.3386pt>
-File: ../Figures/AUC.pdf Graphic file (type pdf)
-<use ../Figures/AUC.pdf>
-Package pdftex.def Info: ../Figures/AUC.pdf  used on input line 124.
+<Figures/AUC.pdf, id=184, 398.3386pt x 398.3386pt>
+File: Figures/AUC.pdf Graphic file (type pdf)
+<use Figures/AUC.pdf>
+Package pdftex.def Info: Figures/AUC.pdf  used on input line 124.
 (pdftex.def)             Requested size: 398.33762pt x 398.33762pt.
 
 Overfull \hbox (8.33762pt too wide) in paragraph at lines 124--125
  [][] 
  []
 
-
-LaTeX Warning: Reference `fig:AUC' on page 5 undefined on input line 128.
-
-
-LaTeX Warning: Reference `fig:Distribution' on page 5 undefined on input line 1
-28.
-
-
-LaTeX Warning: Reference `fig:Distribution' on page 5 undefined on input line 1
-28.
-
-
-LaTeX Warning: Reference `fig:AUC' on page 5 undefined on input line 132.
-
-[5] [6]
-
-LaTeX Warning: Reference `balanced' on page 7 undefined on input line 150.
-
-
-LaTeX Warning: Reference `fig:Distribution' on page 7 undefined on input line 1
-50.
-
-[7]
-
-LaTeX Warning: Reference `fig:Distribution' on page 8 undefined on input line 1
-64.
-
-
-LaTeX Warning: Reference `standard2' on page 8 undefined on input line 166.
-
-
-LaTeX Warning: Reference `standard' on page 8 undefined on input line 170.
-
-<../Figures/Bplot.pdf, id=166, 398.3386pt x 398.3386pt>
-File: ../Figures/Bplot.pdf Graphic file (type pdf)
-<use ../Figures/Bplot.pdf>
-Package pdftex.def Info: ../Figures/Bplot.pdf  used on input line 174.
+[5] [6] [7]
+<Figures/Bplot.pdf, id=218, 398.3386pt x 398.3386pt>
+File: Figures/Bplot.pdf Graphic file (type pdf)
+<use Figures/Bplot.pdf>
+Package pdftex.def Info: Figures/Bplot.pdf  used on input line 174.
 (pdftex.def)             Requested size: 398.33762pt x 398.33762pt.
 
 Overfull \hbox (8.33762pt too wide) in paragraph at lines 174--175
  [][] 
  []
-
-
-LaTeX Warning: Reference `fig:Bplot' on page 8 undefined on input line 179.
 
 [8]
 Overfull \hbox (9.218pt too wide) detected at line 194
@@ -551,33 +487,6 @@ L/cmm/m/it/12 S[] > r\OT1/cmr/m/n/12 ) = [][][]
  []
 
 [9]
-
-LaTeX Warning: Reference `eqn:probbe' on page 10 undefined on input line 213.
-
-
-LaTeX Warning: Reference `eqn:posstepfinal' on page 10 undefined on input line 
-213.
-
-
-LaTeX Warning: Reference `eqn:negstep' on page 10 undefined on input line 213.
-
-
-LaTeX Warning: Reference `eqn:totprobstep' on page 10 undefined on input line 2
-13.
-
-
-LaTeX Warning: Reference `fig:Bplot' on page 10 undefined on input line 218.
-
-
-LaTeX Warning: Reference `fig:Bplot' on page 10 undefined on input line 222.
-
-
-LaTeX Warning: Reference `fig:Bplot' on page 10 undefined on input line 222.
-
-
-LaTeX Warning: Reference `sec:others' on page 10 undefined on input line 222.
-
-
 Overfull \hbox (61.68747pt too wide) detected at line 229
 \OML/cmm/m/it/12 C\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 r\OT1/cmr/m/n/12 ) = \OML/c
 mm/m/it/12 P\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 R \OT1/cmr/m/n/12 = +\OMS/cmsy/m/
@@ -585,127 +494,41 @@ n/12 j\OML/cmm/m/it/12 S[] > r\OT1/cmr/m/n/12 ) = []
  []
 
 [10]
-<../Figures/Balance.pdf, id=187, 398.3386pt x 398.3386pt>
-File: ../Figures/Balance.pdf Graphic file (type pdf)
-<use ../Figures/Balance.pdf>
-Package pdftex.def Info: ../Figures/Balance.pdf  used on input line 238.
+<Figures/Balance.pdf, id=249, 398.3386pt x 398.3386pt>
+File: Figures/Balance.pdf Graphic file (type pdf)
+<use Figures/Balance.pdf>
+Package pdftex.def Info: Figures/Balance.pdf  used on input line 238.
 (pdftex.def)             Requested size: 398.33762pt x 398.33762pt.
 
 Overfull \hbox (8.33762pt too wide) in paragraph at lines 238--239
  [][] 
  []
 
-
-LaTeX Warning: Reference `fig:Distribution' on page 11 undefined on input line 
-243.
-
-
-LaTeX Warning: Reference `fig:Distribution' on page 11 undefined on input line 
-243.
-
-
-LaTeX Warning: Reference `fig:Distribution' on page 11 undefined on input line 
-243.
-
-
-LaTeX Warning: Reference `fig:balance' on page 11 undefined on input line 243.
-
-
-LaTeX Warning: Reference `sec:others' on page 11 undefined on input line 245.
-
-[11]
-
-LaTeX Warning: Reference `fig:balance' on page 12 undefined on input line 252.
-
-
-LaTeX Warning: Reference `fig:balance' on page 12 undefined on input line 253.
-
-
-LaTeX Warning: Reference `fig:balance' on page 12 undefined on input line 257.
-
-
-LaTeX Warning: Reference `fig:balance' on page 12 undefined on input line 259.
-
-
-LaTeX Warning: Reference `fig:balance' on page 12 undefined on input line 259.
-
-[12]
-
-LaTeX Warning: Reference `fig:balance' on page 13 undefined on input line 261.
-
-
-LaTeX Warning: Reference `fig:balance' on page 13 undefined on input line 262.
-
-
-LaTeX Warning: Reference `fig:Bplot2' on page 13 undefined on input line 289.
-
-<../Figures/Bplot2.pdf, id=200, 398.3386pt x 398.3386pt>
-File: ../Figures/Bplot2.pdf Graphic file (type pdf)
-<use ../Figures/Bplot2.pdf>
-Package pdftex.def Info: ../Figures/Bplot2.pdf  used on input line 293.
+[11] [12]
+<Figures/Bplot2.pdf, id=275, 398.3386pt x 398.3386pt>
+File: Figures/Bplot2.pdf Graphic file (type pdf)
+<use Figures/Bplot2.pdf>
+Package pdftex.def Info: Figures/Bplot2.pdf  used on input line 293.
 (pdftex.def)             Requested size: 398.33762pt x 398.33762pt.
 
 Overfull \hbox (8.33762pt too wide) in paragraph at lines 293--294
  [][] 
  []
 
-
-LaTeX Warning: Reference `eq:poscomponentB' on page 13 undefined on input line 
-294.
-
-
-LaTeX Warning: Reference `eq:negcomponentB' on page 13 undefined on input line 
-294.
-
-
-LaTeX Warning: Reference `eq:F1' on page 13 undefined on input line 294.
-
-
-LaTeX Warning: Reference `eq:poscomponentB' on page 13 undefined on input line 
-294.
-
-
-LaTeX Warning: Reference `eq:negcomponentB' on page 13 undefined on input line 
-294.
-
-
-LaTeX Warning: Reference `eq:F1' on page 13 undefined on input line 294.
-
-
-LaTeX Warning: Reference `fig:Bplot2' on page 13 undefined on input line 302.
-
-
-LaTeX Warning: Reference `fig:Bplot2' on page 13 undefined on input line 302.
-
-
-LaTeX Warning: Reference `fig:Bplot2' on page 13 undefined on input line 302.
-
 [13] [14]
 No file ABC.bbl.
-[15] [16 <../Figures/Distribution.pdf>] [17 <../Figures/AUC.pdf>] [18 <../Figur
-es/Bplot.pdf>] [19 <../Figures/Balance.pdf>] [20 <../Figures/Bplot2.pdf>]
-(./ABC.aux)
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-
-Package rerunfilecheck Warning: File `ABC.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `ABC.out':
-(rerunfilecheck)             Before: D41D8CD98F00B204E9800998ECF8427E;0
-(rerunfilecheck)             After:  B4431AED9270773FF33107CFDB49600B;1494.
+[15] [16 <./Figures/Distribution.pdf>] [17 <./Figures/AUC.pdf>] [18 <./Figures/
+Bplot.pdf>] [19 <./Figures/Balance.pdf>] [20 <./Figures/Bplot2.pdf>] (./ABC.aux
+)
+Package rerunfilecheck Info: File `ABC.out' has not changed.
+(rerunfilecheck)             Checksum: B4431AED9270773FF33107CFDB49600B;1494.
  ) 
 Here is how much of TeX's memory you used:
- 11600 strings out of 478994
- 173567 string characters out of 5858183
- 513443 words of memory out of 5000000
- 28662 multiletter control sequences out of 15000+600000
- 422090 words of font info for 156 fonts, out of 8000000 for 9000
+ 11617 strings out of 478994
+ 173616 string characters out of 5858183
+ 515626 words of memory out of 5000000
+ 28670 multiletter control sequences out of 15000+600000
+ 421603 words of font info for 160 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  83i,11n,88p,1268b,354s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2021/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}
@@ -721,19 +544,18 @@ xlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texli
 ve/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texliv
 e/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/
 2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/20
-21/texmf-dist/fonts/type1/public/cm-super/sfbx1000.pfb></usr/local/texlive/2021
-/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/local/texlive/2021/t
-exmf-dist/fonts/type1/public/cm-super/sfrm0700.pfb></usr/local/texlive/2021/tex
-mf-dist/fonts/type1/public/cm-super/sfrm0800.pfb></usr/local/texlive/2021/texmf
--dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/texlive/2021/texmf-d
-ist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2021/texmf-dis
-t/fonts/type1/public/cm-super/sfrm1728.pfb></usr/local/texlive/2021/texmf-dist/
-fonts/type1/public/cm-super/sfti1000.pfb></usr/local/texlive/2021/texmf-dist/fo
-nts/type1/public/cm-super/sfti1200.pfb>
-Output written on ABC.pdf (20 pages, 472764 bytes).
+21/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/local/texlive/2021
+/texmf-dist/fonts/type1/public/cm-super/sfrm0700.pfb></usr/local/texlive/2021/t
+exmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb></usr/local/texlive/2021/tex
+mf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/texlive/2021/texmf
+-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2021/texmf-d
+ist/fonts/type1/public/cm-super/sfrm1728.pfb></usr/local/texlive/2021/texmf-dis
+t/fonts/type1/public/cm-super/sfti1000.pfb></usr/local/texlive/2021/texmf-dist/
+fonts/type1/public/cm-super/sfti1200.pfb>
+Output written on ABC.pdf (20 pages, 464911 bytes).
 PDF statistics:
- 516 PDF objects out of 1000 (max. 8388607)
- 240 compressed objects within 3 object streams
+ 590 PDF objects out of 1000 (max. 8388607)
+ 310 compressed objects within 4 object streams
  59 named destinations out of 1000 (max. 500000)
- 30751 words of extra memory for PDF output out of 35830 (max. 10000000)
+ 28775 words of extra memory for PDF output out of 29859 (max. 10000000)
 
