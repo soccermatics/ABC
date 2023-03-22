@@ -55,6 +55,7 @@ include_other_curves=False
 #The 'easy' members of the negative class have mean value 2 and standard deviation 2.
 #sizeofspurious is the number of 'easy' members.
 ########################################################################
+
 for meandiff in mean_differences:
   cj=cj+1
   ci=-1
@@ -377,18 +378,18 @@ for cj in [0,1,2]:
 
 plt.show()
     
-fig.savefig('Balance.pdf')
+fig.savefig('Article/Figures/Balance.pdf')
 
-fig3.savefig('AUC.pdf')
+fig3.savefig('Article/Figures/AUC.pdf')
 
 if include_other_curves:
-    fig5.savefig('Bplot2.pdf')
+    fig5.savefig('Article/Figures/Bplot2.pdf')
 else:
-    fig5.savefig('Bplot.pdf')
+    fig5.savefig('Article/Figures/Bplot.pdf')
     
-fig2.savefig('Distribution.pdf')
+fig2.savefig('Article/Figures/Distribution.pdf')
 
-fig4.savefig('PrecisionRecall.pdf')
+fig4.savefig('Article/Figures/PrecisionRecall.pdf')
 
 
 

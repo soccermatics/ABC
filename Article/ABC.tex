@@ -34,30 +34,12 @@
 % authors names on the first line, and the last on the second line, try using
 % \AND instead of \And before the third author name.
 
-\author{David J. T. Sumpter
-  \today1\\
-  Department of Information Technology, Uppsala University\\
-  % examples of more authors
-  % \And
-  % Coauthor \\
-  % Affiliation \\
-  % Address \\
-  % \texttt{email} \\
-  % \AND
-  % Coauthor \\
-  % Affiliation \\
-  % Address \\
-  % \texttt{email} \\
-  % \And
-  % Coauthor \\
-  % Affiliation \\
-  % Address \\
-  % \texttt{email} \\
-  % \And
-  % Coauthor \\
-  % Affiliation \\
-  % Address \\
-  % \texttt{email} \\
+\author{David J. T. Sumpter}
+
+\address{
+  Department of Information Technology \\
+  
+  Uppsala University\\
 }
 
 \begin{document}
@@ -75,7 +57,7 @@ Imagine you have created an algorithm (a machine learning model) that assigns a 
 
 \begin{figure}[p]
 \centering
-\includegraphics[scale=1]{Find Cats.pdf}
+\includegraphics[scale=1]{Article/Figures/Find Cats.pdf}
 \caption{Illustration of the method described in this paper} \label{fig:methodill}
 \end{figure}
 
@@ -91,7 +73,7 @@ In this paper I look at this test in relationship to other performance metrics, 
 
 \begin{figure}[t]
 \centering
-\includegraphics[scale=1]{Distribution.pdf}
+\includegraphics[scale=1]{Article/Figures/Distribution.pdf}
 \caption{The score distributions for the nine example data sets we look at here. Green are members of the negative class, yellow members of the positive class. The dotted line shows $r_b$, the solution $B(r)=1/2$ (see equation \ref{balanced})} \label{fig:Distribution}
 \end{figure}
 
@@ -139,7 +121,7 @@ where $u^{-1}(r)$ denotes the inverse of $u(r)$. Thus $A$ is also the area under
 
 \begin{figure}[t]
 \centering
-\includegraphics[scale=1]{AUC.pdf}
+\includegraphics[scale=1]{Article/Figures/AUC.pdf}
 \caption{The area under the curve} \label{fig:AUC}
 \end{figure}
 
@@ -189,7 +171,7 @@ While both of the two measures --- $A$ and $B(r)$ --- that we have looked at so 
 
 \begin{figure}[t]
 \centering
-\includegraphics[scale=1]{Bplot.pdf}
+\includegraphics[scale=1]{Article/Figures/Bplot.pdf}
 \caption{Plot of $B(r)$ for our 9 example data sets. The dotted line is at $1/2$ indicates the value at which the model is balanced.}
 \label{fig:Bplot}
 \end{figure}
@@ -253,7 +235,7 @@ When $N$ is much larger than $P$ then $v(r)$ has to be significantly larger than
 
 \begin{figure}[t]
 \centering
-\includegraphics[scale=1]{Balance.pdf}
+\includegraphics[scale=1]{Article/Figures/Balance.pdf}
 \caption{Plot of $B(r)$ against the precision $C(r)$ (blue), true positive rate $v(r)$ (yellow) and false positive rate $u(r)$ (green) for our 9 example data sets. These curves are parameterised by $r$. }
 \label{fig:balance}
 \end{figure}
@@ -308,7 +290,7 @@ These terms are plotted in figure \ref{fig:Bplot2}. We now look at these two ter
 
 \begin{figure}[t]
 \centering
-\includegraphics[scale=1]{Bplot2.pdf}
+\includegraphics[scale=1]{Article/Figures/Bplot2.pdf}
 \caption{Plot of $B(r)$ for our 9 example data sets. The black line is $B(r)$. The dotted line at $1/2$ indicates the value at which the model is balanced. The yellow line is the component $B_+(r)$ (equation \ref{eq:poscomponentB}) and the green line is $B_-(r)$ (equation \ref{eq:negcomponentB}).  The red line is the $F_1(r)$ score (equation \ref{eq:F1}).}
 \label{fig:Bplot2}
 \end{figure}

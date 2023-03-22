@@ -1,11 +1,4 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Jun 17 16:04:15 2022
-
-@author: davsu428
-"""
-
+# Simple example for calculating B(r)
 
 import numpy as np
 
@@ -17,7 +10,7 @@ threshold = 60
 real_cats = cat_scores
 predicted_cats =np.append(cat_scores[cat_scores>=threshold],noncat_scores[noncat_scores>=threshold])
 
-sample_size=1000000
+sample_size=1000
 real_rand=np.random.choice(real_cats,sample_size)
 predicted_rand=np.random.choice(predicted_cats,sample_size)
 

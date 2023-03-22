@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.11.17)  22 MAR 2023 11:39
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.11.17)  22 MAR 2023 11:53
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -327,24 +327,24 @@ Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
 (./ABC.aux)
 \openout1 = `ABC.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
 
 (/usr/local/texlive/2021/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -368,7 +368,7 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-Package hyperref Info: Link coloring OFF on input line 63.
+Package hyperref Info: Link coloring OFF on input line 45.
 
 (/usr/local/texlive/2021/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
@@ -382,21 +382,21 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count284
 )
-LaTeX Info: Redefining \ref on input line 63.
-LaTeX Info: Redefining \pageref on input line 63.
-LaTeX Info: Redefining \nameref on input line 63.
+LaTeX Info: Redefining \ref on input line 45.
+LaTeX Info: Redefining \pageref on input line 45.
+LaTeX Info: Redefining \nameref on input line 45.
  (./ABC.out) (./ABC.out)
 \@outlinefile=\write4
 \openout4 = `ABC.out'.
 
-LaTeX Info: Redefining \microtypecontext on input line 63.
+LaTeX Info: Redefining \microtypecontext on input line 45.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
 Package microtype Info: Automatic font expansion enabled (level 2),
 (microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
 Package microtype Info: Using default expansion set `alltext-nott'.
-LaTeX Info: Redefining \showhyphens on input line 63.
+LaTeX Info: Redefining \showhyphens on input line 45.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
@@ -405,7 +405,7 @@ Package microtype Info: No adjustment of character kerning.
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
 (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msa on input line 67.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 49.
 
 
 (/usr/local/texlive/2021/texmf-dist/tex/latex/amsfonts/umsa.fd
@@ -414,7 +414,7 @@ File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 (/usr/local/texlive/2021/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 67.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 49.
 
 
 (/usr/local/texlive/2021/texmf-dist/tex/latex/amsfonts/umsb.fd
@@ -423,18 +423,30 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 (/usr/local/texlive/2021/texmf-dist/tex/latex/microtype/mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
-<Find Cats.pdf, id=40, 398.48875pt x 626.34pt>
-File: Find Cats.pdf Graphic file (type pdf)
-<use Find Cats.pdf>
-Package pdftex.def Info: Find Cats.pdf  used on input line 78.
+<../Figures/Find Cats.pdf, id=4, 398.48875pt x 626.34pt>
+File: ../Figures/Find Cats.pdf Graphic file (type pdf)
+<use ../Figures/Find Cats.pdf>
+Package pdftex.def Info: ../Figures/Find Cats.pdf  used on input line 60.
 (pdftex.def)             Requested size: 398.48778pt x 626.33846pt.
 
-Overfull \hbox (8.48778pt too wide) in paragraph at lines 78--79
+Overfull \hbox (8.48778pt too wide) in paragraph at lines 60--61
  [][] 
  []
 
 
-LaTeX Warning: Float too large for page by 101.78242pt on input line 80.
+LaTeX Warning: Float too large for page by 101.78242pt on input line 62.
+
+
+LaTeX Warning: Reference `fig:methodill' on page 1 undefined on input line 64.
+
+
+LaTeX Warning: Reference `fig:methodill' on page 1 undefined on input line 64.
+
+
+LaTeX Warning: Reference `fig:methodill' on page 1 undefined on input line 66.
+
+
+LaTeX Warning: Reference `fig:methodill' on page 1 undefined on input line 66.
 
 
 Overfull \hbox (2.61049pt too wide) has occurred while \output is active
@@ -445,41 +457,93 @@ Overfull \hbox (2.61049pt too wide) has occurred while \output is active
 
 
 {/usr/local/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-[2 <./Find Cats.pdf>]
-<Distribution.pdf, id=160, 398.3386pt x 398.3386pt>
-File: Distribution.pdf Graphic file (type pdf)
-<use Distribution.pdf>
-Package pdftex.def Info: Distribution.pdf  used on input line 94.
+[2 <../Figures/Find Cats.pdf>]
+<../Figures/Distribution.pdf, id=121, 398.3386pt x 398.3386pt>
+File: ../Figures/Distribution.pdf Graphic file (type pdf)
+<use ../Figures/Distribution.pdf>
+Package pdftex.def Info: ../Figures/Distribution.pdf  used on input line 76.
 (pdftex.def)             Requested size: 398.33762pt x 398.33762pt.
 
-Overfull \hbox (8.33762pt too wide) in paragraph at lines 94--95
+Overfull \hbox (8.33762pt too wide) in paragraph at lines 76--77
  [][] 
  []
+
+
+LaTeX Warning: Reference `balanced' on page 3 undefined on input line 77.
+
+
+LaTeX Warning: Reference `balanced' on page 3 undefined on input line 77.
+
+
+LaTeX Warning: Reference `fig:Distribution' on page 3 undefined on input line 8
+0.
+
+
+LaTeX Warning: Reference `fig:Distribution' on page 3 undefined on input line 8
+0.
 
 [3] [4]
-<AUC.pdf, id=185, 398.3386pt x 398.3386pt>
-File: AUC.pdf Graphic file (type pdf)
-<use AUC.pdf>
-Package pdftex.def Info: AUC.pdf  used on input line 142.
+
+LaTeX Warning: Reference `eq:AUCdef' on page 5 undefined on input line 120.
+
+<../Figures/AUC.pdf, id=141, 398.3386pt x 398.3386pt>
+File: ../Figures/AUC.pdf Graphic file (type pdf)
+<use ../Figures/AUC.pdf>
+Package pdftex.def Info: ../Figures/AUC.pdf  used on input line 124.
 (pdftex.def)             Requested size: 398.33762pt x 398.33762pt.
 
-Overfull \hbox (8.33762pt too wide) in paragraph at lines 142--143
+Overfull \hbox (8.33762pt too wide) in paragraph at lines 124--125
  [][] 
  []
 
-[5] [6] [7]
-<Bplot.pdf, id=218, 398.3386pt x 398.3386pt>
-File: Bplot.pdf Graphic file (type pdf)
-<use Bplot.pdf>
-Package pdftex.def Info: Bplot.pdf  used on input line 192.
+
+LaTeX Warning: Reference `fig:AUC' on page 5 undefined on input line 128.
+
+
+LaTeX Warning: Reference `fig:Distribution' on page 5 undefined on input line 1
+28.
+
+
+LaTeX Warning: Reference `fig:Distribution' on page 5 undefined on input line 1
+28.
+
+
+LaTeX Warning: Reference `fig:AUC' on page 5 undefined on input line 132.
+
+[5] [6]
+
+LaTeX Warning: Reference `balanced' on page 7 undefined on input line 150.
+
+
+LaTeX Warning: Reference `fig:Distribution' on page 7 undefined on input line 1
+50.
+
+[7]
+
+LaTeX Warning: Reference `fig:Distribution' on page 8 undefined on input line 1
+64.
+
+
+LaTeX Warning: Reference `standard2' on page 8 undefined on input line 166.
+
+
+LaTeX Warning: Reference `standard' on page 8 undefined on input line 170.
+
+<../Figures/Bplot.pdf, id=166, 398.3386pt x 398.3386pt>
+File: ../Figures/Bplot.pdf Graphic file (type pdf)
+<use ../Figures/Bplot.pdf>
+Package pdftex.def Info: ../Figures/Bplot.pdf  used on input line 174.
 (pdftex.def)             Requested size: 398.33762pt x 398.33762pt.
 
-Overfull \hbox (8.33762pt too wide) in paragraph at lines 192--193
+Overfull \hbox (8.33762pt too wide) in paragraph at lines 174--175
  [][] 
  []
+
+
+LaTeX Warning: Reference `fig:Bplot' on page 8 undefined on input line 179.
 
 [8]
-Overfull \hbox (9.218pt too wide) detected at line 212
+Overfull \hbox (9.218pt too wide) detected at line 194
 []\OML/cmm/m/it/12 P\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 R \OT1/cmr/m/n/12 = +\OMS
 /cmsy/m/n/12 j\OML/cmm/m/it/12 S[] > r\OT1/cmr/m/n/12 ) = [][]\OML/cmm/m/it/12 
 P\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 R \OT1/cmr/m/n/12 = \OMS/cmsy/m/n/12 ^^@j\OM
@@ -487,49 +551,163 @@ L/cmm/m/it/12 S[] > r\OT1/cmr/m/n/12 ) = [][][]
  []
 
 [9]
-Overfull \hbox (61.68747pt too wide) detected at line 247
+
+LaTeX Warning: Reference `eqn:probbe' on page 10 undefined on input line 213.
+
+
+LaTeX Warning: Reference `eqn:posstepfinal' on page 10 undefined on input line 
+213.
+
+
+LaTeX Warning: Reference `eqn:negstep' on page 10 undefined on input line 213.
+
+
+LaTeX Warning: Reference `eqn:totprobstep' on page 10 undefined on input line 2
+13.
+
+
+LaTeX Warning: Reference `fig:Bplot' on page 10 undefined on input line 218.
+
+
+LaTeX Warning: Reference `fig:Bplot' on page 10 undefined on input line 222.
+
+
+LaTeX Warning: Reference `fig:Bplot' on page 10 undefined on input line 222.
+
+
+LaTeX Warning: Reference `sec:others' on page 10 undefined on input line 222.
+
+
+Overfull \hbox (61.68747pt too wide) detected at line 229
 \OML/cmm/m/it/12 C\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 r\OT1/cmr/m/n/12 ) = \OML/c
 mm/m/it/12 P\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 R \OT1/cmr/m/n/12 = +\OMS/cmsy/m/
 n/12 j\OML/cmm/m/it/12 S[] > r\OT1/cmr/m/n/12 ) = []
  []
 
 [10]
-<Balance.pdf, id=249, 398.3386pt x 398.3386pt>
-File: Balance.pdf Graphic file (type pdf)
-<use Balance.pdf>
-Package pdftex.def Info: Balance.pdf  used on input line 256.
+<../Figures/Balance.pdf, id=187, 398.3386pt x 398.3386pt>
+File: ../Figures/Balance.pdf Graphic file (type pdf)
+<use ../Figures/Balance.pdf>
+Package pdftex.def Info: ../Figures/Balance.pdf  used on input line 238.
 (pdftex.def)             Requested size: 398.33762pt x 398.33762pt.
 
-Overfull \hbox (8.33762pt too wide) in paragraph at lines 256--257
+Overfull \hbox (8.33762pt too wide) in paragraph at lines 238--239
  [][] 
  []
 
-[11] [12]
-<Bplot2.pdf, id=275, 398.3386pt x 398.3386pt>
-File: Bplot2.pdf Graphic file (type pdf)
-<use Bplot2.pdf>
-Package pdftex.def Info: Bplot2.pdf  used on input line 311.
+
+LaTeX Warning: Reference `fig:Distribution' on page 11 undefined on input line 
+243.
+
+
+LaTeX Warning: Reference `fig:Distribution' on page 11 undefined on input line 
+243.
+
+
+LaTeX Warning: Reference `fig:Distribution' on page 11 undefined on input line 
+243.
+
+
+LaTeX Warning: Reference `fig:balance' on page 11 undefined on input line 243.
+
+
+LaTeX Warning: Reference `sec:others' on page 11 undefined on input line 245.
+
+[11]
+
+LaTeX Warning: Reference `fig:balance' on page 12 undefined on input line 252.
+
+
+LaTeX Warning: Reference `fig:balance' on page 12 undefined on input line 253.
+
+
+LaTeX Warning: Reference `fig:balance' on page 12 undefined on input line 257.
+
+
+LaTeX Warning: Reference `fig:balance' on page 12 undefined on input line 259.
+
+
+LaTeX Warning: Reference `fig:balance' on page 12 undefined on input line 259.
+
+[12]
+
+LaTeX Warning: Reference `fig:balance' on page 13 undefined on input line 261.
+
+
+LaTeX Warning: Reference `fig:balance' on page 13 undefined on input line 262.
+
+
+LaTeX Warning: Reference `fig:Bplot2' on page 13 undefined on input line 289.
+
+<../Figures/Bplot2.pdf, id=200, 398.3386pt x 398.3386pt>
+File: ../Figures/Bplot2.pdf Graphic file (type pdf)
+<use ../Figures/Bplot2.pdf>
+Package pdftex.def Info: ../Figures/Bplot2.pdf  used on input line 293.
 (pdftex.def)             Requested size: 398.33762pt x 398.33762pt.
 
-Overfull \hbox (8.33762pt too wide) in paragraph at lines 311--312
+Overfull \hbox (8.33762pt too wide) in paragraph at lines 293--294
  [][] 
  []
 
-[13]
+
+LaTeX Warning: Reference `eq:poscomponentB' on page 13 undefined on input line 
+294.
+
+
+LaTeX Warning: Reference `eq:negcomponentB' on page 13 undefined on input line 
+294.
+
+
+LaTeX Warning: Reference `eq:F1' on page 13 undefined on input line 294.
+
+
+LaTeX Warning: Reference `eq:poscomponentB' on page 13 undefined on input line 
+294.
+
+
+LaTeX Warning: Reference `eq:negcomponentB' on page 13 undefined on input line 
+294.
+
+
+LaTeX Warning: Reference `eq:F1' on page 13 undefined on input line 294.
+
+
+LaTeX Warning: Reference `fig:Bplot2' on page 13 undefined on input line 302.
+
+
+LaTeX Warning: Reference `fig:Bplot2' on page 13 undefined on input line 302.
+
+
+LaTeX Warning: Reference `fig:Bplot2' on page 13 undefined on input line 302.
+
+[13] [14]
 No file ABC.bbl.
-[14] [15] [16 <./Distribution.pdf>] [17 <./AUC.pdf>] [18 <./Bplot.pdf>]
-[19 <./Balance.pdf>] [20 <./Bplot2.pdf>] (./ABC.aux)
-Package rerunfilecheck Info: File `ABC.out' has not changed.
-(rerunfilecheck)             Checksum: B4431AED9270773FF33107CFDB49600B;1494.
+[15] [16 <../Figures/Distribution.pdf>] [17 <../Figures/AUC.pdf>] [18 <../Figur
+es/Bplot.pdf>] [19 <../Figures/Balance.pdf>] [20 <../Figures/Bplot2.pdf>]
+(./ABC.aux)
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+
+Package rerunfilecheck Warning: File `ABC.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `ABC.out':
+(rerunfilecheck)             Before: D41D8CD98F00B204E9800998ECF8427E;0
+(rerunfilecheck)             After:  B4431AED9270773FF33107CFDB49600B;1494.
  ) 
 Here is how much of TeX's memory you used:
- 11615 strings out of 478994
- 173357 string characters out of 5858183
- 517364 words of memory out of 5000000
- 28669 multiletter control sequences out of 15000+600000
- 421603 words of font info for 160 fonts, out of 8000000 for 9000
+ 11600 strings out of 478994
+ 173567 string characters out of 5858183
+ 513443 words of memory out of 5000000
+ 28662 multiletter control sequences out of 15000+600000
+ 422090 words of font info for 156 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 83i,11n,88p,1268b,423s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 83i,11n,88p,1268b,354s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2021/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}
 </usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><
 /usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></
@@ -543,18 +721,19 @@ xlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texli
 ve/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texliv
 e/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/
 2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/20
-21/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/local/texlive/2021
-/texmf-dist/fonts/type1/public/cm-super/sfrm0700.pfb></usr/local/texlive/2021/t
-exmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb></usr/local/texlive/2021/tex
-mf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/texlive/2021/texmf
--dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2021/texmf-d
-ist/fonts/type1/public/cm-super/sfrm1728.pfb></usr/local/texlive/2021/texmf-dis
-t/fonts/type1/public/cm-super/sfti1000.pfb></usr/local/texlive/2021/texmf-dist/
-fonts/type1/public/cm-super/sfti1200.pfb>
-Output written on ABC.pdf (20 pages, 463792 bytes).
+21/texmf-dist/fonts/type1/public/cm-super/sfbx1000.pfb></usr/local/texlive/2021
+/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/local/texlive/2021/t
+exmf-dist/fonts/type1/public/cm-super/sfrm0700.pfb></usr/local/texlive/2021/tex
+mf-dist/fonts/type1/public/cm-super/sfrm0800.pfb></usr/local/texlive/2021/texmf
+-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/texlive/2021/texmf-d
+ist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2021/texmf-dis
+t/fonts/type1/public/cm-super/sfrm1728.pfb></usr/local/texlive/2021/texmf-dist/
+fonts/type1/public/cm-super/sfti1000.pfb></usr/local/texlive/2021/texmf-dist/fo
+nts/type1/public/cm-super/sfti1200.pfb>
+Output written on ABC.pdf (20 pages, 472764 bytes).
 PDF statistics:
- 594 PDF objects out of 1000 (max. 8388607)
- 314 compressed objects within 4 object streams
+ 516 PDF objects out of 1000 (max. 8388607)
+ 240 compressed objects within 3 object streams
  59 named destinations out of 1000 (max. 500000)
- 28775 words of extra memory for PDF output out of 29859 (max. 10000000)
+ 30751 words of extra memory for PDF output out of 35830 (max. 10000000)
 
