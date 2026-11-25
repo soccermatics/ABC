@@ -134,13 +134,11 @@ Across the nine data sets, $A$ is high when the scores of the positive and negat
 
 \subsection*{Indistinguishability threshold}
 
-We now change how we measure performance, by looking at how often a member of the positive class scored higher than a member that has been labelled positive. To do this, in the cat labelling problem, we first pick randomly from all images containing cats and denote the score of this image as $S_P$. Then, for a given threshold $r$, we choose randomly from all the images with that score or above, irrespective of whether or not they contain a cat. We denote this score of this image as $S_R$. We then calculate the probability 
+We now compare the positive class with the members we have labelled as positive, rather than with the negative class. In the cat labelling problem, we pick an image at random from all images containing cats and denote its score $S_P$. Then, for a given threshold $r$, we pick an image at random from all images labelled as cats, i.e. those with a score above $r$, whether or not they contain a cat, and denote its score $S_R$. We define
 \[
-B(r) = \prob(S_P>S_R | S_R>r) 
+B(r) = \prob(S_P>S_R | S_R>r),
 \]
-or, in words, the probability that a random member of the positive class scores higher than a random member of the class we have labelled as positive (i.e. has a score greater than $r$). 
-
-Unlike the paired comparison of negatives and positives we made for $A$, it is not immediately clear how this test will help us construct a performance metric. To gain some more intuition, let's think about what happens as we change the threshold $r$. When $r$ is very large then the positively labelled set will contain more positives than negatives, but very few members of either class. As a result $\prob(S_P>S_R | S_R>r)$ will go towards $0$. When $r$ is small (or negative), most images are labelled positive. Nearly all members of the positive class will be included in the positively labelled set, but so too will most members of the negative class. Neither of these two situations is desirable. In the latter, we will have a lot of false positive errors and very low precision: a high proportion of those labelled positive will actually be negative. In the former case, we will have a large proportion of false negatives but very high precision: most of those which are labelled positive are actually positive.
+in words, the probability that a random member of the positive class scores higher than a random member of the set labelled positive. When $r$ is large, only a few high-scoring members are labelled positive, so $B(r)$ is close to zero: precision is high, but many positives are missed (false negatives). When $r$ is small, nearly everything is labelled positive, so $B(r)$ is large: few positives are missed, but many negatives are labelled positive (false positives) and precision is low. Between these extremes, $B(r)$ decreases as $r$ increases (see the Appendix).
 
 We suggest choosing $r_b$ such that
  \begin{equation}
