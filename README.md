@@ -14,13 +14,15 @@ There exist a wide range of single number metrics for assessing performance of c
 
 ## Article
 
-The LaTeX source, bibliography and figures are in `Article/`. `Article.zip` contains the same files.
+The LaTeX source, bibliography and figures are in `Article/`, along with the compiled article, [`Article/ABC.pdf`](Article/ABC.pdf). `Article.zip` contains the source files.
 
-### Corrections to the arXiv version (v1, November 2023)
+### Changes since the arXiv version (v1, November 2023)
 
-The version here corrects the following errors in the arXiv version.
+Section 3.6 (now *Relationship to F1 score*) replaces the earlier informal comparison with exact results. $B(r)$ decomposes into precision, recall and an AUC computed on the labelled members only. At the indistinguishability threshold, FN/FP equals $(2\alpha-1)C$. As a result, $r_b$ always lies below the precision–recall break-even point, and recall and F1 at $r_b$ follow from precision and $\alpha$. The section also shows why the F1-maximising threshold coincides with $r_b$ only in special cases.
+
+The version here also corrects the following errors in the arXiv version.
 
 - **Figures.** `ABC.py` used the wrong data set when computing $B(r)$ for six of the nine panels (it indexed the data with `cj*3+cj` instead of `cj*3+ci`). This moved $r_b$ in figures 2, 4, 5 and 6, most visibly in panels (g) and (h). The figures have been regenerated, and the values quoted in the text updated accordingly ($C(r_b) \approx 0.87$, $0.70$ and $0.53$ for the three columns of data sets).
 - **Figure 1.** The worked example gave $B(65) \approx 0.49$ and $B(75) \approx 0.49$. With the scores shown, $B(67) = 18/37 \approx 0.49$ and $B(75) = 6/20 = 0.30$. Also, "real score score" is now "real score".
-- **Equations.** The denominators in equations (10), (15), (18) and (19) should be $P v(r) + N u(r)$; the integrand in equations (14), (15) and (19) should be $f_N(t) v(t)$; and the integrals in equations (11), (12) and the area under the precision–recall curve had incorrect limits or variables. The code always used the correct expressions.
+- **Equations.** The denominators in equations (10), (15), (18) and (19) should be $P v(r) + N u(r)$; the integrand in equations (14), (15) and (19) should be $f_N(t) v(t)$; and the integrals in equations (11) and (12) had incorrect limits or variables. The code always used the correct expressions.
 - **Text.** The number of 'easy' data points per panel was listed in the wrong order; the description of what happens at large and small thresholds had "former" and "latter" swapped; and the logistic function should be $1/(1+\exp(-r))$. A number of smaller typos have also been fixed.

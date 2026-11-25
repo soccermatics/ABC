@@ -279,11 +279,11 @@ Figure \ref{fig:balance} shows $C(r)$ (black line) plotted against $r$ for our n
 %This is similar to the idea of bookmaker informedness \cite{powers2003precision}. It is the cost of making a mistake. For the data in \ref{fig:balance}(e) this cost is minimised when $r_{\mbox{min}}= -2.60$. This gives a balance of $B(r_{\mbox{min}})=0.646$ and a precision of $C(r_{\mbox{min}})=0.545$ (compared to $C(r_b)=0.734$ at balance).  We could write, that "by tuning our algorithm to favour true positives we reduce the precision fro $73.4$\% at balance, to $54.5$\%". In this particular example, the precision is now at a level comparable to that in figures \ref{fig:balance} (c), (f) and (i). We might think twice before putting such an algorithm in to production.
 
 
-\subsection{Similarity to F1 score}
+\subsection{Relationship to F1 score}
 
 \label{sec:others}
 
-This section is a few notes about how $B(r)$ relates to some other measures of performance. To do this, I first break equation  $B(r)$ in to two components,
+In this section I derive exact relationships between $B(r)$, precision, recall and the F1-score. To do this, I first break equation  $B(r)$ in to two components,
 \begin{equation}
 B(r) = B_+(r) + B_-(r)  \label{eqn:Bpmdef} 
 \end{equation}
@@ -305,17 +305,42 @@ These terms are plotted in figure \ref{fig:Bplot2}. We now look at these two ter
 \label{fig:Bplot2}
 \end{figure}
 
-Equation $B_+(r)$ is the precision multiplied by the true positive rate (recall), divided by two. This is related to the F1-score which is defined as,
-\begin{equation}
-F_1(r) =  \frac{2 C(r) v(r)}{C(r) + v(r)}   \label{eq:F1}
-\end{equation}
-In figure \ref{fig:Bplot2} we see that $F_1$ reaches a maximum at roughly the same point as which $B_+(r)$ is maximized.  Figure \ref{fig:Bplot2} shows that the F1 score reaches a maximum at roughly the same point that $B(r)=1/2$. I have not derived the exact form of this relationship and it would be interesting to look at this in more detail, since F1 is seen as a standard test of model performance.
+Equation $B_+(r)$ is the precision multiplied by the true positive rate (recall), divided by two.
 
-The measure $B_-(r)$ is similar to the integral which gives the area under the Precision-Recall curve, which is
+\paragraph{An AUC for the labelled members.} To interpret $B_-(r)$, define
+\begin{equation}
+\alpha(r) = P(S_P > S_N \mid S_P > r, S_N > r) = \frac{\int_{t=r}^\infty f_N(t) v(t) dt}{u(r) v(r)}  \label{eq:alpha}
+\end{equation}
+which is the probability that a randomly chosen true positive scores higher than a randomly chosen false positive, when the threshold is $r$. The numerator is $P(S_P > S_N, S_N > r)$, since $S_P>S_N>r$ implies that $S_P>r$, and the denominator is $P(S_P>r)P(S_N>r)$. In other words, $\alpha(r)$ is the area under the curve computed using only those members labelled positive, with $\alpha(-\infty)=A$. Since $1-C(r) = N u(r)/(P v(r) + N u(r))$, equation \ref{eq:negcomponentB} becomes $B_-(r) = v(r)\, \alpha(r) \left(1 - C(r)\right)$, and thus
+\begin{equation}
+B(r) = v(r) \left( \frac{C(r)}{2} + \alpha(r) \left(1 - C(r)\right) \right).  \label{eq:Bexact}
+\end{equation}
+This equation has a simple interpretation. $B(r)$ is the average, over all members labelled positive, of the proportion of the positive class which scores higher than that member. For a true positive this proportion is, on average, $v(r)/2$; for a false positive it is, on average, $\alpha(r) v(r)$. These two averages are weighted by the proportion of labelled members that are, respectively, true positives, $C(r)$, and false positives, $1-C(r)$.
+
+\paragraph{Errors at the indistinguishability threshold.} It is useful to write equation \ref{eq:Bexact} in terms of the expected number of true positives, $TP = P v(r)$, false positives, $FP = N u(r)$, and false negatives, $FN = P (1 - v(r))$. Then $v(r) = TP/(TP+FN)$ and $C(r) = TP/(TP+FP)$, and setting $B(r_b)=1/2$ in equation \ref{eq:Bexact} gives
 \[
-\int_{t=-\infty}^{\infty}  C(t) f_P(t) dt = \int_{t=-\infty}^{\infty}  \frac{P v(t)}{P v(t) + N u(t)} f_P(t) dt
+\frac{TP}{TP+FN} \cdot \frac{TP/2 + \alpha FP}{TP+FP} = \frac{1}{2}
 \]
-The difference to $B_-(r)$, is that the integral includes the denominator. The term for $B_-(r)$ can also be thought of as a sort of $A(r)$, an AUC for those values with scores greater than $r$. Again, this needs to be looked at in more detail. 
+where $\alpha = \alpha(r_b)$. Multiplying out gives $TP^2 + 2 \alpha \, TP \cdot FP = (TP+FN)(TP+FP)$, which simplifies to $(2\alpha - 1)\, TP \cdot FP = FN \, (TP+FP)$, or
+\begin{equation}
+\frac{FN}{FP} = \left( 2 \alpha(r_b) - 1 \right) C(r_b) . \label{eq:FNFP}
+\end{equation}
+Equation \ref{eq:FNFP} has three consequences. First, since $FN \geq 0$, we must have $\alpha(r_b) \geq 1/2$: at the indistinguishability threshold, true positives outrank false positives at least as often as would be expected by chance. Second, since $\alpha(r_b) \leq 1$ and $C(r_b)<1$ whenever there are false positives, $FN < FP$. Thus $TP + FP > TP + FN = P$, i.e. more members are labelled positive than there are members of the positive class, and recall is larger than precision, $v(r_b) > C(r_b)$. In other words, $r_b$ always lies below the precision-recall break-even point, which is the threshold at which $FP=FN$ and precision equals recall. Third, recall and the F1-score at $r_b$ are determined by the precision and $\alpha(r_b)$ alone. Since $FN/TP = (FN/FP)(FP/TP) = (2\alpha - 1) C \cdot (1-C)/C = (2\alpha - 1)(1-C)$, we have
+\begin{equation}
+v(r_b) = \frac{1}{1 + (2\alpha-1)(1-C)} \mbox{ and } F_1(r_b) = \frac{2C}{1 + C + (2\alpha-1) C (1-C)}  \label{eq:F1atrb}
+\end{equation}
+where $C=C(r_b)$, $\alpha=\alpha(r_b)$ and the F1-score is defined as,
+\begin{equation}
+F_1(r) =  \frac{2 C(r) v(r)}{C(r) + v(r)} = \frac{2 TP}{2 TP + FP + FN} .  \label{eq:F1}
+\end{equation}
+
+\paragraph{The threshold which maximises F1.} Figure \ref{fig:Bplot2} shows that the F1-score reaches a maximum at roughly the same point that $B(r)=1/2$. To see whether this is exact, we write $F_1(r) = 2 P v(r) / (P v(r) + N u(r) + P)$ and differentiate with respect to $r$. Using $v'(r) = -f_P(r)$ and $u'(r) = -f_N(r)$, the derivative is zero when $f_P(r) (N u(r) + P) = N v(r) f_N(r)$. Rearranging, this condition is
+\begin{equation}
+\eta(r) = \frac{F_1(r)}{2}, \mbox{ where } \eta(r) = \frac{P f_P(r)}{P f_P(r) + N f_N(r)}  \label{eq:F1max}
+\end{equation}
+is the probability that a member with score exactly $r$ is in the positive class. This is a known result: the F1-score is maximised at the threshold at which the probability of being positive equals half of the maximal F1-score \cite{lipton2014optimal}. Equation \ref{eq:F1max} depends only on the densities of scores at the threshold itself. In contrast, the condition $B(r_b) = 1/2$ depends, through $\alpha(r)$, on the distribution of all scores above the threshold. The two thresholds are therefore not the same in general. In the examples in figure \ref{fig:Bplot2} they are close, but this is a property of these particular data sets rather than a general identity.
+
+A similar argument explains why the maxima of $F_1(r)$ and $B_+(r)$ are close. Let $s(r) = N f_N(r) / (P f_P(r))$ be the rate at which false positives are added, relative to true positives, as the threshold is lowered. Maximising $B_+(r) = TP^2/(2P(TP+FP))$ requires that $s(r) = 1 + 2FP/TP$, while maximising $F_1(r) = 2TP/(TP+FP+P)$ requires $s(r) = 1 + (FP+FN)/TP$. The two maxima thus coincide only if $FP = FN$ at that threshold, i.e. if the maximum lies exactly at the precision-recall break-even point.
 
 \section{Conclusions}
 

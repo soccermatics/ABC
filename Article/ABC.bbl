@@ -29,6 +29,12 @@ M.~Majnik and Z.~Bosni{\'c}, ``Roc analysis of classifiers in machine learning:
 Y.~Sasaki {\em et~al.}, ``The truth of the f-measure,'' {\em Teach tutor
   mater}, vol.~1, no.~5, pp.~1--5, 2007.
 
+\bibitem{lipton2014optimal}
+Z.~C. Lipton, C.~Elkan, and B.~Naryanaswamy, ``Optimal thresholding of
+  classifiers to maximize {F1} measure,'' in {\em Machine Learning and
+  Knowledge Discovery in Databases (ECML PKDD 2014)}, vol.~8725 of {\em Lecture
+  Notes in Computer Science}, pp.~225--239, Springer, 2014.
+
 \bibitem{schapire2003boosting}
 R.~E. Schapire, ``The boosting approach to machine learning: An overview,''
   {\em Nonlinear estimation and classification}, pp.~149--171, 2003.
