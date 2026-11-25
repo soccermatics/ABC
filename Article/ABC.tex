@@ -21,6 +21,7 @@
 \newcommand{\nb}[1]{\textcolor{red}{#1}}
 \urlstyle{rm}
 
+\newcommand{\prob}{\mathbb{P}}  % probability
 \newcommand{\labeltrue}{\textsc{like}\xspace}
 \newcommand{\labelfalse}{\textsc{dislike}\xspace}
 
@@ -81,19 +82,19 @@ To get warmed up, we now show that the area under the ROC curve (AUC) measures t
 
 To calculate this probability, we pick one member of the positive class at random and one member of the negative class at random and look to see which of them has the higher score. As a concrete example, imagine an algorithm is shown two images, one which contains a cat, another which does not. The task is to pick the image containing the cat. We call this probability 
 \[
-A = P(S_P>S_N)
+A = \prob(S_P>S_N)
 \]
 where $S_P$ is the score of a randomly chosen positive member and $S_N$ is the score of a randomly chosen negative member. The value of $A$ can be measured directly, simply by randomly picking pairs of members of negative and positive classes and testing which scores higher. The test outcome is then the proportion of cases in which the positive member receives a higher value than the negative member.
 
 We can also measure the paired comparison test over all our scores. Let $F_P(r)$ be the cumulative distribution of scores of the positive class, i.e. 
 \begin{equation}
-F_P(r) = P(S_P < r) = \int_{s=-\infty}^{r} f_P(s) ds \label{eq:ScorefPr}
+F_P(r) = \prob(S_P < r) = \int_{s=-\infty}^{r} f_P(s) ds \label{eq:ScorefPr}
 \end{equation}
 where $f_P(r)$ is thus the probability density function of $S_P$. Likewise, we let $F_N(r)$ to be the cumulative distribution of scores the negative class, i.e. 
 \begin{equation}
-F_N(r) = P(S_N < r) = \int_{s=-\infty}^{r} f_N(s) ds \label{eq:ScorenPr}
+F_N(r) = \prob(S_N < r) = \int_{s=-\infty}^{r} f_N(s) ds \label{eq:ScorenPr}
 \end{equation}
-The value $A=P(S_P>S_N)$ can be written as the double integral
+The value $A=\prob(S_P>S_N)$ can be written as the double integral
 \begin{equation}
 A = \int_{r=-\infty}^{\infty} \int_{s=r}^{\infty}  f_N(r) \cdot  f_P(s) ds dr  \label{eq:SPgreaterSN}
 \end{equation}
@@ -145,15 +146,15 @@ This is why we need to be very clear about what the AUC test tells us: it tells 
 
 We now change how we measure performance, by looking at how often a member of the positive class scored higher than a member that has been labelled positive. To do this, in the cat labelling problem, we first pick randomly from all images containing cats and denote the score of this image as $S_P$. Then, for a given threshold $r$, we choose randomly from all the images with that score or above, irrespective of whether or not they contain a cat. We denote this score of this image as $S_R$. We then calculate the probability 
 \[
-B(r) = P(S_P>S_R | S_R>r) 
+B(r) = \prob(S_P>S_R | S_R>r) 
 \]
 or, in words, the probability that a random member of the positive class scores higher than a random member of the class we have labelled as positive (i.e. has a score greater than $r$). 
 
-Unlike the paired comparison of negatives and positives we made for $A$, it is not immediately clear how this test will help us construct a performance metric. To gain some more intuition, let's think about what happens as we change the threshold $r$. When $r$ is very large then the positively labelled set will contain more positives than negatives, but very few members of either class. As a result $P(S_P>S_R | S_R>r)$ will go towards $0$. When $r$ is small (or negative), most images are labelled positive. Nearly all members of the positive class will be included in the positively labelled set, but so too will most members of the negative class. Neither of these two situations is desirable. In the latter, we will have a lot of false positive errors and very low precision: a high proportion of those labelled positive will actually be negative. In the former case, we will have a large proportion of false negatives but very high precision: most of those which are labelled positive are actually positive.
+Unlike the paired comparison of negatives and positives we made for $A$, it is not immediately clear how this test will help us construct a performance metric. To gain some more intuition, let's think about what happens as we change the threshold $r$. When $r$ is very large then the positively labelled set will contain more positives than negatives, but very few members of either class. As a result $\prob(S_P>S_R | S_R>r)$ will go towards $0$. When $r$ is small (or negative), most images are labelled positive. Nearly all members of the positive class will be included in the positively labelled set, but so too will most members of the negative class. Neither of these two situations is desirable. In the latter, we will have a lot of false positive errors and very low precision: a high proportion of those labelled positive will actually be negative. In the former case, we will have a large proportion of false negatives but very high precision: most of those which are labelled positive are actually positive.
 
 We suggest choosing $r_b$ such that
  \begin{equation}
-B(r_b) = P(S_P>S_R | S_R>r_b) = 1/2 \label{balanced}
+B(r_b) = \prob(S_P>S_R | S_R>r_b) = 1/2 \label{balanced}
 \end{equation}
 because this particular value of $r_b$ has a rather desirable property. It means that, as far as the classifier is concerned the images in the positive class are indistinguishable from those which we have labelled positive. If we pick a random member of the images we have classified as positive and a random member of the positives, these two images are equally likely to have the higher score. We can thus think of $r_b$ as being the threshold value at which the model cannot distinguish between true positives and labelled positives. The algorithm cannot distinguish reality from its own labelling. We thus refer to $r_b$ as the {\it indistinguishability threshold}. More precisely, the two sets are indistinguishable in the sense of {\it stochastic equality} \cite{vargha2000critique}: a randomly chosen member of either set is equally likely to have the higher score. Stochastic equality does not imply that the two sets have identical distributions of scores. For example, the members labelled positive could have a larger spread of scores than the members of the positive class, while still being equally likely to score higher.
 
@@ -177,7 +178,7 @@ which gives $r=0$ as the threshold. Looking again at the distribution of scores 
 
 The limitations of using equation \ref{standard2} to set a threshold are known, but often they are referred to as being ``caused by an unbalanced data set''. The implication is that too many members in the negative class have somehow misled us in to choosing a poor value of $r$. In our experience, students and even experienced practitioners, when confronted with this problem, either start to prune their data, removing `easy' members of the negative class, or oversample from the positive class in order to compensate. They might also draw an ROC curve and a Precision-Recall curve (see below) and try to justify, in an ad-hoc fashion, choosing a different value of the threshold $r$ on the basis of what they see in these curves.
 
-We would argue that it is not the data set that is imbalanced, but this way of looking at it that is wrong! Specifically, it is the arbitrary choice of $r=0$ that is imbalanced, because it lies a long way from the indistinguishability threshold.
+We would argue that it is not the data set that is imbalanced, but this way of looking at it that is wrong! Specifically, it is the arbitrary choice of $r=0$ that is imbalanced, because it lies a long way from the indistinguishability threshold. We now propose a measure, based on the indistinguishability threshold, that avoids the need for any "rebalancing" of the data set.
 
 
 \begin{figure}[tp]
@@ -193,12 +194,12 @@ We would argue that it is not the data set that is imbalanced, but this way of l
 
 \label{PIT}
 
-How often is our positive labelling correct when reality and labelling are indistinguishable? To answer this question, we define $C(r)$ to be the precision: the probability that an individual with a score greater than $r$ is in the positive class, i.e. $P(R = + | S_R > r)$ , or the probability that a positive labelling is made correctly.  Using Bayes law, we can rewrite precision in terms of false positive rate and true positive rate. Specifically,
+How often is our positive labelling correct when reality and labelling are indistinguishable? To answer this question, we define $C(r)$ to be the precision: the probability that an individual with a score greater than $r$ is in the positive class, i.e. $\prob(R = + | S_R > r)$ , or the probability that a positive labelling is made correctly.  Using Bayes law, we can rewrite precision in terms of false positive rate and true positive rate. Specifically,
 \begin{eqnarray*}
-C(r)  & = & P(R = + | S_R > r) \\
-& =  &\frac{P(S_R > r | R = + ) P(R = + )}{P(S_R > r | R = + ) P(R = + ) + P(S_R > r | R = - ) P(R = - )}
+C(r)  & = & \prob(R = + | S_R > r) \\
+& =  &\frac{\prob(S_R > r | R = + ) \prob(R = + )}{\prob(S_R > r | R = + ) \prob(R = + ) + \prob(S_R > r | R = - ) \prob(R = - )}
 \end{eqnarray*}
-In this case, $P(R = + ) = P/(P+N)$ is the proportion of individuals in the positive class and $P(R = - ) = N/(P+N)$ is proportion in the negative class. Substituting $v(r)=P(S_R > r | R = + )$ (true positive rate) and $u(r) = P(S_R > r | R = - )$  (false positive rate) gives
+In this case, $\prob(R = + ) = P/(P+N)$ is the proportion of individuals in the positive class and $\prob(R = - ) = N/(P+N)$ is proportion in the negative class. Substituting $v(r)=\prob(S_R > r | R = + )$ (true positive rate) and $u(r) = \prob(S_R > r | R = - )$  (false positive rate) gives
 \begin{equation}
 C(r) = \frac{P v(r)}{P v(r) + N u(r)} \label{precisionP}
 \end{equation}
@@ -309,9 +310,9 @@ Equation $B_+(r)$ is the precision multiplied by the true positive rate (recall)
 
 \paragraph{An AUC for the labelled members.} To interpret $B_-(r)$, define
 \begin{equation}
-\alpha(r) = P(S_P > S_N \mid S_P > r, S_N > r) = \frac{\int_{t=r}^\infty f_N(t) v(t) dt}{u(r) v(r)}  \label{eq:alpha}
+\alpha(r) = \prob(S_P > S_N \mid S_P > r, S_N > r) = \frac{\int_{t=r}^\infty f_N(t) v(t) dt}{u(r) v(r)}  \label{eq:alpha}
 \end{equation}
-which is the probability that a randomly chosen true positive scores higher than a randomly chosen false positive, when the threshold is $r$. The numerator is $P(S_P > S_N, S_N > r)$, since $S_P>S_N>r$ implies that $S_P>r$, and the denominator is $P(S_P>r)P(S_N>r)$. In other words, $\alpha(r)$ is the area under the curve computed using only those members labelled positive, with $\alpha(-\infty)=A$. Since $1-C(r) = N u(r)/(P v(r) + N u(r))$, equation \ref{eq:negcomponentB} becomes $B_-(r) = v(r)\, \alpha(r) \left(1 - C(r)\right)$, and thus
+which is the probability that a randomly chosen true positive scores higher than a randomly chosen false positive, when the threshold is $r$. The numerator is $\prob(S_P > S_N, S_N > r)$, since $S_P>S_N>r$ implies that $S_P>r$, and the denominator is $\prob(S_P>r)\prob(S_N>r)$. In other words, $\alpha(r)$ is the area under the curve computed using only those members labelled positive, with $\alpha(-\infty)=A$. Since $1-C(r) = N u(r)/(P v(r) + N u(r))$, equation \ref{eq:negcomponentB} becomes $B_-(r) = v(r)\, \alpha(r) \left(1 - C(r)\right)$, and thus
 \begin{equation}
 B(r) = v(r) \left( \frac{C(r)}{2} + \alpha(r) \left(1 - C(r)\right) \right).  \label{eq:Bexact}
 \end{equation}
@@ -387,21 +388,21 @@ Thanks to Daniel Gedon and Andre Teixeira for feedback.
 
 In this appendix we show how $B(r)$ can be calculated. As with $A$ the pairwise nature of the test means it is straightforward to implement a randomised version of $B(r)$. For each value of $r$ we sample, with or without replacement, $n$ members of the positive class. Then we sample $n$ members from the set labelled positive when the threshold is greater than $r$. Pairwise comparison of the scores of these two sets gives $B(r)$ . This method becomes less reliable for large values of $r$, since the size of the positive labelled class becomes small and all the comparisons will be made to a small number of positively labelled images. 
 
-Another way to calculate $B(r)$, following the AUC approach to estimating $A$, is by integration over the true positive rate, $v(r)$, and the false positive rate, $u(r)$. We now derive the appropriate integral. First, let $S_R$ be the score of a randomly chosen member of the data set and $S_P$ the score of a randomly chosen member of the positive class. The probability that $S_R$ is less than $S_P$, given that $S_R$ is greater than $r$, is then written as $P(S_R<S_P | S_R>r)$. It is this probability we call $B(r)$.
+Another way to calculate $B(r)$, following the AUC approach to estimating $A$, is by integration over the true positive rate, $v(r)$, and the false positive rate, $u(r)$. We now derive the appropriate integral. First, let $S_R$ be the score of a randomly chosen member of the data set and $S_P$ the score of a randomly chosen member of the positive class. The probability that $S_R$ is less than $S_P$, given that $S_R$ is greater than $r$, is then written as $\prob(S_R<S_P | S_R>r)$. It is this probability we call $B(r)$.
 
 Our approach to finding an expression for $B(r)$ is to look separately at the case where $S_R$ is from a negative member and a positive member. We can use the law of total probability to give 
 \begin{eqnarray}
-B(r) &= &P(S_R < S_P | S_R>r) \nonumber \\
-& = & P(S_R < S_P | S_{R} > r , R = + ) \cdot P( R = + | S_R > r )  \nonumber \\
-&&  + P(S_R < S_P | S_R>r, R= - ) \cdot P( R = - | S_R>r ) \label{eqn:totprobstep} 
+B(r) &= &\prob(S_R < S_P | S_R>r) \nonumber \\
+& = & \prob(S_R < S_P | S_{R} > r , R = + ) \cdot \prob( R = + | S_R > r )  \nonumber \\
+&&  + \prob(S_R < S_P | S_R>r, R= - ) \cdot \prob( R = - | S_R>r ) \label{eqn:totprobstep} 
 \end{eqnarray}
 where $+$ and $-$ are respectively the events that the chosen individuals are in the positive and negative classes. If an individual is chosen at random then 
 \begin{equation}
-P( R = + | S_R>r ) =   \frac{P v(r)}{P v(r) + N u(r)}  \mbox{ and }  P( R = - | S_R>r ) =   \frac{N u(r)}{P v(r) + N u(r)} \label{eqn:probbe}
+\prob( R = + | S_R>r ) =   \frac{P v(r)}{P v(r) + N u(r)}  \mbox{ and }  \prob( R = - | S_R>r ) =   \frac{N u(r)}{P v(r) + N u(r)} \label{eqn:probbe}
 \end{equation}
 Furthermore,
 \begin{eqnarray}
-P(S_R < S_P | S_{R} > r ,  R = +   ) & = & \frac{P(S_R < S_P \cap S_{R} > r ,  R = +  )}{P(S_{R} > r ,  R = +  )} \nonumber \\
+\prob(S_R < S_P | S_{R} > r ,  R = +   ) & = & \frac{\prob(S_R < S_P \cap S_{R} > r ,  R = +  )}{\prob(S_{R} > r ,  R = +  )} \nonumber \\
 & = & \frac{\int_{t=r}^\infty \int_{s=t}^\infty f_P(t) f_P(s) ds dt}{\int_{t=r}^\infty f_P(t) dt} \nonumber \\
 & = & \frac{\int_{t=r}^\infty f_P(t) v(t) dt}{v(r)} \label{eqn:posstep}
 \end{eqnarray}
@@ -411,11 +412,11 @@ Since the derivative of $v(r)$ is equal to $-f_P(r)$ we can change variable to $
 \end{eqnarray}
 and thus simplify to get
 \begin{equation}
-P(S_R < S_P | S_{R} > r ,  R = +   ) = \frac{v(r)}{2} \label{eqn:posstepfinal}
+\prob(S_R < S_P | S_{R} > r ,  R = +   ) = \frac{v(r)}{2} \label{eqn:posstepfinal}
 \end{equation}
 We can follow similar steps for the case that $R$ is negative to get,
 \begin{equation}
-P(S_R < S_P | S_{R} > r ,  R = -   ) = \frac{\int_{t=r}^\infty f_N(t) v(t) dt}{u(r)}  \label{eqn:negstep}
+\prob(S_R < S_P | S_{R} > r ,  R = -   ) = \frac{\int_{t=r}^\infty f_N(t) v(t) dt}{u(r)}  \label{eqn:negstep}
 \end{equation}
 Substituting \ref{eqn:probbe}, \ref{eqn:posstepfinal} and \ref{eqn:negstep} in to equation \ref{eqn:totprobstep} gives equation \ref{eqn:Bdef} in the section {\it Relationship to F1 score}. This equation is plotted as the black line in figure \ref{fig:Bplot}. As $r \rightarrow -\infty$, $v(r)$ and $u(r)$ tend to one and $\int_{t=r}^\infty f_N(t) v(t) dt$ tends to $A$ (equation \ref{eq:SPgreaterSN2}), so that
 \[
