@@ -66,6 +66,7 @@ To measure the performance of your algorithm, simply calculate the proportion of
 There already exist a number of ways of evaluating classification algorithms. Wikipedia lists a somewhat bewildering array of 17 tests, with a total of 27 different names, for such problems.  The most commonly used method is the area under the Receiver-Operator Curve, commonly referred to as AUC \cite{obuchowski2018receiver, vanderlooy2008critical, majnik2013roc}. Another popular choice is the F1-score \cite{sasaki2007truth}, which seeks to avoid a problem inherent in AUC when applied to unbalanced data \cite{smlbook}. In this paper, I argue that  $C(r_b)$ provides an easy to understand alternative to  F1-score, which avoids many of the problems inherent to AUC.
 
 \section{Data set}
+\label{sec:data}
 
 \begin{figure}[tp]
 \centering
@@ -82,6 +83,7 @@ The choice of these data sets is to give a range of difficulty levels. The data 
 
 
 \subsection{Area under the curve} 
+\label{sec:AUC}
 
 Let's start by asking the following question about our data: how often does a member of the positive class score higher than a member of the negative class? 
 
@@ -341,6 +343,38 @@ F_1(r) =  \frac{2 C(r) v(r)}{C(r) + v(r)} = \frac{2 TP}{2 TP + FP + FN} .  \labe
 is the probability that a member with score exactly $r$ is in the positive class. This is a known result: the F1-score is maximised at the threshold at which the probability of being positive equals half of the maximal F1-score \cite{lipton2014optimal}. Equation \ref{eq:F1max} depends only on the densities of scores at the threshold itself. In contrast, the condition $B(r_b) = 1/2$ depends, through $\alpha(r)$, on the distribution of all scores above the threshold. The two thresholds are therefore not the same in general. In the examples in figure \ref{fig:Bplot2} they are close, but this is a property of these particular data sets rather than a general identity.
 
 A similar argument explains why the maxima of $F_1(r)$ and $B_+(r)$ are close. Let $s(r) = N f_N(r) / (P f_P(r))$ be the rate at which false positives are added, relative to true positives, as the threshold is lowered. Maximising $B_+(r) = TP^2/(2P(TP+FP))$ requires that $s(r) = 1 + 2FP/TP$, while maximising $F_1(r) = 2TP/(TP+FP+P)$ requires $s(r) = 1 + (FP+FN)/TP$. The two maxima thus coincide only if $FP = FN$ at that threshold, i.e. if the maximum lies exactly at the precision-recall break-even point.
+
+\subsection{Two benchmark data sets}
+
+\label{sec:benchmarks}
+
+To see how the measure behaves on real data, I applied it to two standard benchmark data sets, both obtained from OpenML \cite{vanschoren2013openml}. The Adult data set \cite{becker1996adult} contains 48,842 individuals from the 1994 US census, of whom 24\% have an annual income above \$50,000 (the positive class). The Mammography data set \cite{woods1993comparative} contains 11,183 regions of digitised mammograms, of which 260 (2.3\%) contain microcalcifications. For each data set, I trained a logistic regression and a gradient boosting classifier on a randomly chosen half of the data (stratified by class) and calculated all measures exactly from the scores on the other half. Confidence intervals were obtained by resampling the test set 1000 times. The code is available in the repository given in section \ref{sec:data}. The results are shown in table \ref{tab:benchmarks}.
+
+\begin{table}[tp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{lrrcccccc}
+\toprule
+Model & $P$ & Labelled & $C(r_b)$ & $v(r_b)$ & PRBEP & $F_1(r_b)$ & max $F_1$ & $A$ \\
+\midrule
+\multicolumn{9}{l}{\it Adult} \\
+LR & 5844 & 8305 & 0.58 (0.57--0.59) & 0.83 & 0.68 & 0.69 & 0.69 & 0.91 \\
+GB & 5844 & 7532 & 0.64 (0.63--0.65) & 0.83 & 0.72 & 0.72 & 0.73 & 0.93 \\
+\multicolumn{9}{l}{\it Mammography} \\
+LR & 130 & 260 & 0.35 (0.25--0.45) & 0.71 & 0.56 & 0.47 & 0.60 & 0.92 \\
+GB & 130 & 194 & 0.49 (0.36--0.59) & 0.72 & 0.65 & 0.58 & 0.69 & 0.92 \\
+\bottomrule
+\end{tabular}
+\caption{Performance on the test half of two benchmark data sets, for logistic regression (LR) and gradient boosting (GB). $P$ is the number of positives in the test set and `Labelled' the number labelled positive at the indistinguishability threshold $r_b$. $C(r_b)$ is given with a 95\% bootstrap interval. PRBEP is the precision (equal to the recall) at the precision-recall break-even point.}
+\label{tab:benchmarks}
+\end{table}
+
+The measure can be reported in the same plain language as in the rest of this article. For gradient boosting on the Mammography data, for example: {\it when the algorithm is tuned so that the regions it flags cannot be distinguished from the regions that really contain microcalcifications, 49\% of the flagged regions contain microcalcifications} (95\% confidence interval 36--59\%), and 72\% of the regions containing microcalcifications are flagged.
+
+The results confirm the properties derived in section \ref{sec:others}. In all four cases more members are labelled positive at $r_b$ than there are members of the positive class, so that recall is larger than precision and $C(r_b)$ is below the precision at the break-even point. For logistic regression on the Mammography data, twice as many regions are labelled positive as there are positives. The ratio $FN/FP$ agreed with $(2\alpha(r_b)-1)C(r_b)$ (equation \ref{eq:FNFP}) to within $0.006$ in all four cases. On the Adult data, the F1-score at $r_b$ is within 0.005 of its maximum, but on the Mammography data it is 0.11--0.13 lower, illustrating that the indistinguishability threshold and the F1-optimal threshold need not coincide.
+
+The data also illustrate the limitation of $A$ discussed in section \ref{sec:AUC}. Removing the half of the test negatives with the lowest scores, i.e. the easiest cases, reduced $A$ by between 0.04 and 0.09 but left $C(r_b)$ unchanged, since none of these members are labelled positive. More importantly, on the Mammography data the two classifiers have almost identical $A$ (difference $-0.003$, 95\% interval $-0.044$ to $0.038$, from resampling both classifiers on the same test sets), while $C(r_b)$ is 0.13 higher for gradient boosting (95\% interval 0.06 to 0.21). The break-even precision and the F1-score agree that gradient boosting is the better classifier. The area under the curve is dominated by the ranking of the many negatives with low scores, which says little about how well the classifiers find microcalcifications.
 
 \section{Conclusions}
 

@@ -12,6 +12,8 @@ There exist a wide range of single number metrics for assessing performance of c
 
 `ABC.py` creates the rest of the figures in the article and saves them to `Article/Figures/`. It also prints the values of $C(r_b)$ quoted in the text. Set `include_other_curves=True` to produce `Bplot2.pdf` (figure 6) instead of `Bplot.pdf`. It requires `numpy`, `scikit-learn` and `matplotlib`.
 
+`benchmarks.py` produces the results in section 3.7 (table 1): logistic regression and gradient boosting on the Adult and Mammography data sets, downloaded from OpenML on first run. It also requires `pandas`.
+
 ## Article
 
 The LaTeX source, bibliography and figures are in `Article/`, along with the compiled article, [`Article/ABC.pdf`](Article/ABC.pdf). `Article.zip` contains the source files.
@@ -19,6 +21,8 @@ The LaTeX source, bibliography and figures are in `Article/`, along with the com
 ### Changes since the arXiv version (v1, November 2023)
 
 Section 3.6 (now *Relationship to F1 score*) replaces the earlier informal comparison with exact results. $B(r)$ decomposes into precision, recall and an AUC computed on the labelled members only. At the indistinguishability threshold, FN/FP equals $(2\alpha-1)C$. As a result, $r_b$ always lies below the precision–recall break-even point, and recall and F1 at $r_b$ follow from precision and $\alpha$. The section also shows why the F1-maximising threshold coincides with $r_b$ only in special cases.
+
+Section 3.7 (new) applies the measure to two benchmark data sets. On the Mammography data, the two classifiers have the same AUC, but precision at the indistinguishability threshold is 0.13 higher for gradient boosting (95% CI 0.06 to 0.21).
 
 The version here also corrects the following errors in the arXiv version.
 
