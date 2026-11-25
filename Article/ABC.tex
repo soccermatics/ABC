@@ -44,7 +44,7 @@
 \maketitle
 
 \begin{abstract}
-Performance metrics are more useful if they can be stated in words. For example, the area under the ROC curve (AUC) is the probability that a randomly chosen image containing a tumour scores higher than a randomly chosen image without one. But once stated this way, we realise that AUC rarely answers the question practitioners want to know the answer to. It also becomes clear that adding tumour-free images that are easy to classify pushes the AUC towards one. We propose a metric that answers the question we usually want answered: when the algorithm is tuned to a threshold so that it can no longer distinguish the images it labels as tumours from the images that really contain tumours, how often does an image labelled as a tumour actually contain one? Unlike AUC, this performance measure is unaffected by adding easy cases and, unlike the commonly used F1-score, its value can be explained directly in words. We derive exact relationships with precision, recall and F1, showing that at the indistinguishability threshold (which we define) more images are always labelled as tumours than there are tumours, so that recall exceeds precision. We also show that the threshold generally differs from the one that maximises F1. On a benchmark data set of mammograms, two classifiers with the same AUC differ by 13 percentage points in precision at the indistinguishability threshold. We discuss how our measure can help with clearer communication about model performance.
+Performance metrics are more useful if they can be stated in words. For example, the area under the ROC curve (AUC) is the probability that a randomly chosen image containing a tumour scores higher than a randomly chosen image without one. But once stated this way, we realise that AUC rarely answers the question practitioners want to know the answer to. It also becomes clear that adding tumour-free images that are easy to classify pushes the AUC towards one. We propose a metric that answers the question we usually want answered: when the algorithm is tuned to a threshold so that it can no longer distinguish the images it labels as tumours from the images that really contain tumours, how often does an image labelled as a tumour actually contain one? Unlike AUC, this performance measure (which we call precision at the indistinguishability threshold) is unaffected by adding easy cases and, unlike the commonly used F1-score, its value can be explained directly in words. We derive exact relationships between our measure and  precision, recall and F1. We also show that the indistginguishability threshold generally differs from the one that maximises F1. On a benchmark data set of mammograms, two classifiers with the same AUC differ by 13 percentage points in precision at the indistinguishability threshold. We discuss how our measure can help with clearer communication about model performance.
 \end{abstract}
 
 \section*{Introduction}
@@ -67,7 +67,9 @@ There already exist a number of ways of evaluating classification algorithms. Wi
 
 Another popular choice is the F1-score \cite{sasaki2007truth}, which seeks to avoid a problem inherent in AUC when applied to unbalanced data \cite{smlbook}. Unlike AUC, the F1-score has no simple interpretation in words. Hand and Christen showed that it is a weighted arithmetic mean of precision and recall in which the weights depend on the classifier being evaluated, rather than on the problem \cite{hand2018note}, and Hand, Christen and Kirielle proposed a transformation of it, F*, with a more direct interpretation \cite{hand2021f}.
 
-Measures such as precision and the F1-score are calculated at a particular threshold, so their values depend on how that threshold is chosen. Common choices include the threshold which maximises the F1-score \cite{lipton2014optimal, koyejo2014consistent}; the threshold at which precision equals recall, known as the break-even point or R-precision \cite{manning2008introduction}; the threshold which maximises Youden's index, the difference between the true and false positive rates \cite{youden1950index}; and, when the costs of the two types of error are known, the threshold which minimises the expected cost \cite{elkan2001foundations}. In the quantification literature, which aims to estimate the number of members of each class, thresholds are also chosen by simple rules, such as setting the true positive rate to one half \cite{forman2008quantifying}. Hern\'andez-Orallo, Flach and Ferri showed that many performance measures can be understood as the combination of a method for choosing a threshold and a measure of loss at that threshold \cite{hernandez2012unified}. In this paper, we propose a new method for choosing a threshold, the indistinguishability threshold, and argue that precision at this threshold, $C(r_b)$, provides an easy to understand alternative to the F1-score, which avoids many of the problems inherent to AUC.
+Measures such as precision and the F1-score are calculated at a particular threshold, so their values depend on how that threshold is chosen. Common choices include the threshold which maximises the F1-score \cite{lipton2014optimal, koyejo2014consistent}; the threshold at which precision equals recall, known as the break-even point or R-precision \cite{manning2008introduction}; the threshold which maximises Youden's index, the difference between the true and false positive rates \cite{youden1950index}; and, when the costs of the two types of error are known, the threshold which minimises the expected cost \cite{elkan2001foundations}. In the quantification literature, which aims to estimate the number of members of each class, thresholds are also chosen by simple rules, such as setting the true positive rate to one half \cite{forman2008quantifying}. Hern\'andez-Orallo, Flach and Ferri showed that many performance measures can be understood as the combination of a method for choosing a threshold and a measure of loss at that threshold \cite{hernandez2012unified}. 
+
+In this paper, we propose a new method for choosing a threshold --- the one outlined above and presented in more detail below --- and argue that precision at this threshold, $C(r_b)$, provides an easy to understand alternative to the F1-score, which avoids many of the problems inherent to AUC, but remains easy to explain in words.
 
 \section*{Results} 
 
@@ -75,7 +77,7 @@ Measures such as precision and the F1-score are calculated at a particular thres
 \subsection*{Area under the curve} 
 \label{sec:AUC}
 
-We now show that the area under the ROC curve (AUC) measures the probability that a member of the positive class scores higher than a member of the negative class. This has been known since Bamber \cite{bamber1975area}, and was made widely known by Hanley and McNeil \cite{hanley1982meaning}. We retell it here since the argument, which compares the scores of randomly chosen pairs of members, is the same one we use to construct a new measure in the sections that follow.
+To get warmed up, we now show that the area under the ROC curve (AUC) measures the probability that a member of the positive class scores higher than a member of the negative class. This has been known since Bamber \cite{bamber1975area}, and was made widely known by Hanley and McNeil \cite{hanley1982meaning}. We retell it here since the argument, which compares the scores of randomly chosen pairs of members, is the same one we use to construct a new measure in the sections that follow.
 
 To calculate this probability, we pick one member of the positive class at random and one member of the negative class at random and look to see which of them has the higher score. As a concrete example, imagine an algorithm is shown two images, one which contains a cat, another which does not. The task is to pick the image containing the cat. We call this probability 
 \[
@@ -105,11 +107,15 @@ We can also use this formulation to derive the equivalence between the $A$ test 
 \[
 A  =  \int_{r=-\infty}^{\infty} v(r) f_N(r) dr  
 \]
-which by change of variable gives
+To change variable, write $x$ for a false positive rate and let
+\[
+\mathrm{ROC}(x) = v\left(u^{-1}(x)\right)
+\]
+be the true positive rate at the threshold at which the false positive rate is $x$, where $u^{-1}$ is the inverse of the function $u(r)$ (we assume that $u(r)$ is strictly decreasing, so that this inverse exists). The function $\mathrm{ROC}(x)$ is the ROC curve. Setting $x = u(r)$, so that $dx = -f_N(r)\, dr$ and $x$ decreases from one to zero as $r$ increases, gives
 \begin{equation}
-A  = \int_{u=0}^{1} v \left( u^{-1}(u) \right) du  \label{eq:AUCdef}
+A  = \int_{x=0}^{1} \mathrm{ROC}(x)\, dx . \label{eq:AUCdef}
 \end{equation}
-where $u^{-1}$ denotes the inverse of the function $u(r)$, so that $v(u^{-1}(u))$ is the true positive rate at the threshold where the false positive rate is $u$. Thus $A$ is also the area under the ROC curve (which is defined by the right hand side of equation \ref{eq:AUCdef}).
+Thus $A$ is also the area under the ROC curve.
 
 \begin{figure}[tp]
 \centering
