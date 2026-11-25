@@ -47,7 +47,7 @@
 A good performance metric can be stated in words. The area under the ROC curve (AUC) is the probability that a randomly chosen image of a cat scores higher than a randomly chosen image without one. But this is rarely the question we face in practice, and adding images that are easy to reject pushes it towards one. I propose a metric that answers the question we usually want answered: when the algorithm is tuned so that it can no longer distinguish the images it labels as cats from the images that really contain cats, how often does an image labelled as a cat actually contain one? To construct it, the decision threshold is first set so that a randomly chosen labelled image and a randomly chosen real cat are equally likely to have the higher score. The metric is then the precision at this threshold, which I call {\it precision at the indistinguishability threshold}. Unlike AUC, it is unaffected by adding easy cases and, unlike the F1-score, its value can be explained directly in words. I derive exact relationships with precision, recall and F1, showing that at this threshold more images are always labelled as cats than there are cats, so that recall exceeds precision, and that the threshold generally differs from the one that maximises F1. On a benchmark data set of mammograms, two classifiers with the same AUC differ by 13 percentage points in precision at the indistinguishability threshold.
 \end{abstract}
 
-\section{Introduction}
+\section*{Introduction}
 
 Imagine you have created an algorithm (a machine learning model) that assigns a score, predicting whether an entity belongs to one of two classes (positive and negative). For example, the input might be a picture and the output whether or not the picture contains a cat. The scores are larger if your algorithm evaluates the object as more likely to belong to the positive class (i.e if it labels the image as more likely to contain a cat). Such a scoring system explicitly underlies, for example, logistic regression, the output of a neural network and discriminant analysis \cite{smlbook}. Other, non-parametric machine learning methods, such as $k$-nearest neighbours \cite{fix1989discriminatory}, don't have an explicit score, but often have a parameter (e.g. $k$) which can be tuned in a way that mimics a threshold. 
 
@@ -65,24 +65,10 @@ To measure the performance of your algorithm, simply calculate the proportion of
 
 There already exist a number of ways of evaluating classification algorithms. Wikipedia lists a somewhat bewildering array of 17 tests, with a total of 27 different names, for such problems.  The most commonly used method is the area under the Receiver-Operator Curve, commonly referred to as AUC \cite{obuchowski2018receiver, vanderlooy2008critical, majnik2013roc}. Another popular choice is the F1-score \cite{sasaki2007truth}, which seeks to avoid a problem inherent in AUC when applied to unbalanced data \cite{smlbook}. In this paper, I argue that  $C(r_b)$ provides an easy to understand alternative to  F1-score, which avoids many of the problems inherent to AUC.
 
-\section{Data set}
-\label{sec:data}
-
-\begin{figure}[tp]
-\centering
-\includegraphics[scale=1]{Figures/Distribution.pdf}
-\caption{The score distributions for the nine example data sets we look at here. Green are members of the negative class, yellow members of the positive class. The dotted line shows $r_b$, the solution $B(r)=1/2$ (see equation \ref{balanced})} \label{fig:Distribution}
-\end{figure}
-
-I use nine artificial data sets, as shown in figure \ref{fig:Distribution}. The positive class ($Y_i=1$) is created by first generating 1000 input values, $X_i$, with a mean $m_p=10$ and standard deviation $\sigma_p=2$. Similarly, the negative class ($Y_i=-1$) consists of 1000 `difficult' data points with values, $X_i$, which have mean scores (a,d,g) $m_n=5$; (b,e,h) $m_n=7$; (c,f,i) $m_n=9$ and (in all cases) standard deviation $\sigma_n=2$, along with (a,b,c) 100; (d,e,f) 1000; (g,h,i) 10000 `easy' data points, $X_i$, with mean 2 and standard deviation 2.  I then performed logistic regression on $X_i$ to predict $Y_i$ and calculated the log-likelihood for every individual point. These log-likelihoods are taken to be the scores, $S_i$, output by the model and are plotted in figure \ref{fig:Distribution}. 
-
-The choice of these data sets is to give a range of difficulty levels. The data in the left column correspond to relatively easy classification tasks. The overlap between the green (negative) and yellow (positive) is small. The data in the right column is much more difficult, with a large overlap in scores for negative and positive. The datasets at the bottom include a large number of `easy' to classify negative values, but the size of the overlap is only slightly increased over the datasets at the top. The data generation method and the code are available at: \href{https://github.com/soccermatics/ABC.git}{https://github.com/soccermatics/ABC.git}. 
+\section*{Results} 
 
 
-\section{Results} 
-
-
-\subsection{Area under the curve} 
+\subsection*{Area under the curve} 
 \label{sec:AUC}
 
 Let's start by asking the following question about our data: how often does a member of the positive class score higher than a member of the negative class? 
@@ -125,6 +111,16 @@ where $u^{-1}(r)$ denotes the inverse of $u(r)$. Thus $A$ is also the area under
 
 \begin{figure}[tp]
 \centering
+\includegraphics[scale=1]{Figures/Distribution.pdf}
+\caption{The score distributions for the nine example data sets we look at here. Green are members of the negative class, yellow members of the positive class. The dotted line shows $r_b$, the solution $B(r)=1/2$ (see equation \ref{balanced})} \label{fig:Distribution}
+\end{figure}
+
+To see how $A$, and the measures introduced below, behave in practice, I use nine artificial data sets, shown in figure \ref{fig:Distribution}. The positive class ($Y_i=1$) is created by first generating 1000 input values, $X_i$, with a mean $m_p=10$ and standard deviation $\sigma_p=2$. Similarly, the negative class ($Y_i=-1$) consists of 1000 `difficult' data points with values, $X_i$, which have mean scores (a,d,g) $m_n=5$; (b,e,h) $m_n=7$; (c,f,i) $m_n=9$ and (in all cases) standard deviation $\sigma_n=2$, along with (a,b,c) 100; (d,e,f) 1000; (g,h,i) 10000 `easy' data points, $X_i$, with mean 2 and standard deviation 2.  I then performed logistic regression on $X_i$ to predict $Y_i$ and calculated the log-likelihood for every individual point. These log-likelihoods are taken to be the scores, $S_i$, output by the model and are plotted in figure \ref{fig:Distribution}. 
+
+The choice of these data sets is to give a range of difficulty levels. The data in the left column correspond to relatively easy classification tasks. The overlap between the green (negative) and yellow (positive) is small. The data in the right column is much more difficult, with a large overlap in scores for negative and positive. The datasets at the bottom include a large number of `easy' to classify negative values, but the size of the overlap is only slightly increased over the datasets at the top. The data generation method and the code are available at: \href{https://github.com/soccermatics/ABC.git}{https://github.com/soccermatics/ABC.git}.
+
+\begin{figure}[tp]
+\centering
 \includegraphics[scale=1]{Figures/AUC.pdf}
 \caption{The area under the curve for each of the scores in figure \ref{fig:Distribution}} \label{fig:AUC}
 \end{figure}
@@ -135,7 +131,7 @@ These examples illustrate both the power and the limitation of $A$ as a measure.
 
 This is why we need to be very clear about what the AUC test tells us: it tells us that if we pick one member of the positive class at random it has probability $A$ of having a higher score than one member of the negative class chosen at random. When there are a lot more 'easy'  to classify members of the negative class then a high value of $A$ is not surprising: most of the time we will randomly pick one of those members. Thus in figure \ref{fig:AUC}i  an $A$ close to one tells us very little about how well our algorithm can distinguish more difficult cases. 
 
-\subsection{Indistinguishability threshold}
+\subsection*{Indistinguishability threshold}
 
 We now look at how often a member of the positive class scored higher than a member that has been labelled positive. To do this, we pick a random member of the positive class and we compare its score to the score of a random individual that has been labelled (predicted) positive. For example, in the cat labelling problem, we first pick randomly from all images containing cats and denote the score of this image as $S_P$. Then, for a given threshold $r$, we choose randomly from all the images with that score or above, irrespective of whether or not they contain a cat. We denote this score of this image as $S_R$. We then calculate the probability 
 \[
@@ -182,10 +178,10 @@ While both of the two measures --- $A$ and $B(r)$ --- that we have looked at so 
 \label{fig:Bplot}
 \end{figure}
 
-Neither $r_b$ nor $B(r)$ provide a measure of model performance, like $A$ does. Instead they are both measurements around which we can organise a rigorous evaluation of our model. We will look at how $B(r)$ can be used to construct such a measure in section \ref{PIT}. In this next section, which can be skipped by readers who just want to know about the performance measure, we look at some properties of $B(r)$.
+Neither $r_b$ nor $B(r)$ provide a measure of model performance, like $A$ does. Instead they are both measurements around which we can organise a rigorous evaluation of our model. We will look at how $B(r)$ can be used to construct such a measure in the section {\it Precision at the indistinguishability threshold}. In this next section, which can be skipped by readers who just want to know about the performance measure, we look at some properties of $B(r)$.
 
 
-\subsection{Properties and implementation of $B(r)$}
+\subsection*{Properties and implementation of $B(r)$}
 
 As with $A$ the pairwise nature of the test means it is straightforward to implement a randomised version of $B(r)$. For each value of $r$ we sample, with or without replacement, $n$ members of the positive class. Then we sample $n$ members from the set labelled positive when the threshold is greater than $r$. Pairwise comparison of the scores of these two sets gives $B(r)$ . This method becomes less reliable for large values of $r$, since the size of the positive labelled class becomes small and all the comparisons will be made to a small number of positively labelled images. 
 
@@ -228,9 +224,9 @@ This equation is plotted as the black line in figure \ref{fig:Bplot}. We see tha
 \[
 B(-\infty) = \frac{P/2 + N A}{N + P} 
 \]
-and decreases to zero as $r$ increases, so that $B(\infty) = 0$. The value $r_b$, the solution $B(r_b)=1/2$, is identified as the point in figure \ref{fig:Bplot} where $B(r)$ crosses the dotted line at $1/2$. This is also the value of $r_b$ plotted as the dotted line in figure \ref{fig:Bplot}. We will look in more detail at the function $B(r)$ in more detail in section \ref{sec:others} and compare it to other measures. 
+and decreases to zero as $r$ increases, so that $B(\infty) = 0$. The value $r_b$, the solution $B(r_b)=1/2$, is identified as the point in figure \ref{fig:Bplot} where $B(r)$ crosses the dotted line at $1/2$. This is also the value of $r_b$ plotted as the dotted line in figure \ref{fig:Bplot}. We will look in more detail at the function $B(r)$ in more detail in the section {\it Relationship to F1 score} and compare it to other measures. 
 
-\subsection{Precision at the indistinguishability threshold}
+\subsection*{Precision at the indistinguishability threshold}
 
 \label{PIT}
 
@@ -247,10 +243,10 @@ When $N$ is much larger than $P$ then $v(r)$ has to be significantly larger than
 
 I propose measuring precision specifically with a value of $r=r_b$, i.e. for a threshold whereby data classified as positive cannot be distinguished from data which truly is positive, i.e. we calculate $C(r_b)$. Evaluating this for the data in figure \ref{fig:Distribution} (a), (d) and (g) we get $C(r_b) \approx  0.87$. This could be considered a reasonably good performance: 87\% of the pictures the algorithm says are cats are in fact cats. For figure \ref{fig:Distribution}  (b), (e) and (h) we get $C(r_b) \approx 0.70$. This is not a great performance, but could be useable in certain applications: 70\% of the pictures the algorithm says are cats are in fact cats. Finally, for the data in figure \ref{fig:Distribution} (c), (f) and (i) we get $C(r_b) \approx  0.53$. This is poor performance, and is probably not very useful in most applications: only 53\% of the pictures the algorithm says are cats are in fact cats.
 
-We can now see why $C(r_b)$ is preferable measure of performance over $A$. When we calculated $A$, the value was highly dependent on the number of `easy' cases. This is not the case with $C(r_b)$. By evaluating precision when the algorithm cannot distinguish reality from its own labelling, we obtain a measure of performance that doesn't depend on the number of `easy' cases. The choice of $r_b$ is theoretically motivated (in the previous section) and gives reasonable results. In section \ref{sec:others} we will compare $C(r_b)$ to other known metrics for measuring performance, but before we do this, we look at how we might be flexible about our choice of $r$. 
+We can now see why $C(r_b)$ is preferable measure of performance over $A$. When we calculated $A$, the value was highly dependent on the number of `easy' cases. This is not the case with $C(r_b)$. By evaluating precision when the algorithm cannot distinguish reality from its own labelling, we obtain a measure of performance that doesn't depend on the number of `easy' cases. The choice of $r_b$ is theoretically motivated (in the previous section) and gives reasonable results. In the section {\it Relationship to F1 score} we will compare $C(r_b)$ to other known metrics for measuring performance, but before we do this, we look at how we might be flexible about our choice of $r$. 
 
 
-\subsection{Tuning false positive and true positive rates}
+\subsection*{Tuning false positive and true positive rates}
 
 There are two further questions we might ask. 
 \begin{enumerate}
@@ -283,7 +279,7 @@ Figure \ref{fig:balance} shows $C(r)$ (black line) plotted against $r$ for our n
 %This is similar to the idea of bookmaker informedness \cite{powers2003precision}. It is the cost of making a mistake. For the data in \ref{fig:balance}(e) this cost is minimised when $r_{\mbox{min}}= -2.60$. This gives a balance of $B(r_{\mbox{min}})=0.646$ and a precision of $C(r_{\mbox{min}})=0.545$ (compared to $C(r_b)=0.734$ at balance).  We could write, that "by tuning our algorithm to favour true positives we reduce the precision fro $73.4$\% at balance, to $54.5$\%". In this particular example, the precision is now at a level comparable to that in figures \ref{fig:balance} (c), (f) and (i). We might think twice before putting such an algorithm in to production.
 
 
-\subsection{Relationship to F1 score}
+\subsection*{Relationship to F1 score}
 
 \label{sec:others}
 
@@ -346,13 +342,13 @@ is the probability that a member with score exactly $r$ is in the positive class
 
 A similar argument explains why the maxima of $F_1(r)$ and $B_+(r)$ are close. Let $s(r) = N f_N(r) / (P f_P(r))$ be the rate at which false positives are added, relative to true positives, as the threshold is lowered. Maximising $B_+(r) = TP^2/(2P(TP+FP))$ requires that $s(r) = 1 + 2FP/TP$, while maximising $F_1(r) = 2TP/(TP+FP+P)$ requires $s(r) = 1 + (FP+FN)/TP$. The two maxima thus coincide only if $FP = FN$ at that threshold, i.e. if the maximum lies exactly at the precision-recall break-even point.
 
-\subsection{Two benchmark data sets}
+\subsection*{Two benchmark data sets}
 
 \label{sec:benchmarks}
 
 On a standard benchmark data set of mammograms, two classifiers with the same area under the curve (difference in $A$ of $-0.003$, 95\% interval $-0.044$ to $0.038$) differ by 13 percentage points in precision at the indistinguishability threshold (95\% interval 6 to 21 percentage points), illustrating why $C(r_b)$, rather than $A$, should be used to compare their performance.
 
-To see how the measure behaves on real data, I applied it to two standard benchmark data sets, both obtained from OpenML \cite{vanschoren2013openml}. The Adult data set \cite{becker1996adult} contains 48,842 individuals from the 1994 US census, of whom 24\% have an annual income above \$50,000 (the positive class). The Mammography data set \cite{woods1993comparative} contains 11,183 regions of digitised mammograms, of which 260 (2.3\%) contain microcalcifications. For each data set, I trained a logistic regression and a gradient boosting classifier on a randomly chosen half of the data (stratified by class) and calculated all measures exactly from the scores on the other half. Confidence intervals were obtained by resampling the test set 1000 times, with both classifiers evaluated on the same resampled test sets. The code is available in the repository given in section \ref{sec:data}. The results are shown in table \ref{tab:benchmarks}.
+To see how the measure behaves on real data, I applied it to two standard benchmark data sets, both obtained from OpenML \cite{vanschoren2013openml}. The Adult data set \cite{becker1996adult} contains 48,842 individuals from the 1994 US census, of whom 24\% have an annual income above \$50,000 (the positive class). The Mammography data set \cite{woods1993comparative} contains 11,183 regions of digitised mammograms, of which 260 (2.3\%) contain microcalcifications. For each data set, I trained a logistic regression and a gradient boosting classifier on a randomly chosen half of the data (stratified by class) and calculated all measures exactly from the scores on the other half. Confidence intervals were obtained by resampling the test set 1000 times, with both classifiers evaluated on the same resampled test sets. The code is available in the same repository as the code for the artificial data sets. The results are shown in table \ref{tab:benchmarks}.
 
 \begin{table}[tp]
 \centering
@@ -376,11 +372,11 @@ GB & 130 & 194 & 0.49 (0.36--0.59) & 0.72 & 0.65 & 0.58 & 0.69 & 0.92 \\
 
 The measure can be reported in the same plain language as in the rest of this article. For gradient boosting on the Mammography data, for example: {\it when the algorithm is tuned so that the regions it flags cannot be distinguished from the regions that really contain microcalcifications, 49\% of the flagged regions contain microcalcifications} (95\% confidence interval 36--59\%), and 72\% of the regions containing microcalcifications are flagged.
 
-The results confirm the properties derived in section \ref{sec:others}. In all four cases more members are labelled positive at $r_b$ than there are members of the positive class, so that recall is larger than precision and $C(r_b)$ is below the precision at the break-even point. For logistic regression on the Mammography data, twice as many regions are labelled positive as there are positives. The ratio $FN/FP$ agreed with $(2\alpha(r_b)-1)C(r_b)$ (equation \ref{eq:FNFP}) to within $0.006$ in all four cases. On the Adult data, the F1-score at $r_b$ is within 0.005 of its maximum, but on the Mammography data it is 0.11--0.13 lower, illustrating that the indistinguishability threshold and the F1-optimal threshold need not coincide.
+The results confirm the properties derived in the section {\it Relationship to F1 score}. In all four cases more members are labelled positive at $r_b$ than there are members of the positive class, so that recall is larger than precision and $C(r_b)$ is below the precision at the break-even point. For logistic regression on the Mammography data, twice as many regions are labelled positive as there are positives. The ratio $FN/FP$ agreed with $(2\alpha(r_b)-1)C(r_b)$ (equation \ref{eq:FNFP}) to within $0.006$ in all four cases. On the Adult data, the F1-score at $r_b$ is within 0.005 of its maximum, but on the Mammography data it is 0.11--0.13 lower, illustrating that the indistinguishability threshold and the F1-optimal threshold need not coincide.
 
-The data also illustrate the limitation of $A$ discussed in section \ref{sec:AUC}. Removing the half of the test negatives with the lowest scores, i.e. the easiest cases, reduced $A$ by between 0.04 and 0.09 but left $C(r_b)$ unchanged, since none of these members are labelled positive.
+The data also illustrate the limitation of $A$ discussed in the section {\it Area under the curve}. Removing the half of the test negatives with the lowest scores, i.e. the easiest cases, reduced $A$ by between 0.04 and 0.09 but left $C(r_b)$ unchanged, since none of these members are labelled positive.
 
-\section{Conclusions}
+\section*{Discussion}
 
 The first test in this article, $A$, ---how often is a randomly chosen member of the positive class scored higher than randomly chosen member of the negative class?---is equivalent to calculating the AUC. In many applications, discerning between pairs of negative and positive cases might not be the most important challenge. Clinicians, for example, aren't usually presented with two people, one of whom they know is sick and one who is healthy, and asked to find the sick individual! Emphasising that $A$ answers a specific question about paired comparison makes its limitation clear: knowing $A$ tells us about paired comparisons between scores. It does not answer all questions we might have about the accuracy of our approach.
 
@@ -396,7 +392,7 @@ That said, the development of many machine learning algorithms occurs in a way t
 
 
 
-\section{Acknowledgements}
+\section*{Acknowledgements}
 
 Thanks to Daniel Gedon and Andre Teixeira for feedback. 
 
