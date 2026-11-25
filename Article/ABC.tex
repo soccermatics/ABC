@@ -71,11 +71,9 @@ There already exist a number of ways of evaluating classification algorithms. Wi
 \subsection*{Area under the curve} 
 \label{sec:AUC}
 
-Let's start by asking the following question about our data: how often does a member of the positive class score higher than a member of the negative class? 
+We now show that the area under the ROC curve (AUC) measures the probability that a member of the positive class scores higher than a member of the negative class. This has been known since Bamber \cite{bamber1975area}, and was made widely known by Hanley and McNeil \cite{hanley1982meaning}. I retell it here since the argument, which compares the scores of randomly chosen pairs of members, is the same one I use to construct a new measure in the sections that follow.
 
-The answer to this question is the area under the ROC curve (AUC). This is a well-known result, first shown by Bamber \cite{bamber1975area} and made widely known by Hanley and McNeil \cite{hanley1982meaning}, who also related the AUC to the Wilcoxon (Mann--Whitney) rank statistic. I retell it here for pedagogical purposes: the argument, which compares the scores of randomly chosen pairs of members, is the same one I use to construct a new measure in the sections that follow.
-
-To measure this we pick one member of the positive class at random and one member of the negative class at random and we will look to see which of them has the highest score. As a concrete example, imagine an algorithm is shown two images, one which contains a cat, another which does not. The task is to pick the image containing the cat. We call this probability 
+To calculate this probability, we pick one member of the positive class at random and one member of the negative class at random and look to see which of them has the higher score. As a concrete example, imagine an algorithm is shown two images, one which contains a cat, another which does not. The task is to pick the image containing the cat. We call this probability 
 \[
 A = P(S_P>S_N)
 \]
