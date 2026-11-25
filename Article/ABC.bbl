@@ -25,10 +25,6 @@ M.~Majnik and Z.~Bosni{\'c}, ``Roc analysis of classifiers in machine learning:
   A survey,'' {\em Intelligent data analysis}, vol.~17, no.~3, pp.~531--558,
   2013.
 
-\bibitem{sasaki2007truth}
-Y.~Sasaki {\em et~al.}, ``The truth of the f-measure,'' {\em Teach tutor
-  mater}, vol.~1, no.~5, pp.~1--5, 2007.
-
 \bibitem{bamber1975area}
 D.~Bamber, ``The area above the ordinal dominance graph and the area below the
   receiver operating characteristic graph,'' {\em Journal of Mathematical
@@ -38,6 +34,109 @@ D.~Bamber, ``The area above the ordinal dominance graph and the area below the
 J.~A. Hanley and B.~J. McNeil, ``The meaning and use of the area under a
   receiver operating characteristic ({ROC}) curve,'' {\em Radiology}, vol.~143,
   no.~1, pp.~29--36, 1982.
+
+\bibitem{lobo2008auc}
+J.~M. Lobo, A.~Jim{\'e}nez-Valverde, and R.~Real, ``{AUC}: a misleading measure
+  of the performance of predictive distribution models,'' {\em Global Ecology
+  and Biogeography}, vol.~17, no.~2, pp.~145--151, 2008.
+
+\bibitem{hand2009measuring}
+D.~J. Hand, ``Measuring classifier performance: a coherent alternative to the
+  area under the {ROC} curve,'' {\em Machine Learning}, vol.~77, no.~1,
+  pp.~103--123, 2009.
+
+\bibitem{davis2006relationship}
+J.~Davis and M.~Goadrich, ``The relationship between precision-recall and {ROC}
+  curves,'' in {\em Proceedings of the 23rd International Conference on Machine
+  Learning (ICML)}, pp.~233--240, 2006.
+
+\bibitem{saito2015precision}
+T.~Saito and M.~Rehmsmeier, ``The precision-recall plot is more informative
+  than the {ROC} plot when evaluating binary classifiers on imbalanced
+  datasets,'' {\em {PLoS ONE}}, vol.~10, no.~3, p.~e0118432, 2015.
+
+\bibitem{mcclish1989analyzing}
+D.~K. McClish, ``Analyzing a portion of the {ROC} curve,'' {\em Medical
+  Decision Making}, vol.~9, no.~3, pp.~190--195, 1989.
+
+\bibitem{dodd2003partial}
+L.~E. Dodd and M.~S. Pepe, ``Partial {AUC} estimation and regression,'' {\em
+  Biometrics}, vol.~59, no.~3, pp.~614--623, 2003.
+
+\bibitem{carrington2020new}
+A.~M. Carrington, P.~W. Fieguth, H.~Qazi, A.~Holzinger, H.~H. Chen, F.~Mayr,
+  and D.~G. Manuel, ``A new concordant partial {AUC} and partial c statistic
+  for imbalanced data in the evaluation of machine learning algorithms,'' {\em
+  BMC Medical Informatics and Decision Making}, vol.~20, p.~4, 2020.
+
+\bibitem{flach2015precision}
+P.~Flach and M.~Kull, ``Precision-recall-gain curves: {PR} analysis done
+  right,'' in {\em Advances in Neural Information Processing Systems 28},
+  pp.~838--846, 2015.
+
+\bibitem{sasaki2007truth}
+Y.~Sasaki {\em et~al.}, ``The truth of the f-measure,'' {\em Teach tutor
+  mater}, vol.~1, no.~5, pp.~1--5, 2007.
+
+\bibitem{hand2018note}
+D.~Hand and P.~Christen, ``A note on using the {F}-measure for evaluating
+  record linkage algorithms,'' {\em Statistics and Computing}, vol.~28, no.~3,
+  pp.~539--547, 2018.
+
+\bibitem{hand2021f}
+D.~J. Hand, P.~Christen, and N.~Kirielle, ``{F*}: an interpretable
+  transformation of the {F}-measure,'' {\em Machine Learning}, vol.~110, no.~3,
+  pp.~451--456, 2021.
+
+\bibitem{lipton2014optimal}
+Z.~C. Lipton, C.~Elkan, and B.~Naryanaswamy, ``Optimal thresholding of
+  classifiers to maximize {F1} measure,'' in {\em Machine Learning and
+  Knowledge Discovery in Databases (ECML PKDD 2014)}, vol.~8725 of {\em Lecture
+  Notes in Computer Science}, pp.~225--239, Springer, 2014.
+
+\bibitem{koyejo2014consistent}
+O.~Koyejo, N.~Natarajan, P.~Ravikumar, and I.~S. Dhillon, ``Consistent binary
+  classification with generalized performance metrics,'' in {\em Advances in
+  Neural Information Processing Systems 27}, pp.~2744--2752, 2014.
+
+\bibitem{manning2008introduction}
+C.~D. Manning, P.~Raghavan, and H.~Sch{\"u}tze, {\em Introduction to
+  Information Retrieval}.
+\newblock Cambridge University Press, 2008.
+
+\bibitem{youden1950index}
+W.~J. Youden, ``Index for rating diagnostic tests,'' {\em Cancer}, vol.~3,
+  no.~1, pp.~32--35, 1950.
+
+\bibitem{elkan2001foundations}
+C.~Elkan, ``The foundations of cost-sensitive learning,'' in {\em Proceedings
+  of the 17th International Joint Conference on Artificial Intelligence
+  (IJCAI)}, pp.~973--977, 2001.
+
+\bibitem{forman2008quantifying}
+G.~Forman, ``Quantifying counts and costs via classification,'' {\em Data
+  Mining and Knowledge Discovery}, vol.~17, no.~2, pp.~164--206, 2008.
+
+\bibitem{hernandez2012unified}
+J.~Hern{\'a}ndez-Orallo, P.~Flach, and C.~Ferri, ``A unified view of
+  performance metrics: translating threshold choice into expected
+  classification loss,'' {\em Journal of Machine Learning Research}, vol.~13,
+  pp.~2813--2869, 2012.
+
+\bibitem{mann1947test}
+H.~B. Mann and D.~R. Whitney, ``On a test of whether one of two random
+  variables is stochastically larger than the other,'' {\em Annals of
+  Mathematical Statistics}, vol.~18, no.~1, pp.~50--60, 1947.
+
+\bibitem{hanley1997sampling}
+J.~A. Hanley and K.~O. Hajian-Tilaki, ``Sampling variability of nonparametric
+  estimates of the areas under receiver operating characteristic curves: an
+  update,'' {\em Academic Radiology}, vol.~4, no.~1, pp.~49--58, 1997.
+
+\bibitem{pepe2004analysis}
+M.~S. Pepe and T.~Cai, ``The analysis of placement values for evaluating
+  discriminatory measures,'' {\em Biometrics}, vol.~60, no.~2, pp.~528--535,
+  2004.
 
 \bibitem{vanschoren2013openml}
 J.~Vanschoren, J.~N. van Rijn, B.~Bischl, and L.~Torgo, ``{OpenML}: networked
@@ -54,12 +153,6 @@ K.~S. Woods, C.~C. Doss, K.~W. Bowyer, J.~L. Solka, C.~E. Priebe, and W.~P.
   detection of microcalcifications in mammography,'' {\em International Journal
   of Pattern Recognition and Artificial Intelligence}, vol.~7, no.~6,
   pp.~1417--1436, 1993.
-
-\bibitem{lipton2014optimal}
-Z.~C. Lipton, C.~Elkan, and B.~Naryanaswamy, ``Optimal thresholding of
-  classifiers to maximize {F1} measure,'' in {\em Machine Learning and
-  Knowledge Discovery in Databases (ECML PKDD 2014)}, vol.~8725 of {\em Lecture
-  Notes in Computer Science}, pp.~225--239, Springer, 2014.
 
 \bibitem{schapire2003boosting}
 R.~E. Schapire, ``The boosting approach to machine learning: An overview,''
