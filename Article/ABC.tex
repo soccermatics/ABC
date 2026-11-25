@@ -238,7 +238,7 @@ GB & 130 & 194 & 0.49 (0.36--0.59) & 0.72 & 0.65 & 0.58 & 0.69 & 0.92 \\
 \label{tab:benchmarks}
 \end{table}
 
-The measure can be reported in the same plain language as in the rest of this article. For gradient boosting on the Mammography data, for example: {\it when the algorithm is tuned so that the regions it flags cannot be distinguished from the regions that really contain microcalcifications, 49\% of the flagged regions contain microcalcifications} (95\% confidence interval 36--59\%), and 72\% of the regions containing microcalcifications are flagged.
+The measure can be reported in the same plain language as in the rest of this article. For gradient boosting on the Mammography data, for example: {\it when the algorithm is tuned so that the regions it flags cannot be distinguished from the regions that really contain microcalcifications, 49\% of the flagged regions contain microcalcifications} (95\% confidence interval 36--59\%, compared with 2.3\% if regions were flagged at random), and 72\% of the regions containing microcalcifications are flagged.
 
 The data also illustrate the limitation of $A$ discussed in the section {\it Area under the curve}. Removing the half of the test negatives with the lowest scores, i.e. the easiest cases, reduced $A$ by between 0.04 and 0.09 but left $C(r_b)$ unchanged, since none of these members are labelled positive.
 
