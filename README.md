@@ -10,7 +10,7 @@ Performance metrics are more useful if they can be stated in words. For example,
 
 `simple_example.py` is the example from figure 1.
 
-`ABC.py` creates the rest of the figures in the article and saves them to `Article/Figures/`. It also prints the values of $C(r_b)$ quoted in the text. Set `include_other_curves=True` to produce `Bplot2.pdf` (figure 6) instead of `Bplot.pdf`. It requires `numpy`, `scikit-learn` and `matplotlib`.
+`ABC.py` creates the rest of the figures in the article and saves them to `Article/Figures/`. It also prints the values of $C(r_b)$ quoted in the text. Set `include_other_curves=True` to produce `Bplot2.pdf` (figure 5) instead of `Bplot.pdf`. The ROC curves it saves as `AUC.pdf` are no longer used in the article. It requires `numpy`, `scikit-learn` and `matplotlib`.
 
 `benchmarks.py` produces the results in the section *Two benchmark data sets* (table 1): logistic regression and gradient boosting on the Adult and Mammography data sets, downloaded from OpenML on first run. It also requires `pandas`.
 
@@ -24,11 +24,11 @@ The section *Relationship to F1 score* (previously *Similarity to F1 score*) rep
 
 A new section, *Two benchmark data sets*, applies the measure to two benchmark data sets. On the Mammography data, the two classifiers have the same AUC, but precision at the indistinguishability threshold is 0.13 higher for gradient boosting (95% CI 0.06 to 0.21).
 
-The derivation of $B(r)$ in terms of the true and false positive rates has moved to an appendix.
+The derivation of $B(r)$ in terms of the true and false positive rates has moved to an appendix. The figure of ROC curves for the artificial data (figure 3 in the arXiv version) has been removed; the text now gives the values of $A$ directly.
 
 The version here also corrects the following errors in the arXiv version.
 
-- **Figures.** `ABC.py` used the wrong data set when computing $B(r)$ for six of the nine panels (it indexed the data with `cj*3+cj` instead of `cj*3+ci`). This moved $r_b$ in figures 2, 4, 5 and 6, most visibly in panels (g) and (h). The figures have been regenerated, and the values quoted in the text updated accordingly ($C(r_b) \approx 0.87$, $0.70$ and $0.53$ for the three columns of data sets).
+- **Figures.** `ABC.py` used the wrong data set when computing $B(r)$ for six of the nine panels (it indexed the data with `cj*3+cj` instead of `cj*3+ci`). This moved $r_b$ in figures 2, 4, 5 and 6 of the arXiv version, most visibly in panels (g) and (h). The figures have been regenerated, and the values quoted in the text updated accordingly ($C(r_b) \approx 0.87$, $0.70$ and $0.53$ for the three columns of data sets).
 - **Figure 1.** The worked example gave $B(65) \approx 0.49$ and $B(75) \approx 0.49$. With the scores shown, $B(67) = 18/37 \approx 0.49$ and $B(75) = 6/20 = 0.30$. Also, "real score score" is now "real score".
 - **Equations** (numbered as in the arXiv version). The denominators in equations (10), (15), (18) and (19) should be $P v(r) + N u(r)$; the integrand in equations (14), (15) and (19) should be $f_N(t) v(t)$; and the integrals in equations (11) and (12) had incorrect limits or variables. The code always used the correct expressions.
 - **Text.** The number of 'easy' data points per panel was listed in the wrong order; the description of what happens at large and small thresholds had "former" and "latter" swapped; and the logistic function should be $1/(1+\exp(-r))$. A number of smaller typos have also been fixed.

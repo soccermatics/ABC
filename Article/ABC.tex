@@ -130,17 +130,7 @@ To see how $A$, and the further measures introduced below, behave in practice, w
 
 The choice of these data sets is to give a range of difficulty levels. The data in the left column correspond to relatively easy classification tasks. The overlap between the green (negative) and yellow (positive) is small. The data in the right column is much more difficult, with a large overlap in scores for negative and positive. The datasets at the bottom include a large number of `easy' to classify negative values, but the size of the overlap is only slightly increased over the datasets at the top. The data generation method and the code are available at: \href{https://github.com/soccermatics/ABC.git}{https://github.com/soccermatics/ABC.git}.
 
-\begin{figure}[tp]
-\centering
-\includegraphics[scale=1]{Figures/AUC.pdf}
-\caption{The area under the curve for each of the scores in figure \ref{fig:Distribution}} \label{fig:AUC}
-\end{figure}
-
-The ROC curves are shown in figure \ref{fig:AUC} for our nine data sets. The area under these curves (i.e. $A$) is shown as text within the figure. The value of $A$ is close to one when either the scores for the negative and positive class are typically different (e.g. for the score distributions shown in figure \ref{fig:Distribution} a, d and g) or there are a large proportion of 'easy' to score negative members (e.g. for the score distributions shown in figure \ref{fig:Distribution} h and i). 
-
-These examples illustrate the limitation of $A$ as a measure. In the cases a, d and g -- where the score accurately distinguishes class members -- $A$ reflects the fact it is more likely that the algorithm picks out the positive cases correctly. But in the cases where there is an overlap between the positive and 'difficult' negative class (e.g. cases c, h and i) we see that as we add more 'easy' cases (i.e. go from c through f to i) the accuracy of the model appears to increase, despite the fact that the difficult cases are equally difficult in all three data sets. We could see this as giving a possibility for `cheating': by adding more easier cases to our data set we can appear to be improving accuracy, as measured by $A$, while no such improvement is actually occurring. 
-
-This is why we need to be very clear about what the AUC test tells us: it tells us that if we pick one member of the positive class at random it has probability $A$ of having a higher score than one member of the negative class chosen at random. When there are a lot more 'easy'  to classify members of the negative class then a high value of $A$ is not surprising: most of the time we will randomly pick one of those members. Thus in figure \ref{fig:AUC}i  an $A$ close to one tells us very little about how well our algorithm can distinguish more difficult cases. 
+Across the nine data sets, $A$ is high when the scores of the positive and negative classes are well separated (figure \ref{fig:Distribution}a, d and g, with $A$ between 0.97 and 0.99). But $A$ also increases when easy negatives are added, even though the difficult negatives stay exactly as difficult: going from c through f to i, $A$ rises from 0.68 to 0.85 to 0.96. In data set i, most randomly chosen negatives are easy ones, so a value of $A$ close to one tells us very little about how well the algorithm separates the positives from the difficult negatives. Adding easy cases to a test set can therefore make an algorithm appear to improve when it has not.
 
 \subsection*{Indistinguishability threshold}
 
