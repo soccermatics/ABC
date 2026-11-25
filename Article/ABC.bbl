@@ -39,12 +39,6 @@ J.~A. Hanley and B.~J. McNeil, ``The meaning and use of the area under a
   receiver operating characteristic ({ROC}) curve,'' {\em Radiology}, vol.~143,
   no.~1, pp.~29--36, 1982.
 
-\bibitem{lipton2014optimal}
-Z.~C. Lipton, C.~Elkan, and B.~Naryanaswamy, ``Optimal thresholding of
-  classifiers to maximize {F1} measure,'' in {\em Machine Learning and
-  Knowledge Discovery in Databases (ECML PKDD 2014)}, vol.~8725 of {\em Lecture
-  Notes in Computer Science}, pp.~225--239, Springer, 2014.
-
 \bibitem{vanschoren2013openml}
 J.~Vanschoren, J.~N. van Rijn, B.~Bischl, and L.~Torgo, ``{OpenML}: networked
   science in machine learning,'' {\em SIGKDD Explorations}, vol.~15, no.~2,
@@ -60,6 +54,12 @@ K.~S. Woods, C.~C. Doss, K.~W. Bowyer, J.~L. Solka, C.~E. Priebe, and W.~P.
   detection of microcalcifications in mammography,'' {\em International Journal
   of Pattern Recognition and Artificial Intelligence}, vol.~7, no.~6,
   pp.~1417--1436, 1993.
+
+\bibitem{lipton2014optimal}
+Z.~C. Lipton, C.~Elkan, and B.~Naryanaswamy, ``Optimal thresholding of
+  classifiers to maximize {F1} measure,'' in {\em Machine Learning and
+  Knowledge Discovery in Databases (ECML PKDD 2014)}, vol.~8725 of {\em Lecture
+  Notes in Computer Science}, pp.~225--239, Springer, 2014.
 
 \bibitem{schapire2003boosting}
 R.~E. Schapire, ``The boosting approach to machine learning: An overview,''

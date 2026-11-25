@@ -97,7 +97,7 @@ A = \int_{r=-\infty}^{\infty}  f_N(r)  \int_{s=r}^{\infty}  f_P(s) ds dr  = \int
 \end{equation}
 We can use this equation to calculate $A$ by numerical integration. 
 
-More importantly, we can also use this formulation to derive the equivalence between the $A$ test above and the most commonly used measure of accuracy, namely, AUC (the area under the ROC/receiver operator curve). ROC curves plot the false positive rate against the true positive rate, as parametrised curves of $r$. Note that the true positive rate for a given threshold $r$ is given by $v(r)=1-F_P(r)$ and that the false positive rate for a given threshold $r$, is given by $u(r)=1-F_N(r)$. Then we see that
+We can also use this formulation to derive the equivalence between the $A$ test and AUC. To do so, note that the true positive rate for a given threshold $r$ is given by $v(r)=1-F_P(r)$ and that the false positive rate for a given threshold $r$, is given by $u(r)=1-F_N(r)$. Then we see that
 \[
 A  =  \int_{r=-\infty}^{\infty} v(r) f_N(r) dr  
 \]
@@ -113,7 +113,9 @@ where $u^{-1}(r)$ denotes the inverse of $u(r)$. Thus $A$ is also the area under
 \caption{The score distributions for the nine example data sets we look at here. Green are members of the negative class, yellow members of the positive class. The dotted line shows $r_b$, the solution $B(r)=1/2$ (see equation \ref{balanced})} \label{fig:Distribution}
 \end{figure}
 
-To see how $A$, and the measures introduced below, behave in practice, I use nine artificial data sets, shown in figure \ref{fig:Distribution}. The positive class ($Y_i=1$) is created by first generating 1000 input values, $X_i$, with a mean $m_p=10$ and standard deviation $\sigma_p=2$. Similarly, the negative class ($Y_i=-1$) consists of 1000 `difficult' data points with values, $X_i$, which have mean scores (a,d,g) $m_n=5$; (b,e,h) $m_n=7$; (c,f,i) $m_n=9$ and (in all cases) standard deviation $\sigma_n=2$, along with (a,b,c) 100; (d,e,f) 1000; (g,h,i) 10000 `easy' data points, $X_i$, with mean 2 and standard deviation 2.  I then performed logistic regression on $X_i$ to predict $Y_i$ and calculated the log-likelihood for every individual point. These log-likelihoods are taken to be the scores, $S_i$, output by the model and are plotted in figure \ref{fig:Distribution}. 
+\subsection*{Artificial data sets}
+
+To see how $A$, and the further measures introduced below, behave in practice, I use nine artificial data sets, shown in figure \ref{fig:Distribution}. The positive class ($Y_i=1$) is created by first generating 1000 input values, $X_i$, with a mean $m_p=10$ and standard deviation $\sigma_p=2$. Similarly, the negative class ($Y_i=-1$) consists of 1000 `difficult' data points with values, $X_i$, which have mean scores (a,d,g) $m_n=5$; (b,e,h) $m_n=7$; (c,f,i) $m_n=9$ and (in all cases) standard deviation $\sigma_n=2$, along with (a,b,c) 100; (d,e,f) 1000; (g,h,i) 10000 `easy' data points, $X_i$, with mean 2 and standard deviation 2.  I then performed logistic regression on $X_i$ to predict $Y_i$ and calculated the log-likelihood for every individual point. These log-likelihoods are taken to be the scores, $S_i$, output by the model and are plotted in figure \ref{fig:Distribution}. 
 
 The choice of these data sets is to give a range of difficulty levels. The data in the left column correspond to relatively easy classification tasks. The overlap between the green (negative) and yellow (positive) is small. The data in the right column is much more difficult, with a large overlap in scores for negative and positive. The datasets at the bottom include a large number of `easy' to classify negative values, but the size of the overlap is only slightly increased over the datasets at the top. The data generation method and the code are available at: \href{https://github.com/soccermatics/ABC.git}{https://github.com/soccermatics/ABC.git}.
 
@@ -125,19 +127,19 @@ The choice of these data sets is to give a range of difficulty levels. The data 
 
 The ROC curves are shown in figure \ref{fig:AUC} for our nine data sets. The area under these curves (i.e. $A$) is shown as text within the figure. The value of $A$ is close to one when either the scores for the negative and positive class are typically different (e.g. for the score distributions shown in figure \ref{fig:Distribution} a, d and g) or there are a large proportion of 'easy' to score negative members (e.g. for the score distributions shown in figure \ref{fig:Distribution} h and i). 
 
-These examples illustrate both the power and the limitation of $A$ as a measure. In the cases a, d and g -- where the score accurately distinguishes class members -- $A$ reflects the fact it is more likely that the algorithm picks out the positive cases correctly. But in the cases where there is an overlap between the positive and 'difficult' negative class (e.g. cases c, h and i) we see that as we add more 'easy' cases (i.e. go from c through f to i) the accuracy of the model appears to increase, despite the fact that the difficult cases are equally difficult in all three data sets. We could see this as giving a possibility for `cheating': by adding more easier cases to our data set we can appear to be improving accuracy, as measured by $A$, while no such improvement is actually occurring. 
+These examples illustrate the limitation of $A$ as a measure. In the cases a, d and g -- where the score accurately distinguishes class members -- $A$ reflects the fact it is more likely that the algorithm picks out the positive cases correctly. But in the cases where there is an overlap between the positive and 'difficult' negative class (e.g. cases c, h and i) we see that as we add more 'easy' cases (i.e. go from c through f to i) the accuracy of the model appears to increase, despite the fact that the difficult cases are equally difficult in all three data sets. We could see this as giving a possibility for `cheating': by adding more easier cases to our data set we can appear to be improving accuracy, as measured by $A$, while no such improvement is actually occurring. 
 
 This is why we need to be very clear about what the AUC test tells us: it tells us that if we pick one member of the positive class at random it has probability $A$ of having a higher score than one member of the negative class chosen at random. When there are a lot more 'easy'  to classify members of the negative class then a high value of $A$ is not surprising: most of the time we will randomly pick one of those members. Thus in figure \ref{fig:AUC}i  an $A$ close to one tells us very little about how well our algorithm can distinguish more difficult cases. 
 
 \subsection*{Indistinguishability threshold}
 
-We now look at how often a member of the positive class scored higher than a member that has been labelled positive. To do this, we pick a random member of the positive class and we compare its score to the score of a random individual that has been labelled (predicted) positive. For example, in the cat labelling problem, we first pick randomly from all images containing cats and denote the score of this image as $S_P$. Then, for a given threshold $r$, we choose randomly from all the images with that score or above, irrespective of whether or not they contain a cat. We denote this score of this image as $S_R$. We then calculate the probability 
+We now change how we measure performance, by looking at how often a member of the positive class scored higher than a member that has been labelled positive. To do this, in the cat labelling problem, we first pick randomly from all images containing cats and denote the score of this image as $S_P$. Then, for a given threshold $r$, we choose randomly from all the images with that score or above, irrespective of whether or not they contain a cat. We denote this score of this image as $S_R$. We then calculate the probability 
 \[
 B(r) = P(S_P>S_R | S_R>r) 
 \]
 or, in words, the probability that a random member of the positive class scores higher than a random member of the class we have labelled as positive (i.e. has a score greater than $r$). 
 
-Unlike the paired comparison of negatives and positives we made in the previous section, it is not immediately clear how this test will help us construct a performance metric. To gain some more intuition, let's think about what happens as we change the threshold $r$. When $r$ is very large then the positively labelled set will contain more positives than negatives, but very few members of either class. As a result $P(S_P>S_R | S_R>r)$ will go towards $0$. When $r$ is small (or negative), most images are labelled positive. Nearly all members of the positive class will be included in the positively labelled set, but so too will most members of the negative class. Neither of these two situations is desirable. In the latter, we will have a lot of false positive errors and very low precision: a high proportion of those labelled positive will actually be negative. In the former case, we will have a large proportion of false negatives but very high precision: most of those which are labelled positive are actually positive.
+Unlike the paired comparison of negatives and positives we made for $A$, it is not immediately clear how this test will help us construct a performance metric. To gain some more intuition, let's think about what happens as we change the threshold $r$. When $r$ is very large then the positively labelled set will contain more positives than negatives, but very few members of either class. As a result $P(S_P>S_R | S_R>r)$ will go towards $0$. When $r$ is small (or negative), most images are labelled positive. Nearly all members of the positive class will be included in the positively labelled set, but so too will most members of the negative class. Neither of these two situations is desirable. In the latter, we will have a lot of false positive errors and very low precision: a high proportion of those labelled positive will actually be negative. In the former case, we will have a large proportion of false negatives but very high precision: most of those which are labelled positive are actually positive.
 
 I suggest choosing $r_b$ such that
  \begin{equation}
@@ -145,9 +147,9 @@ B(r_b) = P(S_P>S_R | S_R>r_b) = 1/2 \label{balanced}
 \end{equation}
 because this particular value of $r_b$ has a rather desirable property. It means that, as far as the classifier is concerned the images in the positive class are indistinguishable from those which we have labelled positive. If we pick a random member of the images we have classified as positive and a random member of the positives, these two images are equally likely to be classified as positive. We can thus think of $r_b$ as being the threshold value at which the model cannot distinguish between true positives and labelled positives. The algorithm cannot distinguish reality from its own labelling. We thus refer to $r_b$ as the {\it indistinguishability threshold}.
 
-To understand why this is desirable, think about a situation where we have two separate test sets of images, $Y_1$ and $Y_2$, and we want to check whether or not they have a similar distribution of scores. A solution to this problem might be to pick members from both $Y_1$ and $Y_2$ at random and compare their scores. If roughly half of the time members of $Y_1$ scored higher than members of $Y_2$ we might say that the two groups are indistinguishable\footnote{There could still be differences between the distributions of the sets not identified by such a test. For example $Y_1$ might have larger variance in scores than $Y_2$}.  In the same way,  by setting $r_b$ using equation \ref{balanced}, we are finding a threshold so that the positive class is indistinguishable from the set that is labelled positive. The vertical dotted lines in figure \ref{fig:Distribution} shows the value of $r_b$ for our nine example score distribution sets. For all nine distributions the lines give a reasonable separation between the scores, lying roughly halfway between the `difficult' negative cases and the positive cases. 
+To understand why this is desirable, think about a situation where we have two separate test sets of images, $Y_1$ and $Y_2$, and we want to check whether or not they have a similar distribution of scores. A solution to this problem might be to pick members from both $Y_1$ and $Y_2$ at random and compare their scores. If roughly half of the time members of $Y_1$ scored higher than members of $Y_2$ we might say that the two groups are indistinguishable.  In the same way,  by setting $r_b$ using equation \ref{balanced}, we are finding a threshold so that the positive class is indistinguishable from the set that is labelled positive. The vertical dotted lines in figure \ref{fig:Distribution} show the value of $r_b$ for our nine example score distribution sets. For all nine distributions the lines give a reasonable separation between the scores, lying roughly halfway between the `difficult' negative cases and the positive cases. 
 
-A common (but misguided) alternative to choosing $r=r_b$ is to instead choose $r$ such that
+A misguided (but still somwetimes proposed) alternative to choosing $r=r_b$ is to instead choose $r$ such that
  \begin{equation}
 P(S_P = r) = 1 - P(S_P=r) \label{standard}
 \end{equation}
@@ -163,10 +165,7 @@ which gives $r=0$ as the threshold. Looking again at the distribution of scores 
 
 The limitations of using equation \ref{standard2} to set a threshold are known, but often they are referred to as being ``caused by an unbalanced data set''. The implication is that too many members in the negative class have somehow misled us in to choosing a poor value of $r$. In my experience, students and even experienced practitioners, when confronted with this problem, either start to prune their data, removing `easy' members of the negative class, or oversample from the positive class in order to compensate. They might also draw an ROC curve and a Precision-Recall curve (see below) and try to justify, in an ad-hoc fashion, choosing a different value of the threshold $r$ on the basis of what they see in these curves.
 
-It is not the data set that is imbalanced. It is rather our way of looking at it that is wrong! Specifically, it is the arbitrary choice of $r=0$ that is imbalanced. 
-
-While both of the two measures --- $A$ and $B(r)$ --- that we have looked at so far have sensible, method independent interpretations that give us a measure performance, this is not the case for equation \ref{standard}, which is simply the score for which the probability of receiving a positive label equals that of receiving a negative label. In logistic regression, the model is adjusting to account for the fact that negative cases are more likely than positive cases: negative cases are the more likely outcome and it requires more evidence to persuade us otherwise. But in an application where, for example, we are scanning for a medical condition, the number of negatives (be it 90\% or 99.99999\% of the population) should not influence how we decide that a case is likely to be positive. 
-
+I would argue that, it is not the data set that is imbalanced, but this way of looking at it that is wrong! Specifically, it is the arbitrary choice of $r=0$ that is imbalanced, because it lies a long way from the indistinguishability threshold.
 
 
 \begin{figure}[tp]
@@ -176,12 +175,63 @@ While both of the two measures --- $A$ and $B(r)$ --- that we have looked at so 
 \label{fig:Bplot}
 \end{figure}
 
-Neither $r_b$ nor $B(r)$ provide a measure of model performance, like $A$ does. Instead they are both measurements around which we can organise a rigorous evaluation of our model. We will look at how $B(r)$ can be used to construct such a measure in the section {\it Precision at the indistinguishability threshold}. In this next section, which can be skipped by readers who just want to know about the performance measure, we look at some properties of $B(r)$.
 
+
+\subsection*{Precision at the indistinguishability threshold}
+
+\label{PIT}
+
+How often is our positive labelling correct when reality and labelling are indistinguishable? To answer this question, we define $C(r)$ to be the precision: the probability that an individual with a score greater than $r$ is in the positive class, i.e. $P(R = + | S_R > r)$ , or the probability that a positive labelling is made correctly.  Using Bayes law, we can rewrite precision in terms of false positive rate and true positive rate. Specifically,
+\begin{eqnarray*}
+C(r)  & = & P(R = + | S_R > r) \\
+& =  &\frac{P(S_+ > r | R = + ) P(R = + )}{P(S_+ > r | R = + ) P(R = + ) + P(S_- > r | R = - ) P(R = - )}
+\end{eqnarray*}
+In this case, $P(R = + ) = P/(P+N)$ is the proportion of individuals in the positive class and $P(R = - ) = N/(P+N)$ is proportion in the negative class. Substituting $v(r)=P(S_+ > r | R = + )$ (true positive rate) and $u(r) = P(S_- > r | R = - )$  (false positive rate) gives
+\begin{equation}
+C(r) = \frac{P v(r)}{P v(r) + N u(r)} \label{precisionP}
+\end{equation}
+When $N$ is much larger than $P$ then $v(r)$ has to be significantly larger than $u(r)$ for precision to have a large value. It is the ratio of true positives, $v(r)$, to all positives, $v(r)$ and $u(r)$, weighted by the frequency at which individuals are, respectively, positive and negative. 
+
+I propose measuring precision specifically with a value of $r=r_b$, i.e. for a threshold whereby data classified as positive cannot be distinguished from data which truly is positive, i.e. we calculate $C(r_b)$. Evaluating this for the data in figure \ref{fig:Distribution} (a), (d) and (g) we get $C(r_b) \approx  0.87$. This could be considered a reasonably good performance: 87\% of the pictures the algorithm says are cats are in fact cats. For figure \ref{fig:Distribution}  (b), (e) and (h) we get $C(r_b) \approx 0.70$. This is not a great performance, but could be useable in certain applications: 70\% of the pictures the algorithm says are cats are in fact cats. Finally, for the data in figure \ref{fig:Distribution} (c), (f) and (i) we get $C(r_b) \approx  0.53$. This is poor performance, and is probably not very useful in most applications: only 53\% of the pictures the algorithm says are cats are in fact cats.
+
+We can now see why $C(r_b)$ is preferable measure of performance over $A$. When we calculated $A$, the value was highly dependent on the number of `easy' cases. This is not the case with $C(r_b)$. By evaluating precision when the algorithm cannot distinguish reality from its own labelling, we obtain a measure of performance that doesn't depend on the number of `easy' cases. The choice of $r_b$ is theoretically motivated (in the previous section) and gives reasonable results. Before looking at how $B(r)$ can be calculated, and at how $C(r_b)$ relates to other measures of performance, we test it on real data. 
+
+
+\subsection*{Two benchmark data sets}
+
+\label{sec:benchmarks}
+
+On a standard benchmark data set of mammograms, two classifiers with the same area under the curve (difference in $A$ of $-0.003$, 95\% interval $-0.044$ to $0.038$) differ by 13 percentage points in precision at the indistinguishability threshold (95\% interval 6 to 21 percentage points), illustrating why $C(r_b)$, rather than $A$, should be used to compare their performance.
+
+To see how the measure behaves on real data, I applied it to two standard benchmark data sets, both obtained from OpenML \cite{vanschoren2013openml}. The Adult data set \cite{becker1996adult} contains 48,842 individuals from the 1994 US census, of whom 24\% have an annual income above \$50,000 (the positive class). The Mammography data set \cite{woods1993comparative} contains 11,183 regions of digitised mammograms, of which 260 (2.3\%) contain microcalcifications. For each data set, I trained a logistic regression and a gradient boosting classifier on a randomly chosen half of the data (stratified by class) and calculated all measures exactly from the scores on the other half. Confidence intervals were obtained by resampling the test set 1000 times, with both classifiers evaluated on the same resampled test sets. The code is available in the same repository as the code for the artificial data sets. The results are shown in table \ref{tab:benchmarks}.
+
+\begin{table}[tp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{lrrcccccc}
+\toprule
+Model & $P$ & Labelled & $C(r_b)$ & $v(r_b)$ & PRBEP & $F_1(r_b)$ & max $F_1$ & $A$ \\
+\midrule
+\multicolumn{9}{l}{\it Adult} \\
+LR & 5844 & 8305 & 0.58 (0.57--0.59) & 0.83 & 0.68 & 0.69 & 0.69 & 0.91 \\
+GB & 5844 & 7532 & 0.64 (0.63--0.65) & 0.83 & 0.72 & 0.72 & 0.73 & 0.93 \\
+\multicolumn{9}{l}{\it Mammography} \\
+LR & 130 & 260 & 0.35 (0.25--0.45) & 0.71 & 0.56 & 0.47 & 0.60 & 0.92 \\
+GB & 130 & 194 & 0.49 (0.36--0.59) & 0.72 & 0.65 & 0.58 & 0.69 & 0.92 \\
+\bottomrule
+\end{tabular}
+\caption{Performance on the test half of two benchmark data sets, for logistic regression (LR) and gradient boosting (GB). $P$ is the number of positives in the test set and `Labelled' the number labelled positive at the indistinguishability threshold $r_b$. $C(r_b)$ is given with a 95\% bootstrap interval. PRBEP is the precision (equal to the recall) at the precision-recall break-even point.}
+\label{tab:benchmarks}
+\end{table}
+
+The measure can be reported in the same plain language as in the rest of this article. For gradient boosting on the Mammography data, for example: {\it when the algorithm is tuned so that the regions it flags cannot be distinguished from the regions that really contain microcalcifications, 49\% of the flagged regions contain microcalcifications} (95\% confidence interval 36--59\%), and 72\% of the regions containing microcalcifications are flagged.
+
+The data also illustrate the limitation of $A$ discussed in the section {\it Area under the curve}. Removing the half of the test negatives with the lowest scores, i.e. the easiest cases, reduced $A$ by between 0.04 and 0.09 but left $C(r_b)$ unchanged, since none of these members are labelled positive.
 
 \subsection*{Properties and implementation of $B(r)$}
 
-As with $A$ the pairwise nature of the test means it is straightforward to implement a randomised version of $B(r)$. For each value of $r$ we sample, with or without replacement, $n$ members of the positive class. Then we sample $n$ members from the set labelled positive when the threshold is greater than $r$. Pairwise comparison of the scores of these two sets gives $B(r)$ . This method becomes less reliable for large values of $r$, since the size of the positive labelled class becomes small and all the comparisons will be made to a small number of positively labelled images. 
+We now return to the function $B(r)$ and look at how it can be calculated. As with $A$ the pairwise nature of the test means it is straightforward to implement a randomised version of $B(r)$. For each value of $r$ we sample, with or without replacement, $n$ members of the positive class. Then we sample $n$ members from the set labelled positive when the threshold is greater than $r$. Pairwise comparison of the scores of these two sets gives $B(r)$ . This method becomes less reliable for large values of $r$, since the size of the positive labelled class becomes small and all the comparisons will be made to a small number of positively labelled images. 
 
 Another way to calculate $B(r)$, following the AUC approach to estimating $A$, is by integration over the true positive rate, $v(r)$, and the false positive rate, $u(r)$. We now derive the appropriate integral. First, let $S_R$ be the score of a randomly chosen member of the data set and $S_P$ the score of a randomly chosen member of the positive class. The probability that $S_R$ is less than $S_P$, given that $S_R$ is greater than $r$, is then written as $P(S_R<S_P | S_R>r)$. It is this probability we call $B(r)$.
 
@@ -222,33 +272,13 @@ This equation is plotted as the black line in figure \ref{fig:Bplot}. We see tha
 \[
 B(-\infty) = \frac{P/2 + N A}{N + P} 
 \]
-and decreases to zero as $r$ increases, so that $B(\infty) = 0$. The value $r_b$, the solution $B(r_b)=1/2$, is identified as the point in figure \ref{fig:Bplot} where $B(r)$ crosses the dotted line at $1/2$. This is also the value of $r_b$ plotted as the dotted line in figure \ref{fig:Bplot}. We will look in more detail at the function $B(r)$ in more detail in the section {\it Relationship to F1 score} and compare it to other measures. 
-
-\subsection*{Precision at the indistinguishability threshold}
-
-\label{PIT}
-
-How often is our positive labelling correct when reality and labelling are indistinguishable? To answer this question, we define $C(r)$ to be the precision: the probability that an individual with a score greater than $r$ is in the positive class, i.e. $P(R = + | S_R > r)$ , or the probability that a positive labelling is made correctly.  Using Bayes law, we can rewrite precision in terms of false positive rate and true positive rate. Specifically,
-\begin{eqnarray*}
-C(r)  & = & P(R = + | S_R > r) \\
-& =  &\frac{P(S_+ > r | R = + ) P(R = + )}{P(S_+ > r | R = + ) P(R = + ) + P(S_- > r | R = - ) P(R = - )}
-\end{eqnarray*}
-In this case, $P(R = + ) = P/(P+N)$ is the proportion of individuals in the positive class and $P(R = - ) = N/(P+N)$ is proportion in the negative class. Substituting $v(r)=P(S_+ > r | R = + )$ (true positive rate) and $u(r) = P(S_- > r | R = - )$  (false positive rate) gives
-\begin{equation}
-C(r) = \frac{P v(r)}{P v(r) + N u(r)} \label{precisionP}
-\end{equation}
-When $N$ is much larger than $P$ then $v(r)$ has to be significantly larger than $u(r)$ for precision to have a large value. It is the ratio of true positives, $v(r)$, to all positives, $v(r)$ and $u(r)$, weighted by the frequency at which individuals are, respectively, positive and negative. 
-
-I propose measuring precision specifically with a value of $r=r_b$, i.e. for a threshold whereby data classified as positive cannot be distinguished from data which truly is positive, i.e. we calculate $C(r_b)$. Evaluating this for the data in figure \ref{fig:Distribution} (a), (d) and (g) we get $C(r_b) \approx  0.87$. This could be considered a reasonably good performance: 87\% of the pictures the algorithm says are cats are in fact cats. For figure \ref{fig:Distribution}  (b), (e) and (h) we get $C(r_b) \approx 0.70$. This is not a great performance, but could be useable in certain applications: 70\% of the pictures the algorithm says are cats are in fact cats. Finally, for the data in figure \ref{fig:Distribution} (c), (f) and (i) we get $C(r_b) \approx  0.53$. This is poor performance, and is probably not very useful in most applications: only 53\% of the pictures the algorithm says are cats are in fact cats.
-
-We can now see why $C(r_b)$ is preferable measure of performance over $A$. When we calculated $A$, the value was highly dependent on the number of `easy' cases. This is not the case with $C(r_b)$. By evaluating precision when the algorithm cannot distinguish reality from its own labelling, we obtain a measure of performance that doesn't depend on the number of `easy' cases. The choice of $r_b$ is theoretically motivated (in the previous section) and gives reasonable results. In the section {\it Relationship to F1 score} we will compare $C(r_b)$ to other known metrics for measuring performance, but before we do this, we look at how we might be flexible about our choice of $r$. 
-
+and decreases to zero as $r$ increases, so that $B(\infty) = 0$. The value $r_b$, the solution $B(r_b)=1/2$, is identified as the point in figure \ref{fig:Bplot} where $B(r)$ crosses the dotted line at $1/2$. This is also the value of $r_b$ plotted as the dotted line in figure \ref{fig:Bplot}. We look at the function $B(r)$ in more detail, and compare it to other measures, in the section {\it Relationship to F1 score}. 
 
 \subsection*{Tuning false positive and true positive rates}
 
 There are two further questions we might ask. 
 \begin{enumerate}
-\item How	often is a member of the positive class detected by the test? This is the true positive rate, $v(r)$.
+\item Howoften is a member of the positive class detected by the test? This is the true positive rate, $v(r)$.
 \item How often is a member of the negative class labelled positive by the test? This is the false positive rate, $u(r)$.
 \end{enumerate}
 Typically, one of these rates will be more important than another. For example, we might, in a medical screening task, accept a higher false positive rate in order to make sure all those who are positive for a condition are identified. In this case we set $r$ to be a smaller value so as to get a high true positive rate, but also (possibly) a high false positive rate.  In a targeted advertising task, where people who might be interested in a product should be identified, we might concentrate on having a lower false positive rate and accept a lower true positive rate, identifying only individuals who are very likely to be interested in the advertised product. In this case we set $r$ to a larger value. In general, there is no escaping from the fact that the measure of performance, and thus the choice of $r$, is informed by the application area.
@@ -340,39 +370,7 @@ is the probability that a member with score exactly $r$ is in the positive class
 
 A similar argument explains why the maxima of $F_1(r)$ and $B_+(r)$ are close. Let $s(r) = N f_N(r) / (P f_P(r))$ be the rate at which false positives are added, relative to true positives, as the threshold is lowered. Maximising $B_+(r) = TP^2/(2P(TP+FP))$ requires that $s(r) = 1 + 2FP/TP$, while maximising $F_1(r) = 2TP/(TP+FP+P)$ requires $s(r) = 1 + (FP+FN)/TP$. The two maxima thus coincide only if $FP = FN$ at that threshold, i.e. if the maximum lies exactly at the precision-recall break-even point.
 
-\subsection*{Two benchmark data sets}
-
-\label{sec:benchmarks}
-
-On a standard benchmark data set of mammograms, two classifiers with the same area under the curve (difference in $A$ of $-0.003$, 95\% interval $-0.044$ to $0.038$) differ by 13 percentage points in precision at the indistinguishability threshold (95\% interval 6 to 21 percentage points), illustrating why $C(r_b)$, rather than $A$, should be used to compare their performance.
-
-To see how the measure behaves on real data, I applied it to two standard benchmark data sets, both obtained from OpenML \cite{vanschoren2013openml}. The Adult data set \cite{becker1996adult} contains 48,842 individuals from the 1994 US census, of whom 24\% have an annual income above \$50,000 (the positive class). The Mammography data set \cite{woods1993comparative} contains 11,183 regions of digitised mammograms, of which 260 (2.3\%) contain microcalcifications. For each data set, I trained a logistic regression and a gradient boosting classifier on a randomly chosen half of the data (stratified by class) and calculated all measures exactly from the scores on the other half. Confidence intervals were obtained by resampling the test set 1000 times, with both classifiers evaluated on the same resampled test sets. The code is available in the same repository as the code for the artificial data sets. The results are shown in table \ref{tab:benchmarks}.
-
-\begin{table}[tp]
-\centering
-\footnotesize
-\setlength{\tabcolsep}{3.5pt}
-\begin{tabular}{lrrcccccc}
-\toprule
-Model & $P$ & Labelled & $C(r_b)$ & $v(r_b)$ & PRBEP & $F_1(r_b)$ & max $F_1$ & $A$ \\
-\midrule
-\multicolumn{9}{l}{\it Adult} \\
-LR & 5844 & 8305 & 0.58 (0.57--0.59) & 0.83 & 0.68 & 0.69 & 0.69 & 0.91 \\
-GB & 5844 & 7532 & 0.64 (0.63--0.65) & 0.83 & 0.72 & 0.72 & 0.73 & 0.93 \\
-\multicolumn{9}{l}{\it Mammography} \\
-LR & 130 & 260 & 0.35 (0.25--0.45) & 0.71 & 0.56 & 0.47 & 0.60 & 0.92 \\
-GB & 130 & 194 & 0.49 (0.36--0.59) & 0.72 & 0.65 & 0.58 & 0.69 & 0.92 \\
-\bottomrule
-\end{tabular}
-\caption{Performance on the test half of two benchmark data sets, for logistic regression (LR) and gradient boosting (GB). $P$ is the number of positives in the test set and `Labelled' the number labelled positive at the indistinguishability threshold $r_b$. $C(r_b)$ is given with a 95\% bootstrap interval. PRBEP is the precision (equal to the recall) at the precision-recall break-even point.}
-\label{tab:benchmarks}
-\end{table}
-
-The measure can be reported in the same plain language as in the rest of this article. For gradient boosting on the Mammography data, for example: {\it when the algorithm is tuned so that the regions it flags cannot be distinguished from the regions that really contain microcalcifications, 49\% of the flagged regions contain microcalcifications} (95\% confidence interval 36--59\%), and 72\% of the regions containing microcalcifications are flagged.
-
-The results confirm the properties derived in the section {\it Relationship to F1 score}. In all four cases more members are labelled positive at $r_b$ than there are members of the positive class, so that recall is larger than precision and $C(r_b)$ is below the precision at the break-even point. For logistic regression on the Mammography data, twice as many regions are labelled positive as there are positives. The ratio $FN/FP$ agreed with $(2\alpha(r_b)-1)C(r_b)$ (equation \ref{eq:FNFP}) to within $0.006$ in all four cases. On the Adult data, the F1-score at $r_b$ is within 0.005 of its maximum, but on the Mammography data it is 0.11--0.13 lower, illustrating that the indistinguishability threshold and the F1-optimal threshold need not coincide.
-
-The data also illustrate the limitation of $A$ discussed in the section {\it Area under the curve}. Removing the half of the test negatives with the lowest scores, i.e. the easiest cases, reduced $A$ by between 0.04 and 0.09 but left $C(r_b)$ unchanged, since none of these members are labelled positive.
+The benchmark results in table \ref{tab:benchmarks} confirm the properties derived in this section. In all four cases more members are labelled positive at $r_b$ than there are members of the positive class, so that recall is larger than precision and $C(r_b)$ is below the precision at the break-even point. For logistic regression on the Mammography data, twice as many regions are labelled positive as there are positives. The ratio $FN/FP$ agreed with $(2\alpha(r_b)-1)C(r_b)$ (equation \ref{eq:FNFP}) to within $0.006$ in all four cases. On the Adult data, the F1-score at $r_b$ is within 0.005 of its maximum, but on the Mammography data it is 0.11--0.13 lower, illustrating that the indistinguishability threshold and the F1-optimal threshold need not coincide.
 
 \section*{Discussion}
 
