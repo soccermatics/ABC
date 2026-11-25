@@ -146,12 +146,9 @@ B(r_b) = \prob(S_P>S_R | S_R>r_b) = 1/2 \label{balanced}
 \end{equation}
 so that, as far as the classifier is concerned, the images in the positive class are indistinguishable from those which we have labelled positive. If we pick a random member of the images we have classified as positive and a random member of the positives, these two images are equally likely to have the higher score. We can thus think of $r_b$ as being the threshold value at which the model cannot distinguish between true positives and labelled positives. We thus refer to $r_b$ as the {\it indistinguishability threshold}. 
 
-This notion of indistinguishability is related to several existing concepts. It is {\it stochastic equality} \cite{vargha2000critique}, which, unlike identical distributions of scores, allows the members labelled positive to have, for example, a larger spread of scores than the positive class. It is the property tested by the Mann--Whitney test \cite{mann1947test}, which compares two groups by how often a randomly chosen member of one scores higher than a randomly chosen member of the other. And, in terms of placement values \cite{hanley1997sampling, pepe2004analysis}, $B(r)$ is the mean proportion of the positive class that scores higher than a member labelled positive, so $B(r_b)=1/2$ places the members labelled positive, on average, where the positive class places itself.
-
-
 The vertical dotted lines in figure \ref{fig:Distribution} show the value of $r_b$ for our nine example score distribution sets. For all nine distributions the lines give a reasonable separation between the scores, lying roughly halfway between the `difficult' negative cases and the positive cases. 
 
-
+This notion of indistinguishability is related to several existing concepts. It is {\it stochastic equality} \cite{vargha2000critique}, which, unlike identical distributions of scores, allows the members labelled positive to have, for example, a larger spread of scores than the positive class. It is also the property tested by the Mann--Whitney test \cite{mann1947test}, which compares two groups by how often a randomly chosen member of one scores higher than a randomly chosen member of the other. And, in terms of placement values \cite{hanley1997sampling, pepe2004analysis}, $B(r)$ is the mean proportion of the positive class that scores higher than a member labelled positive, so $B(r_b)=1/2$ places the members labelled positive, on average, where the positive class places itself.
 
 A misguided (but still sometimes proposed) alternative to choosing $r=r_b$ is to instead choose $r$ such that
  \begin{equation}
@@ -185,16 +182,11 @@ We would argue that it is not the data set that is imbalanced, but this way of l
 
 \label{PIT}
 
-How often is our positive labelling correct when reality and labelling are indistinguishable? To answer this question, we define $C(r)$ to be the precision: the probability that an individual with a score greater than $r$ is in the positive class, i.e. $\prob(R = + | S_R > r)$ , or the probability that a positive labelling is made correctly.  Using Bayes law, we can rewrite precision in terms of false positive rate and true positive rate. Specifically,
-\begin{eqnarray*}
-C(r)  & = & \prob(R = + | S_R > r) \\
-& =  &\frac{\prob(S_R > r | R = + ) \prob(R = + )}{\prob(S_R > r | R = + ) \prob(R = + ) + \prob(S_R > r | R = - ) \prob(R = - )}
-\end{eqnarray*}
-In this case, $\prob(R = + ) = P/(P+N)$ is the proportion of individuals in the positive class and $\prob(R = - ) = N/(P+N)$ is proportion in the negative class. Substituting $v(r)=\prob(S_R > r | R = + )$ (true positive rate) and $u(r) = \prob(S_R > r | R = - )$  (false positive rate) gives
+How often is our positive labelling correct when reality and labelling are indistinguishable? To answer this, we use the precision, $C(r)$: the proportion of members labelled positive (score greater than $r$) that are in the positive class. There are $P v(r)$ true positives and $N u(r)$ false positives, so
 \begin{equation}
-C(r) = \frac{P v(r)}{P v(r) + N u(r)} \label{precisionP}
+C(r) = \frac{P v(r)}{P v(r) + N u(r)}. \label{precisionP}
 \end{equation}
-When $N$ is much larger than $P$ then $v(r)$ has to be significantly larger than $u(r)$ for precision to have a large value. It is the ratio of true positives to all members labelled positive, with the true and false positive rates, $v(r)$ and $u(r)$, weighted by the number of members in, respectively, the positive and negative classes. 
+When $N$ is much larger than $P$, the true positive rate $v(r)$ has to be much larger than the false positive rate $u(r)$ for precision to be high.
 
 We propose measuring precision specifically with a value of $r=r_b$, i.e. for a threshold whereby data classified as positive cannot be distinguished from data which truly is positive, i.e. we calculate $C(r_b)$. Evaluating this for the data in figure \ref{fig:Distribution} (a), (d) and (g) we get $C(r_b) \approx  0.87$. This could be considered a reasonably good performance: 87\% of the pictures the algorithm says are cats are in fact cats. For figure \ref{fig:Distribution}  (b), (e) and (h) we get $C(r_b) \approx 0.70$. This is not a great performance, but could be useable in certain applications: 70\% of the pictures the algorithm says are cats are in fact cats. Finally, for the data in figure \ref{fig:Distribution} (c), (f) and (i) we get $C(r_b) \approx  0.53$. This is poor performance, and is probably not very useful in most applications: only 53\% of the pictures the algorithm says are cats are in fact cats.
 
@@ -391,7 +383,7 @@ where $+$ and $-$ are respectively the events that the chosen individuals are in
 \begin{equation}
 \prob( R = + | S_R>r ) =   \frac{P v(r)}{P v(r) + N u(r)}  \mbox{ and }  \prob( R = - | S_R>r ) =   \frac{N u(r)}{P v(r) + N u(r)} \label{eqn:probbe}
 \end{equation}
-Furthermore,
+The first of these is the precision, $C(r)$, given in equation \ref{precisionP}. Furthermore,
 \begin{eqnarray}
 \prob(S_R < S_P | S_{R} > r ,  R = +   ) & = & \frac{\prob(S_R < S_P \cap S_{R} > r ,  R = +  )}{\prob(S_{R} > r ,  R = +  )} \nonumber \\
 & = & \frac{\int_{t=r}^\infty \int_{s=t}^\infty f_P(t) f_P(s) ds dt}{\int_{t=r}^\infty f_P(t) dt} \nonumber \\
