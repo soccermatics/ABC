@@ -87,6 +87,8 @@ The choice of these data sets is to give a range of difficulty levels. The data 
 
 Let's start by asking the following question about our data: how often does a member of the positive class score higher than a member of the negative class? 
 
+The answer to this question is the area under the ROC curve (AUC). This is a well-known result, first shown by Bamber \cite{bamber1975area} and made widely known by Hanley and McNeil \cite{hanley1982meaning}, who also related the AUC to the Wilcoxon (Mann--Whitney) rank statistic. I retell it here for pedagogical purposes: the argument, which compares the scores of randomly chosen pairs of members, is the same one I use to construct a new measure in the sections that follow.
+
 To measure this we pick one member of the positive class at random and one member of the negative class at random and we will look to see which of them has the highest score. As a concrete example, imagine an algorithm is shown two images, one which contains a cat, another which does not. The task is to pick the image containing the cat. We call this probability 
 \[
 A = P(S_P>S_N)
@@ -111,7 +113,7 @@ A = \int_{r=-\infty}^{\infty}  f_N(r)  \int_{s=r}^{\infty}  f_P(s) ds dr  = \int
 \end{equation}
 We can use this equation to calculate $A$ by numerical integration. 
 
-More importantly, we can also use this formulation to note an equivalence between the $A$ test above and another commonly used measure of accuracy, namely, AUC (the area under the ROC/receiver operator curve). ROC curves plot the false positive rate against the true positive rate, as parametrised curves of $r$. Note that the true positive rate for a given threshold $r$ is given by $v(r)=1-F_P(r)$ and that the false positive rate for a given threshold $r$, is given by $u(r)=1-F_N(r)$. Then we see that
+More importantly, we can also use this formulation to derive the equivalence between the $A$ test above and the most commonly used measure of accuracy, namely, AUC (the area under the ROC/receiver operator curve). ROC curves plot the false positive rate against the true positive rate, as parametrised curves of $r$. Note that the true positive rate for a given threshold $r$ is given by $v(r)=1-F_P(r)$ and that the false positive rate for a given threshold $r$, is given by $u(r)=1-F_N(r)$. Then we see that
 \[
 A  =  \int_{r=-\infty}^{\infty} v(r) f_N(r) dr  
 \]

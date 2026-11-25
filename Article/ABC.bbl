@@ -29,6 +29,16 @@ M.~Majnik and Z.~Bosni{\'c}, ``Roc analysis of classifiers in machine learning:
 Y.~Sasaki {\em et~al.}, ``The truth of the f-measure,'' {\em Teach tutor
   mater}, vol.~1, no.~5, pp.~1--5, 2007.
 
+\bibitem{bamber1975area}
+D.~Bamber, ``The area above the ordinal dominance graph and the area below the
+  receiver operating characteristic graph,'' {\em Journal of Mathematical
+  Psychology}, vol.~12, no.~4, pp.~387--415, 1975.
+
+\bibitem{hanley1982meaning}
+J.~A. Hanley and B.~J. McNeil, ``The meaning and use of the area under a
+  receiver operating characteristic ({ROC}) curve,'' {\em Radiology}, vol.~143,
+  no.~1, pp.~29--36, 1982.
+
 \bibitem{lipton2014optimal}
 Z.~C. Lipton, C.~Elkan, and B.~Naryanaswamy, ``Optimal thresholding of
   classifiers to maximize {F1} measure,'' in {\em Machine Learning and
