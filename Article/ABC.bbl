@@ -1,0 +1,57 @@
+\begin{thebibliography}{10}
+
+\bibitem{smlbook}
+A.~Lindholm, N.~Wahlstr\"om, F.~Lindsten, and T.~B. Sch\"on, {\em Machine
+  Learning - A First Course for Engineers and Scientists}.
+\newblock Cambridge University Press, 2022.
+
+\bibitem{fix1989discriminatory}
+E.~Fix and J.~L. Hodges, ``Discriminatory analysis. nonparametric
+  discrimination: Consistency properties,'' {\em International Statistical
+  Review/Revue Internationale de Statistique}, vol.~57, no.~3, pp.~238--247,
+  1989.
+
+\bibitem{obuchowski2018receiver}
+N.~A. Obuchowski and J.~A. Bullen, ``Receiver operating characteristic (roc)
+  curves: review of methods with applications in diagnostic medicine,'' {\em
+  Physics in Medicine \& Biology}, vol.~63, no.~7, p.~07TR01, 2018.
+
+\bibitem{vanderlooy2008critical}
+S.~Vanderlooy and E.~H{\"u}llermeier, ``A critical analysis of variants of the
+  auc,'' {\em Machine Learning}, vol.~72, pp.~247--262, 2008.
+
+\bibitem{majnik2013roc}
+M.~Majnik and Z.~Bosni{\'c}, ``Roc analysis of classifiers in machine learning:
+  A survey,'' {\em Intelligent data analysis}, vol.~17, no.~3, pp.~531--558,
+  2013.
+
+\bibitem{sasaki2007truth}
+Y.~Sasaki {\em et~al.}, ``The truth of the f-measure,'' {\em Teach tutor
+  mater}, vol.~1, no.~5, pp.~1--5, 2007.
+
+\bibitem{schapire2003boosting}
+R.~E. Schapire, ``The boosting approach to machine learning: An overview,''
+  {\em Nonlinear estimation and classification}, pp.~149--171, 2003.
+
+\bibitem{neyman1933ix}
+J.~Neyman and E.~S. Pearson, ``Ix. on the problem of the most efficient tests
+  of statistical hypotheses,'' {\em Philosophical Transactions of the Royal
+  Society of London. Series A, Containing Papers of a Mathematical or Physical
+  Character}, vol.~231, no.~694-706, pp.~289--337, 1933.
+
+\bibitem{scott2007performance}
+C.~Scott, ``Performance measures for neyman--pearson classification,'' {\em
+  IEEE Transactions on Information Theory}, vol.~53, no.~8, pp.~2852--2863,
+  2007.
+
+\bibitem{chu1999introduction}
+K.~Chu, ``An introduction to sensitivity, specificity, predictive values and
+  likelihood ratios,'' {\em Emergency Medicine}, vol.~11, no.~3, pp.~175--181,
+  1999.
+
+\bibitem{care2018new}
+A.~Care, F.~A. Ramponi, and M.~C. Campi, ``A new classification algorithm with
+  guaranteed sensitivity and specificity for medical applications,'' {\em IEEE
+  Control Systems Letters}, vol.~2, no.~3, pp.~393--398, 2018.
+
+\end{thebibliography}

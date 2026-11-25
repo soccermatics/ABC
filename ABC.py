@@ -15,6 +15,9 @@ import sklearn.linear_model as skl_lm
 import sklearn.discriminant_analysis as skl_da
 import sklearn.neighbors as skl_nb
 
+#Fixed seed so that the values quoted in the article can be reproduced.
+np.random.seed(2023)
+
 Nr=[]
 br_index=[]
 
@@ -89,7 +92,7 @@ for meandiff in mean_differences:
     if ci==2:
         ax2[ci, cj].set_xticks(np.arange(-10,10,step=5))
     else:
-        ax2[ci, cj].set_xticks(np.arange(-20,10,step=100))
+        ax2[ci, cj].set_xticks([])
     
     
     ax2[ci, cj].bar(bins[1:],ncounts,color='g', alpha=0.3)
@@ -100,14 +103,14 @@ for meandiff in mean_differences:
         if cj==0:
             ax2[ci, cj].set_yticks(np.arange(0,1501,step=500))
         else:
-            ax2[ci, cj].set_yticks(np.arange(-100,1501,step=5000))
+            ax2[ci, cj].set_yticks([])
         ax2[ci, cj].text(5,1350,'(%s)' % chr(97+3*ci+cj)) 
     else:
         ax2[ci, cj].set_ylim((0,550))
         if cj==0:
             ax2[ci, cj].set_yticks(np.arange(0,501,step=250))
         else:
-            ax2[ci, cj].set_yticks(np.arange(-100,1501,step=5000))
+            ax2[ci, cj].set_yticks([])
         ax2[ci, cj].text(5,400,'(%s)' % chr(97+3*ci+cj)) 
     
     
@@ -170,11 +173,11 @@ for cj in [0,1,2]:
     if ci==2:
         ax3[ci, cj].set_xticks(np.arange(0,1.1,step=0.5))
     else:
-        ax3[ci, cj].set_xticks(np.arange(-20,10,step=100))
+        ax3[ci, cj].set_xticks([])
     if cj==0:
         ax3[ci, cj].set_yticks(np.arange(0,1.1,step=0.5))
     else:
-        ax3[ci, cj].set_yticks(np.arange(-20,10,step=100))
+        ax3[ci, cj].set_yticks([])
     if ((ci==1) & (cj==0)):
         ax3[ci, cj].set_ylabel('True Positive Rate: $v(r)$')
     if ((ci==2) & (cj==1)):
@@ -204,8 +207,8 @@ for cj in [0,1,2]:
     #Calculate B-test using sampling method and integral 
     ########################################################################
 
-    p=score_positives[cj*3+cj]
-    n=score_negatives[cj*3+cj]    
+    p=score_positives[cj*3+ci]
+    n=score_negatives[cj*3+ci]
     #This is the B(r) in the article.
     B_test=np.zeros(len(rvals))
     #This is the B_+(r) in the article.
@@ -293,11 +296,11 @@ for cj in [0,1,2]:
     if ci==2:
         ax5[ci, cj].set_xticks(np.arange(-10,10,step=5))
     else:
-        ax5[ci, cj].set_xticks(np.arange(-20,10,step=100))
+        ax5[ci, cj].set_xticks([])
     if cj==0:
         ax5[ci, cj].set_yticks(np.arange(0,1.1,step=0.5))
     else:
-        ax5[ci, cj].set_yticks(np.arange(-20,10,step=100))
+        ax5[ci, cj].set_yticks([])
         
     if ((ci==1) & (cj==0)):
         ax5[ci, cj].set_ylabel('$B(r)$')
@@ -326,7 +329,7 @@ for cj in [0,1,2]:
     ax[ci, cj].spines['top'].set_visible(False)
     ax[ci, cj].spines['right'].set_visible(False)
     if ((ci==1) & (cj==0)):
-        ax[ci, cj].set_ylabel('Recall: $C(r)$')
+        ax[ci, cj].set_ylabel('$C(r)$')
     if ((ci==2) & (cj==1)):
         ax[ci, cj].set_xlabel(" $B(r)$") 
 
@@ -336,24 +339,27 @@ for cj in [0,1,2]:
     if ci==2:
         ax[ci, cj].set_xticks(np.arange(0,1.1,step=0.5))
     else:
-        ax[ci, cj].set_xticks(np.arange(-20,10,step=100))
+        ax[ci, cj].set_xticks([])
     if cj==0:
         ax[ci, cj].set_yticks(np.arange(0,1.1,step=0.2))
     else:
-        ax[ci, cj].set_yticks(np.arange(-20,10,step=100))
+        ax[ci, cj].set_yticks([])
 
     
     max_F1=np.nanargmax(2*Sensitivity*TPR/(Sensitivity+TPR))
     rbalance=np.nansum(B_test_analytic>0.5)
 
-    print(max_F1)
-    print(rbalance)
-
     lower=0.4
     upper=0.6
-    
+
+    #Index of r_60 (where B(r)=0.6) and r_40 (where B(r)=0.4).
     forty=np.nansum(B_test_analytic>upper)
     sixty=np.nansum(B_test_analytic>lower)
+
+    #Values quoted in the article. Note that 'Sensitivity' holds the precision C(r).
+    print('(%s) A=%.3f  r_b=%.1f  C(r_b)=%.3f  C(r_60)=%.3f  C(r_40)=%.3f  r at max F1=%.1f'
+          % (chr(97+3*ci+cj), AUC, rvals[rbalance], Sensitivity[rbalance],
+             Sensitivity[forty], Sensitivity[sixty], rvals[max_F1]))
     
     #Store the integral of area between 40 and 60
     #Just an idea.
