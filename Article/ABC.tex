@@ -194,7 +194,7 @@ When $N$ is much larger than $P$ then $v(r)$ has to be significantly larger than
 
 I propose measuring precision specifically with a value of $r=r_b$, i.e. for a threshold whereby data classified as positive cannot be distinguished from data which truly is positive, i.e. we calculate $C(r_b)$. Evaluating this for the data in figure \ref{fig:Distribution} (a), (d) and (g) we get $C(r_b) \approx  0.87$. This could be considered a reasonably good performance: 87\% of the pictures the algorithm says are cats are in fact cats. For figure \ref{fig:Distribution}  (b), (e) and (h) we get $C(r_b) \approx 0.70$. This is not a great performance, but could be useable in certain applications: 70\% of the pictures the algorithm says are cats are in fact cats. Finally, for the data in figure \ref{fig:Distribution} (c), (f) and (i) we get $C(r_b) \approx  0.53$. This is poor performance, and is probably not very useful in most applications: only 53\% of the pictures the algorithm says are cats are in fact cats.
 
-We can now see why $C(r_b)$ is preferable measure of performance over $A$. When we calculated $A$, the value was highly dependent on the number of `easy' cases. This is not the case with $C(r_b)$. By evaluating precision when the algorithm cannot distinguish reality from its own labelling, we obtain a measure of performance that doesn't depend on the number of `easy' cases. The choice of $r_b$ is theoretically motivated (in the previous section) and gives reasonable results. Before looking at how $B(r)$ can be calculated, and at how $C(r_b)$ relates to other measures of performance, we test it on real data. 
+We can now see why $C(r_b)$ is preferable measure of performance over $A$. When we calculated $A$, the value was highly dependent on the number of `easy' cases. This is not the case with $C(r_b)$. By evaluating precision when the algorithm cannot distinguish reality from its own labelling, we obtain a measure of performance that doesn't depend on the number of `easy' cases. The choice of $r_b$ is theoretically motivated (in the previous section) and gives reasonable results. Before looking at how $C(r_b)$ relates to other measures of performance, we test it on real data. 
 
 
 \subsection*{Two benchmark data sets}
@@ -228,51 +228,6 @@ GB & 130 & 194 & 0.49 (0.36--0.59) & 0.72 & 0.65 & 0.58 & 0.69 & 0.92 \\
 The measure can be reported in the same plain language as in the rest of this article. For gradient boosting on the Mammography data, for example: {\it when the algorithm is tuned so that the regions it flags cannot be distinguished from the regions that really contain microcalcifications, 49\% of the flagged regions contain microcalcifications} (95\% confidence interval 36--59\%), and 72\% of the regions containing microcalcifications are flagged.
 
 The data also illustrate the limitation of $A$ discussed in the section {\it Area under the curve}. Removing the half of the test negatives with the lowest scores, i.e. the easiest cases, reduced $A$ by between 0.04 and 0.09 but left $C(r_b)$ unchanged, since none of these members are labelled positive.
-
-\subsection*{Properties and implementation of $B(r)$}
-
-We now return to the function $B(r)$ and look at how it can be calculated. As with $A$ the pairwise nature of the test means it is straightforward to implement a randomised version of $B(r)$. For each value of $r$ we sample, with or without replacement, $n$ members of the positive class. Then we sample $n$ members from the set labelled positive when the threshold is greater than $r$. Pairwise comparison of the scores of these two sets gives $B(r)$ . This method becomes less reliable for large values of $r$, since the size of the positive labelled class becomes small and all the comparisons will be made to a small number of positively labelled images. 
-
-Another way to calculate $B(r)$, following the AUC approach to estimating $A$, is by integration over the true positive rate, $v(r)$, and the false positive rate, $u(r)$. We now derive the appropriate integral. First, let $S_R$ be the score of a randomly chosen member of the data set and $S_P$ the score of a randomly chosen member of the positive class. The probability that $S_R$ is less than $S_P$, given that $S_R$ is greater than $r$, is then written as $P(S_R<S_P | S_R>r)$. It is this probability we call $B(r)$.
-
-Our approach to finding an expression for $B(r)$ is to look separately at the case where $S_R$ is from a negative member and a positive member. We can use the law of total probability to give 
-\begin{eqnarray}
-B(r) &= &P(S_R < S_P | S_R>r) \nonumber \\
-& = & P(S_R < S_P | S_{R} > r , R = + ) \cdot P( R = + | S_R > r )  \nonumber \\
-&&  + P(S_R < S_P | S_R>r, R= - ) \cdot P( R = - | S_R>r ) \label{eqn:totprobstep} 
-\end{eqnarray}
-where $+$ and $-$ are respectively the events that the chosen individuals are in the positive and negative classes. If an individual is chosen at random then 
-\begin{equation}
-P( R = + | S_R>r ) =   \frac{P v(r)}{P v(r) + N u(r)}  \mbox{ and }  P( R = - | S_R>r ) =   \frac{N u(r)}{P v(r) + N u(r)} \label{eqn:probbe}
-\end{equation}
-Furthermore,
-\begin{eqnarray}
-P(S_R < S_P | S_{R} > r ,  R = +   ) & = & \frac{P(S_R < S_P \cap S_{R} > r ,  R = +  )}{P(S_{R} > r ,  R = +  )} \nonumber \\
-& = & \frac{\int_{t=r}^\infty \int_{s=t}^\infty f_P(t) f_P(s) ds dt}{\int_{t=r}^\infty f_P(t) dt} \nonumber \\
-& = & \frac{\int_{t=r}^\infty f_P(t) v(t) dt}{v(r)} \label{eqn:posstep}
-\end{eqnarray}
-Since the derivative of $v(r)$ is equal to $-f_P(r)$ we can change variable to $v$ in the integral in the numerator to get
- \begin{eqnarray}
-\int_{t=r}^\infty f_P(t) v(t) dt =  \int_{t=r}^\infty v(t) \left( -v'(t) \right) dt = \int_{0}^{v(r)} v \, dv = \frac{v(r)^2}{2}
-\end{eqnarray}
-and thus simplify to get
-\begin{equation}
-P(S_R < S_P | S_{R} > r ,  R = +   ) = \frac{v(r)}{2} \label{eqn:posstepfinal}
-\end{equation}
-We can follow similar steps for the case that $R$ is negative to get,
-\begin{equation}
-P(S_R < S_P | S_{R} > r ,  R = -   ) = \frac{\int_{t=r}^\infty f_N(t) v(t) dt}{u(r)}  \label{eqn:negstep}
-\end{equation}
-Substituting \ref{eqn:probbe}, \ref{eqn:posstepfinal} and \ref{eqn:negstep} in to equation \ref{eqn:totprobstep} gives
-\begin{equation}
-B(r) = \frac{P v(r)^2/2 + N \int_{t=r}^\infty f_N(t) v(t) dt }{P v(r) + N u(r)}
- \label{eqn:Bdef}
-\end{equation}
-This equation is plotted as the black line in figure \ref{fig:Bplot}. We see that it goes towards a maximum when $r \rightarrow -\infty$, taking the value
-\[
-B(-\infty) = \frac{P/2 + N A}{N + P} 
-\]
-and decreases to zero as $r$ increases, so that $B(\infty) = 0$. The value $r_b$, the solution $B(r_b)=1/2$, is identified as the point in figure \ref{fig:Bplot} where $B(r)$ crosses the dotted line at $1/2$. This is also the value of $r_b$ plotted as the dotted line in figure \ref{fig:Bplot}. We look at the function $B(r)$ in more detail, and compare it to other measures, in the section {\it Relationship to F1 score}. 
 
 \subsection*{Tuning false positive and true positive rates}
 
@@ -311,7 +266,12 @@ Figure \ref{fig:balance} shows $C(r)$ (black line) plotted against $r$ for our n
 
 \label{sec:others}
 
-In this section I derive exact relationships between $B(r)$, precision, recall and the F1-score. To do this, I first break equation  $B(r)$ in to two components,
+In this section I derive exact relationships between $B(r)$, precision, recall and the F1-score. In the Appendix, I show that $B(r)$ can be written in terms of the true positive rate, $v(r)$, the false positive rate, $u(r)$, and the density of scores of the negative class, $f_N(t)$, as
+\begin{equation}
+B(r) = \frac{P v(r)^2/2 + N \int_{t=r}^\infty f_N(t) v(t) dt }{P v(r) + N u(r)} .
+ \label{eqn:Bdef}
+\end{equation}
+To make the relationships clear, I first break equation \ref{eqn:Bdef} in to two components,
 \begin{equation}
 B(r) = B_+(r) + B_-(r)  \label{eqn:Bpmdef} 
 \end{equation}
@@ -391,6 +351,47 @@ That said, the development of many machine learning algorithms occurs in a way t
 \section*{Acknowledgements}
 
 Thanks to Daniel Gedon and Andre Teixeira for feedback. 
+
+\section*{Appendix: Properties and implementation of $B(r)$}
+\label{app:B}
+
+In this appendix I show how $B(r)$ can be calculated. As with $A$ the pairwise nature of the test means it is straightforward to implement a randomised version of $B(r)$. For each value of $r$ we sample, with or without replacement, $n$ members of the positive class. Then we sample $n$ members from the set labelled positive when the threshold is greater than $r$. Pairwise comparison of the scores of these two sets gives $B(r)$ . This method becomes less reliable for large values of $r$, since the size of the positive labelled class becomes small and all the comparisons will be made to a small number of positively labelled images. 
+
+Another way to calculate $B(r)$, following the AUC approach to estimating $A$, is by integration over the true positive rate, $v(r)$, and the false positive rate, $u(r)$. We now derive the appropriate integral. First, let $S_R$ be the score of a randomly chosen member of the data set and $S_P$ the score of a randomly chosen member of the positive class. The probability that $S_R$ is less than $S_P$, given that $S_R$ is greater than $r$, is then written as $P(S_R<S_P | S_R>r)$. It is this probability we call $B(r)$.
+
+Our approach to finding an expression for $B(r)$ is to look separately at the case where $S_R$ is from a negative member and a positive member. We can use the law of total probability to give 
+\begin{eqnarray}
+B(r) &= &P(S_R < S_P | S_R>r) \nonumber \\
+& = & P(S_R < S_P | S_{R} > r , R = + ) \cdot P( R = + | S_R > r )  \nonumber \\
+&&  + P(S_R < S_P | S_R>r, R= - ) \cdot P( R = - | S_R>r ) \label{eqn:totprobstep} 
+\end{eqnarray}
+where $+$ and $-$ are respectively the events that the chosen individuals are in the positive and negative classes. If an individual is chosen at random then 
+\begin{equation}
+P( R = + | S_R>r ) =   \frac{P v(r)}{P v(r) + N u(r)}  \mbox{ and }  P( R = - | S_R>r ) =   \frac{N u(r)}{P v(r) + N u(r)} \label{eqn:probbe}
+\end{equation}
+Furthermore,
+\begin{eqnarray}
+P(S_R < S_P | S_{R} > r ,  R = +   ) & = & \frac{P(S_R < S_P \cap S_{R} > r ,  R = +  )}{P(S_{R} > r ,  R = +  )} \nonumber \\
+& = & \frac{\int_{t=r}^\infty \int_{s=t}^\infty f_P(t) f_P(s) ds dt}{\int_{t=r}^\infty f_P(t) dt} \nonumber \\
+& = & \frac{\int_{t=r}^\infty f_P(t) v(t) dt}{v(r)} \label{eqn:posstep}
+\end{eqnarray}
+Since the derivative of $v(r)$ is equal to $-f_P(r)$ we can change variable to $v$ in the integral in the numerator to get
+ \begin{eqnarray}
+\int_{t=r}^\infty f_P(t) v(t) dt =  \int_{t=r}^\infty v(t) \left( -v'(t) \right) dt = \int_{0}^{v(r)} v \, dv = \frac{v(r)^2}{2}
+\end{eqnarray}
+and thus simplify to get
+\begin{equation}
+P(S_R < S_P | S_{R} > r ,  R = +   ) = \frac{v(r)}{2} \label{eqn:posstepfinal}
+\end{equation}
+We can follow similar steps for the case that $R$ is negative to get,
+\begin{equation}
+P(S_R < S_P | S_{R} > r ,  R = -   ) = \frac{\int_{t=r}^\infty f_N(t) v(t) dt}{u(r)}  \label{eqn:negstep}
+\end{equation}
+Substituting \ref{eqn:probbe}, \ref{eqn:posstepfinal} and \ref{eqn:negstep} in to equation \ref{eqn:totprobstep} gives equation \ref{eqn:Bdef} in the section {\it Relationship to F1 score}. This equation is plotted as the black line in figure \ref{fig:Bplot}. We see that it goes towards a maximum when $r \rightarrow -\infty$, taking the value
+\[
+B(-\infty) = \frac{P/2 + N A}{N + P} 
+\]
+and decreases to zero as $r$ increases, so that $B(\infty) = 0$. The value $r_b$, the solution $B(r_b)=1/2$, is identified as the point in figure \ref{fig:Bplot} where $B(r)$ crosses the dotted line at $1/2$. This is also the value of $r_b$ plotted as the dotted line in figure \ref{fig:Bplot}.
 
 \bibliographystyle{ieeetr}
 %\bibliographystyle{plain}
