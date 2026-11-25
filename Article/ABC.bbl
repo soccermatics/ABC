@@ -159,10 +159,6 @@ K.~S. Woods, C.~C. Doss, K.~W. Bowyer, J.~L. Solka, C.~E. Priebe, and W.~P.
   of Pattern Recognition and Artificial Intelligence}, vol.~7, no.~6,
   pp.~1417--1436, 1993.
 
-\bibitem{schapire2003boosting}
-R.~E. Schapire, ``The boosting approach to machine learning: An overview,''
-  {\em Nonlinear estimation and classification}, pp.~149--171, 2003.
-
 \bibitem{neyman1933ix}
 J.~Neyman and E.~S. Pearson, ``Ix. on the problem of the most efficient tests
   of statistical hypotheses,'' {\em Philosophical Transactions of the Royal
@@ -183,5 +179,9 @@ K.~Chu, ``An introduction to sensitivity, specificity, predictive values and
 A.~Care, F.~A. Ramponi, and M.~C. Campi, ``A new classification algorithm with
   guaranteed sensitivity and specificity for medical applications,'' {\em IEEE
   Control Systems Letters}, vol.~2, no.~3, pp.~393--398, 2018.
+
+\bibitem{schapire2003boosting}
+R.~E. Schapire, ``The boosting approach to machine learning: An overview,''
+  {\em Nonlinear estimation and classification}, pp.~149--171, 2003.
 
 \end{thebibliography}
