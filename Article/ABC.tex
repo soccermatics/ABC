@@ -261,44 +261,30 @@ Figure \ref{fig:balance} shows $C(r)$ (black line) plotted against $r$ for our n
 
 \label{sec:others}
 
-In this section we derive exact relationships between $B(r)$, precision, recall and the F1-score. In the Appendix, we show that $B(r)$ can be written in terms of the true positive rate, $v(r)$, the false positive rate, $u(r)$, and the density of scores of the negative class, $f_N(t)$, as
+In this section we derive exact relationships between $B(r)$, precision, recall and the F1-score. We first need one further quantity. Let
 \begin{equation}
-B(r) = \frac{P v(r)^2/2 + N \int_{t=r}^\infty f_N(t) v(t) dt }{P v(r) + N u(r)} .
- \label{eqn:Bdef}
+\alpha(r) = \prob(S_P > S_N \mid S_P > r, S_N > r)  \label{eq:alpha}
 \end{equation}
-To make the relationships clear, we first break equation \ref{eqn:Bdef} in to two components,
+be the probability that a randomly chosen true positive scores higher than a randomly chosen false positive, when the threshold is $r$. In other words, $\alpha(r)$ is the area under the curve computed using only those members labelled positive, so that $\alpha(-\infty)=A$.
+
+Recall that $B(r)$ is the probability that a randomly chosen member of the positive class scores higher than a randomly chosen member labelled positive. The member labelled positive is either a true positive, with probability $C(r)$, or a false positive, with probability $1-C(r)$. If it is a true positive, the member of the positive class must also score above $r$, which happens with probability $v(r)$. Both are then members of the positive class scoring above $r$, so each is equally likely to have the higher score, giving probability $v(r)/2$. If it is a false positive, the member of the positive class must score above $r$, which happens with probability $v(r)$, and must then outscore the false positive, which happens with probability $\alpha(r)$. Combining the two cases gives
 \begin{equation}
-B(r) = B_+(r) + B_-(r)  \label{eqn:Bpmdef} 
+B(r) = v(r) \left( \frac{C(r)}{2} + \alpha(r) \left(1 - C(r)\right) \right).  \label{eq:Bexact}
 \end{equation}
-such that
+In words, $B(r)$ is the average, over all members labelled positive, of the proportion of the positive class which scores higher than that member. For a true positive this proportion is, on average, $v(r)/2$; for a false positive it is, on average, $\alpha(r) v(r)$. These two averages are weighted by the proportion of labelled members that are, respectively, true positives and false positives. In the Appendix we derive the same expression by integrating over the score distributions.
+
+We write the two terms of equation \ref{eq:Bexact} as
 \begin{equation}
-B_+(r) =  \frac{P v(r)^2/2}{P v(r) + N u(r)} = \frac{1}{2} v(r) C(r)   \label{eq:poscomponentB}
+B_+(r) = \frac{1}{2} v(r) C(r) \mbox{ and } B_-(r) = v(r) \alpha(r) \left(1 - C(r)\right), \label{eq:poscomponentB}
 \end{equation}
-and 
-\begin{equation}
-B_-(r) = \frac{N \int_{t=r}^\infty f_N(t) v(t) dt }{P v(r) + N u(r)}
- \label{eq:negcomponentB}
-\end{equation}
-These terms are plotted in figure \ref{fig:Bplot2}. We now look at these two terms individually.
+the contributions from true positives and from false positives. The first is the precision multiplied by the true positive rate (recall), divided by two. Both terms are plotted in figure \ref{fig:Bplot2}.
 
 \begin{figure}[tp]
 \centering
 \includegraphics[scale=1]{Figures/Bplot2.pdf}
-\caption{Plot of $B(r)$ for our 9 example data sets. The black line is $B(r)$. The dotted line at $1/2$ indicates the value at which the model is balanced. The yellow line is the component $B_+(r)$ (equation \ref{eq:poscomponentB}) and the green line is $B_-(r)$ (equation \ref{eq:negcomponentB}).  The red line is the $F_1(r)$ score (equation \ref{eq:F1}).}
+\caption{Plot of $B(r)$ for our 9 example data sets. The black line is $B(r)$. The dotted line at $1/2$ indicates the value at which the model is balanced. The yellow line is the component $B_+(r)$ and the green line is $B_-(r)$ (equation \ref{eq:poscomponentB}).  The red line is the $F_1(r)$ score (equation \ref{eq:F1}).}
 \label{fig:Bplot2}
 \end{figure}
-
-Equation $B_+(r)$ is the precision multiplied by the true positive rate (recall), divided by two.
-
-\paragraph{An AUC for the labelled members.} To interpret $B_-(r)$, define
-\begin{equation}
-\alpha(r) = \prob(S_P > S_N \mid S_P > r, S_N > r) = \frac{\int_{t=r}^\infty f_N(t) v(t) dt}{u(r) v(r)}  \label{eq:alpha}
-\end{equation}
-which is the probability that a randomly chosen true positive scores higher than a randomly chosen false positive, when the threshold is $r$. The numerator is $\prob(S_P > S_N, S_N > r)$, since $S_P>S_N>r$ implies that $S_P>r$, and the denominator is $\prob(S_P>r)\prob(S_N>r)$. In other words, $\alpha(r)$ is the area under the curve computed using only those members labelled positive, with $\alpha(-\infty)=A$. Since $1-C(r) = N u(r)/(P v(r) + N u(r))$, equation \ref{eq:negcomponentB} becomes $B_-(r) = v(r)\, \alpha(r) \left(1 - C(r)\right)$, and thus
-\begin{equation}
-B(r) = v(r) \left( \frac{C(r)}{2} + \alpha(r) \left(1 - C(r)\right) \right).  \label{eq:Bexact}
-\end{equation}
-This equation has a simple interpretation. $B(r)$ is the average, over all members labelled positive, of the proportion of the positive class which scores higher than that member. For a true positive this proportion is, on average, $v(r)/2$; for a false positive it is, on average, $\alpha(r) v(r)$. These two averages are weighted by the proportion of labelled members that are, respectively, true positives, $C(r)$, and false positives, $1-C(r)$.
 
 \paragraph{Errors at the indistinguishability threshold.} It is useful to write equation \ref{eq:Bexact} in terms of the expected number of true positives, $TP = P v(r)$, false positives, $FP = N u(r)$, and false negatives, $FN = P (1 - v(r))$. Then $v(r) = TP/(TP+FN)$ and $C(r) = TP/(TP+FP)$, and setting $B(r_b)=1/2$ in equation \ref{eq:Bexact} gives
 \[
@@ -400,7 +386,16 @@ We can follow similar steps for the case that $R$ is negative to get,
 \begin{equation}
 \prob(S_R < S_P | S_{R} > r ,  R = -   ) = \frac{\int_{t=r}^\infty f_N(t) v(t) dt}{u(r)}  \label{eqn:negstep}
 \end{equation}
-Substituting \ref{eqn:probbe}, \ref{eqn:posstepfinal} and \ref{eqn:negstep} in to equation \ref{eqn:totprobstep} gives equation \ref{eqn:Bdef} in the section {\it Relationship to F1 score}. This equation is plotted as the black line in figure \ref{fig:Bplot}. As $r \rightarrow -\infty$, $v(r)$ and $u(r)$ tend to one and $\int_{t=r}^\infty f_N(t) v(t) dt$ tends to $A$ (equation \ref{eq:SPgreaterSN2}), so that
+Substituting \ref{eqn:probbe}, \ref{eqn:posstepfinal} and \ref{eqn:negstep} in to equation \ref{eqn:totprobstep} gives
+\begin{equation}
+B(r) = \frac{P v(r)^2/2 + N \int_{t=r}^\infty f_N(t) v(t) dt }{P v(r) + N u(r)} .
+ \label{eqn:Bdef}
+\end{equation}
+The numerator in equation \ref{eqn:negstep} is $\prob(S_P > S_N, S_N > r)$, since $S_P>S_N>r$ implies that $S_P>r$. Dividing by $\prob(S_P>r)\prob(S_N>r) = v(r) u(r)$ gives the integral form of equation \ref{eq:alpha},
+\begin{equation}
+\alpha(r) = \frac{\int_{t=r}^\infty f_N(t) v(t) dt}{u(r) v(r)} ,
+\end{equation}
+so that equation \ref{eqn:negstep} equals $\alpha(r) v(r)$ and equation \ref{eqn:Bdef} is the same as equation \ref{eq:Bexact}. Equation \ref{eqn:Bdef} is plotted as the black line in figure \ref{fig:Bplot}. As $r \rightarrow -\infty$, $v(r)$ and $u(r)$ tend to one and $\int_{t=r}^\infty f_N(t) v(t) dt$ tends to $A$ (equation \ref{eq:SPgreaterSN2}), so that
 \[
 B(-\infty) = \frac{P/2 + N A}{N + P} 
 \]
