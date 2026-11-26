@@ -129,7 +129,7 @@ for name, mname, m, lo, hi, m2 in rows:
           % (name, mname, m['P'], m['k_b'], m['C'], lo, hi, m['v'], m['alpha'], m['FN_FP'],
              m['PRBEP'], m['F1_rb'], m['F1max'], m['A'], m2['A']))
     assert abs(m2['C'] - m['C']) < 1e-12, 'C(r_b) should not change when easy negatives are removed'
-    print('%35s check: FN/FP = %.4f, (2 alpha - 1) C = %.4f' % ('', m['FN_FP'], (2 * m['alpha'] - 1) * m['C']))
+    print('%35s check: v(r_b) = %.4f, 1/(C + 2 alpha (1 - C)) = %.4f' % ('', m['v'], 1 / (m['C'] + 2 * m['alpha'] * (1 - m['C']))))
 
 print('\nPaired bootstrap, gradient boosting minus logistic regression:')
 for name, key, mean, lo, hi in diffs:

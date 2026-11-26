@@ -20,7 +20,7 @@ The LaTeX source, bibliography and figures are in `Article/`, along with the com
 
 ### Changes since the arXiv version (v1, November 2023)
 
-The section *Relationship to F1 score* (previously *Similarity to F1 score*) replaces the earlier informal comparison with exact results. $B(r)$ decomposes into precision, recall and an AUC computed on the labelled members only. At the indistinguishability threshold, FN/FP equals $(2\alpha-1)C$. As a result, $r_b$ always lies below the precision–recall break-even point, and recall and F1 at $r_b$ follow from precision and $\alpha$. The section also shows why the F1-maximising threshold coincides with $r_b$ only in special cases.
+The section *Relationship to F1 score* (previously *Similarity to F1 score*) replaces the earlier informal comparison with exact results. $B(r)$ decomposes into precision, recall and an AUC computed on the labelled members only. At the indistinguishability threshold, recall equals $1/(C + 2\alpha(1-C))$, so recall and F1 at $r_b$ follow from precision and $\alpha$. As a result, recall always exceeds precision at $r_b$, which lies below the precision–recall break-even point. The section also shows why the F1-maximising threshold coincides with $r_b$ only in special cases.
 
 A new section, *Two benchmark data sets*, applies the measure to two benchmark data sets. On the Mammography data, the two classifiers have the same AUC, but precision at the indistinguishability threshold is 0.13 higher for gradient boosting (95% CI 0.06 to 0.21).
 
