@@ -159,11 +159,29 @@ K.~S. Woods, C.~C. Doss, K.~W. Bowyer, J.~L. Solka, C.~E. Priebe, and W.~P.
   of Pattern Recognition and Artificial Intelligence}, vol.~7, no.~6,
   pp.~1417--1436, 1993.
 
+\bibitem{altman1994diagnostic}
+D.~G. Altman and J.~M. Bland, ``Diagnostic tests 1: Sensitivity and
+  specificity,'' {\em BMJ}, vol.~308, no.~6943, p.~1552, 1994.
+
+\bibitem{fawcett2006introduction}
+T.~Fawcett, ``An introduction to roc analysis,'' {\em Pattern recognition
+  letters}, vol.~27, no.~8, pp.~861--874, 2006.
+
 \bibitem{neyman1933ix}
 J.~Neyman and E.~S. Pearson, ``Ix. on the problem of the most efficient tests
   of statistical hypotheses,'' {\em Philosophical Transactions of the Royal
   Society of London. Series A, Containing Papers of a Mathematical or Physical
   Character}, vol.~231, no.~694-706, pp.~289--337, 1933.
+
+\bibitem{scott2005neyman}
+C.~Scott and R.~Nowak, ``A neyman-pearson approach to statistical learning,''
+  {\em IEEE Transactions on Information Theory}, vol.~51, no.~11,
+  pp.~3806--3819, 2005.
+
+\bibitem{tong2018neyman}
+X.~Tong, Y.~Feng, and J.~J. Li, ``Neyman-pearson classification algorithms and
+  {NP} receiver operating characteristics,'' {\em Science Advances}, vol.~4,
+  no.~2, p.~eaao1659, 2018.
 
 \bibitem{scott2007performance}
 C.~Scott, ``Performance measures for neyman--pearson classification,'' {\em
