@@ -261,55 +261,43 @@ Figure \ref{fig:balance} shows $C(r)$ (black line) plotted against $r$ for our n
 
 \label{sec:others}
 
-In this section we derive exact relationships between $B(r)$, precision, recall and the F1-score. We first need one further quantity. Let
+Precision and recall pull in opposite directions. Lowering the threshold finds more members of the positive class, increasing recall, $v(r)$, but also labels more negatives as positive, reducing precision, $C(r)$. Reporting only one of them can therefore be misleading: labelling every member positive gives perfect recall, and labelling only the single highest-scoring member can give perfect precision. The F1-score combines the two into a single number. It is their harmonic mean,
+\begin{equation}
+F_1(r) =  \frac{2 C(r) v(r)}{C(r) + v(r)} = \frac{2 TP}{2 TP + FP + FN} ,  \label{eq:F1}
+\end{equation}
+where $TP = P v(r)$, $FP = N u(r)$ and $FN = P (1 - v(r))$ are the expected numbers of true positives, false positives and false negatives. It is high only when both precision and recall are high. This is why the F1-score is widely used, particularly in information retrieval and natural language processing \cite{chinchor1993muc, manning2008introduction, sasaki2007truth}, and why the threshold which maximises it is a common choice \cite{lipton2014optimal}. But, as we noted in the Introduction, it has no simple interpretation in words \cite{hand2018note}.
+
+\paragraph{$B(r)$ also combines precision and recall.} To see this, we need one further quantity. Let
 \begin{equation}
 \alpha(r) = \prob(S_P > S_N \mid S_P > r, S_N > r)  \label{eq:alpha}
 \end{equation}
-be the probability that a randomly chosen true positive scores higher than a randomly chosen false positive, when the threshold is $r$. In other words, $\alpha(r)$ is the area under the curve computed using only those members labelled positive, so that $\alpha(-\infty)=A$.
-
-Recall that $B(r)$ is the probability that a randomly chosen member of the positive class scores higher than a randomly chosen member labelled positive. The member labelled positive is either a true positive, with probability $C(r)$, or a false positive, with probability $1-C(r)$. If it is a true positive, the member of the positive class must also score above $r$, which happens with probability $v(r)$. Both are then members of the positive class scoring above $r$, so each is equally likely to have the higher score, giving probability $v(r)/2$. If it is a false positive, the member of the positive class must score above $r$, which happens with probability $v(r)$, and must then outscore the false positive, which happens with probability $\alpha(r)$. Combining the two cases gives
+be the probability that a randomly chosen true positive scores higher than a randomly chosen false positive. In other words, $\alpha(r)$ is the area under the curve computed using only those members labelled positive, so that $\alpha(-\infty)=A$. Now, the member labelled positive in the comparison that defines $B(r)$ is either a true positive, with probability $C(r)$, or a false positive, with probability $1-C(r)$. In both cases, the member of the positive class can only score higher if it also scores above $r$, which happens with probability $v(r)$. If the labelled member is a true positive, both are then members of the positive class scoring above $r$, and each is equally likely to have the higher score. If it is a false positive, the member of the positive class has the higher score with probability $\alpha(r)$. Combining the two cases gives
 \begin{equation}
-B(r) = v(r) \left( \frac{C(r)}{2} + \alpha(r) \left(1 - C(r)\right) \right).  \label{eq:Bexact}
+B(r) = v(r) \left( \frac{C(r)}{2} + \alpha(r) \left(1 - C(r)\right) \right) = B_+(r) + B_-(r),  \label{eq:Bexact}
 \end{equation}
-In words, $B(r)$ is the average, over all members labelled positive, of the proportion of the positive class which scores higher than that member. For a true positive this proportion is, on average, $v(r)/2$; for a false positive it is, on average, $\alpha(r) v(r)$. These two averages are weighted by the proportion of labelled members that are, respectively, true positives and false positives. In the Appendix we derive the same expression by integrating over the score distributions.
-
-We write the two terms of equation \ref{eq:Bexact} as
-\begin{equation}
-B_+(r) = \frac{1}{2} v(r) C(r) \mbox{ and } B_-(r) = v(r) \alpha(r) \left(1 - C(r)\right), \label{eq:poscomponentB}
-\end{equation}
-the contributions from true positives and from false positives. The first is the precision multiplied by the true positive rate (recall), divided by two. Both terms are plotted in figure \ref{fig:Bplot2}.
+where $B_+(r) = v(r) C(r)/2$ is the contribution from true positives and $B_-(r) = v(r) \alpha(r) (1 - C(r))$ the contribution from false positives. (In the Appendix we derive the same expression by integrating over the score distributions.) Thus, like the F1-score, $B(r)$ is built from recall and precision: it is recall multiplied by a weighted average of $1/2$ and $\alpha(r)$, with weights given by the precision. The first term, $B_+(r)$, is half the product of precision and recall, the same ingredients as the F1-score, which is their product divided by their mean. Figure \ref{fig:Bplot2} shows $B(r)$, its two components and the F1-score for our nine data sets.
 
 \begin{figure}[tp]
 \centering
 \includegraphics[scale=1]{Figures/Bplot2.pdf}
-\caption{Plot of $B(r)$ for our 9 example data sets. The black line is $B(r)$. The dotted line at $1/2$ indicates the value at which the model is balanced. The yellow line is the component $B_+(r)$ and the green line is $B_-(r)$ (equation \ref{eq:poscomponentB}).  The red line is the $F_1(r)$ score (equation \ref{eq:F1}).}
+\caption{Plot of $B(r)$ for our 9 example data sets. The black line is $B(r)$. The dotted line at $1/2$ indicates the value at which the model is balanced. The yellow line is the component $B_+(r)$ and the green line is $B_-(r)$ (equation \ref{eq:Bexact}).  The red line is the $F_1(r)$ score (equation \ref{eq:F1}).}
 \label{fig:Bplot2}
 \end{figure}
 
-\paragraph{Errors at the indistinguishability threshold.} It is useful to write equation \ref{eq:Bexact} in terms of the expected number of true positives, $TP = P v(r)$, false positives, $FP = N u(r)$, and false negatives, $FN = P (1 - v(r))$. Then $v(r) = TP/(TP+FN)$ and $C(r) = TP/(TP+FP)$, and setting $B(r_b)=1/2$ in equation \ref{eq:Bexact} gives
-\[
-\frac{TP}{TP+FN} \cdot \frac{TP/2 + \alpha FP}{TP+FP} = \frac{1}{2}
-\]
-where $\alpha = \alpha(r_b)$. Multiplying out gives $TP^2 + 2 \alpha \, TP \cdot FP = (TP+FN)(TP+FP)$, which simplifies to $(2\alpha - 1)\, TP \cdot FP = FN \, (TP+FP)$, or
+\paragraph{Precision, recall and F1 at the indistinguishability threshold.} Setting $B(r_b)=1/2$ in equation \ref{eq:Bexact}, and writing $v = TP/(TP+FN)$ and $C = TP/(TP+FP)$, gives $TP^2 + 2 \alpha \, TP \cdot FP = (TP+FN)(TP+FP)$, where $\alpha = \alpha(r_b)$. This simplifies to
 \begin{equation}
 \frac{FN}{FP} = \left( 2 \alpha(r_b) - 1 \right) C(r_b) . \label{eq:FNFP}
 \end{equation}
-Equation \ref{eq:FNFP} has three consequences. First, since $FN \geq 0$, we must have $\alpha(r_b) \geq 1/2$: at the indistinguishability threshold, true positives outrank false positives at least as often as would be expected by chance. Second, since $\alpha(r_b) \leq 1$ and $C(r_b)<1$ whenever there are false positives, $FN < FP$. Thus $TP + FP > TP + FN = P$, i.e. more members are labelled positive than there are members of the positive class, and recall is larger than precision, $v(r_b) > C(r_b)$. In other words, $r_b$ always lies below the precision-recall break-even point, which is the threshold at which $FP=FN$ and precision equals recall. Third, recall and the F1-score at $r_b$ are determined by the precision and $\alpha(r_b)$ alone. Since $FN/TP = (FN/FP)(FP/TP) = (2\alpha - 1) C \cdot (1-C)/C = (2\alpha - 1)(1-C)$, we have
+Since $\alpha(r_b) \leq 1$ and $C(r_b) < 1$ whenever there are false positives, there are always fewer false negatives than false positives at the indistinguishability threshold. More members are labelled positive than there are members of the positive class, and recall is larger than precision, $v(r_b) > C(r_b)$. In other words, $r_b$ always lies below the precision-recall break-even point, the threshold at which precision equals recall \cite{manning2008introduction}. (Equation \ref{eq:FNFP} also shows that $\alpha(r_b) \geq 1/2$, since $FN \geq 0$.) Furthermore, recall and the F1-score at $r_b$ are determined by the precision and $\alpha$ alone. Writing $C=C(r_b)$, and using $FN/TP = (FN/FP)(FP/TP) = (2\alpha - 1)(1-C)$, we have
 \begin{equation}
-v(r_b) = \frac{1}{1 + (2\alpha-1)(1-C)} \mbox{ and } F_1(r_b) = \frac{2C}{1 + C + (2\alpha-1) C (1-C)}  \label{eq:F1atrb}
-\end{equation}
-where $C=C(r_b)$, $\alpha=\alpha(r_b)$ and the F1-score is defined as,
-\begin{equation}
-F_1(r) =  \frac{2 C(r) v(r)}{C(r) + v(r)} = \frac{2 TP}{2 TP + FP + FN} .  \label{eq:F1}
+v(r_b) = \frac{1}{1 + (2\alpha-1)(1-C)} \mbox{ and } F_1(r_b) = \frac{2C}{1 + C + (2\alpha-1) C (1-C)} .  \label{eq:F1atrb}
 \end{equation}
 
-\paragraph{The threshold which maximises F1.} Figure \ref{fig:Bplot2} shows that the F1-score reaches a maximum at roughly the same point that $B(r)=1/2$. To see whether this is exact, we write $F_1(r) = 2 P v(r) / (P v(r) + N u(r) + P)$ and differentiate with respect to $r$. Using $v'(r) = -f_P(r)$ and $u'(r) = -f_N(r)$, the derivative is zero when $f_P(r) (N u(r) + P) = N v(r) f_N(r)$. Rearranging, this condition is
+\paragraph{The threshold which maximises F1.} Figure \ref{fig:Bplot2} shows that, for our nine data sets, the F1-score reaches its maximum close to $r_b$. This is not true in general. Differentiating $F_1(r) = 2 P v(r) / (P v(r) + N u(r) + P)$ with respect to $r$, using $v'(r) = -f_P(r)$ and $u'(r) = -f_N(r)$, shows that the maximum occurs where
 \begin{equation}
 \eta(r) = \frac{F_1(r)}{2}, \mbox{ where } \eta(r) = \frac{P f_P(r)}{P f_P(r) + N f_N(r)}  \label{eq:F1max}
 \end{equation}
-is the probability that a member with score exactly $r$ is in the positive class. This is a known result: the F1-score is maximised at the threshold at which the probability of being positive equals half of the maximal F1-score \cite{lipton2014optimal}. Equation \ref{eq:F1max} depends only on the densities of scores at the threshold itself. In contrast, the condition $B(r_b) = 1/2$ depends, through $\alpha(r)$, on the distribution of all scores above the threshold. The two thresholds are therefore not the same in general. In the examples in figure \ref{fig:Bplot2} they are close, but this is a property of these particular data sets rather than a general identity.
-
-A similar argument explains why the maxima of $F_1(r)$ and $B_+(r)$ are close. Let $s(r) = N f_N(r) / (P f_P(r))$ be the rate at which false positives are added, relative to true positives, as the threshold is lowered. At an interior maximum of $B_+(r) = TP^2/(2P(TP+FP))$ we must have $s(r) = 1 + 2FP/TP$, while at an interior maximum of $F_1(r) = 2TP/(TP+FP+P)$ we must have $s(r) = 1 + (FP+FN)/TP$. The two maxima thus coincide only if $FP = FN$ at that threshold, i.e. if the maximum lies exactly at the precision-recall break-even point.
+is the probability that a member with score exactly $r$ is in the positive class \cite{lipton2014optimal}. This condition depends only on the scores at the threshold itself, while the condition $B(r_b)=1/2$ depends, through $\alpha(r)$, on all scores above the threshold. A similar calculation shows that interior maxima of $F_1(r)$ and $B_+(r)$ coincide only if $FP = FN$, i.e. at the break-even point.
 
 The benchmark results in table \ref{tab:benchmarks} confirm the properties derived in this section. In all four cases more members are labelled positive at $r_b$ than there are members of the positive class, so that recall is larger than precision and $C(r_b)$ is below the precision at the break-even point. For logistic regression on the Mammography data, twice as many regions are labelled positive as there are positives. The ratio $FN/FP$ agreed with $(2\alpha(r_b)-1)C(r_b)$ (equation \ref{eq:FNFP}) to within $0.006$ in all four cases. On the Adult data, the F1-score at $r_b$ is within 0.005 of its maximum, but on the Mammography data it is 0.11--0.13 lower, illustrating that the indistinguishability threshold and the F1-optimal threshold need not coincide.
 

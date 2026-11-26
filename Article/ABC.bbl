@@ -183,6 +183,11 @@ X.~Tong, Y.~Feng, and J.~J. Li, ``Neyman-pearson classification algorithms and
   {NP} receiver operating characteristics,'' {\em Science Advances}, vol.~4,
   no.~2, p.~eaao1659, 2018.
 
+\bibitem{chinchor1993muc}
+N.~Chinchor and B.~M. Sundheim, ``Muc-5 evaluation metrics,'' in {\em Fifth
+  Message Understanding Conference (MUC-5): Proceedings of a Conference Held in
+  Baltimore, Maryland, August 25-27, 1993}, 1993.
+
 \bibitem{scott2007performance}
 C.~Scott, ``Performance measures for neyman--pearson classification,'' {\em
   IEEE Transactions on Information Theory}, vol.~53, no.~8, pp.~2852--2863,
