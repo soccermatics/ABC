@@ -275,7 +275,7 @@ be the probability that a randomly chosen true positive scores higher than a ran
 \begin{equation}
 B(r) = v(r) \left( \frac{C(r)}{2} + \alpha(r) \left(1 - C(r)\right) \right) = B_+(r) + B_-(r),  \label{eq:Bexact}
 \end{equation}
-where $B_+(r) = v(r) C(r)/2$ is the contribution from true positives and $B_-(r) = v(r) \alpha(r) (1 - C(r))$ the contribution from false positives. (In the Appendix we derive the same expression by integrating over the score distributions.) Thus, like the F1-score, $B(r)$ is built from recall and precision: it is recall multiplied by a weighted average of $1/2$ and $\alpha(r)$, with weights given by the precision. The first term, $B_+(r)$, is half the product of precision and recall, the same ingredients as the F1-score, which is their product divided by their mean. Figure \ref{fig:Bplot2} shows $B(r)$, its two components and the F1-score for our nine data sets.
+where $B_+(r) = v(r) C(r)/2$ is the contribution from true positives and $B_-(r) = v(r) \alpha(r) (1 - C(r))$ the contribution from false positives. (In the Appendix we derive the same expression by integrating over the score distributions.) Thus, like the F1-score, $B(r)$ is built from recall and precision: it is recall multiplied by a weighted average of $1/2$ and $\alpha(r)$, with weights given by the precision. Figure \ref{fig:Bplot2} shows $B(r)$, its two components and the F1-score for our nine data sets.
 
 \begin{figure}[tp]
 \centering
@@ -283,6 +283,10 @@ where $B_+(r) = v(r) C(r)/2$ is the contribution from true positives and $B_-(r)
 \caption{Plot of $B(r)$ for our 9 example data sets. The black line is $B(r)$. The dotted line at $1/2$ indicates the value at which the model is balanced. The yellow line is the component $B_+(r)$ and the green line is $B_-(r)$ (equation \ref{eq:Bexact}).  The red line is the $F_1(r)$ score (equation \ref{eq:F1}).}
 \label{fig:Bplot2}
 \end{figure}
+
+\paragraph{$B_+(r)$ and the F1-score do similar things.} Figure \ref{fig:Bplot2} shows that $B_+(r)$ (yellow line) reaches its maximum at almost the same threshold as the F1-score (red line). The reason is that both are averages of precision and recall. The F1-score is their harmonic mean, while $\sqrt{2 B_+(r)} = \sqrt{C(r) v(r)}$ is their geometric mean. These two means are equal when precision equals recall, and differ only slightly when precision and recall are similar: the geometric mean exceeds the harmonic mean by approximately $(C-v)^2/(4(C+v))$. The same is true of their maxima. At the threshold which maximises $B_+(r)$, a small change in the threshold changes precision and recall in opposite directions, in the ratio $\Delta C / \Delta v = -C/v$, so that the sum $C+v$ changes by $\Delta v (v-C)/v$. Since $F_1 = 2Cv/(C+v)$, and the product $Cv$ is at its maximum, the F1-score is then also at its maximum when precision equals recall, and close to its maximum when they are similar. On the benchmark data sets (table \ref{tab:benchmarks}), the F1-score at the threshold which maximises $B_+(r)$ is within 0.005 of the maximal F1-score in all four cases. Maximising $B_+(r)$ and maximising the F1-score are thus, in practice, almost the same procedure. Both reward a threshold at which precision and recall are high together.
+
+The difference between $B(r)$ and the F1-score lies in the second term, $B_-(r)$, which accounts for the false positives through $\alpha(r)$. It is this term that changes the question from \lq at which threshold are precision and recall jointly highest?\rq\ to \lq at which threshold can the algorithm no longer distinguish labelled positives from real ones?\rq, which, unlike the first, can be answered in words.
 
 \paragraph{Precision, recall and F1 at the indistinguishability threshold.} Setting $B(r_b)=1/2$ in equation \ref{eq:Bexact} and solving for the recall gives
 \begin{equation}
@@ -293,11 +297,11 @@ where $C=C(r_b)$ and $\alpha=\alpha(r_b)$. So, at the indistinguishability thres
 F_1(r_b) = \frac{2C}{1 + C^2 + 2\alpha C (1-C)} .  \label{eq:F1atrb}
 \end{equation}
 
-\paragraph{The threshold which maximises F1.} Figure \ref{fig:Bplot2} shows that, for our nine data sets, the F1-score reaches its maximum close to $r_b$. This is not true in general. Differentiating $F_1(r) = 2 P v(r) / (P v(r) + N u(r) + P)$ with respect to $r$, using $v'(r) = -f_P(r)$ and $u'(r) = -f_N(r)$, shows that the maximum occurs where
+\paragraph{The threshold which maximises F1.} Figure \ref{fig:Bplot2} also shows that, for our nine data sets, the F1-score reaches its maximum close to $r_b$. This is not true in general. Differentiating $F_1(r) = 2 P v(r) / (P v(r) + N u(r) + P)$ with respect to $r$, using $v'(r) = -f_P(r)$ and $u'(r) = -f_N(r)$, shows that the maximum occurs where
 \begin{equation}
 \eta(r) = \frac{F_1(r)}{2}, \mbox{ where } \eta(r) = \frac{P f_P(r)}{P f_P(r) + N f_N(r)}  \label{eq:F1max}
 \end{equation}
-is the probability that a member with score exactly $r$ is in the positive class \cite{lipton2014optimal}. This condition depends only on the scores at the threshold itself, while the condition $B(r_b)=1/2$ depends, through $\alpha(r)$, on all scores above the threshold. A similar calculation shows that interior maxima of $F_1(r)$ and $B_+(r)$ coincide only if precision equals recall there, i.e. at the break-even point.
+is the probability that a member with score exactly $r$ is in the positive class \cite{lipton2014optimal}. This condition depends only on the scores at the threshold itself, while the condition $B(r_b)=1/2$ depends, through $\alpha(r)$, on all scores above the threshold.
 
 The benchmark results in table \ref{tab:benchmarks} confirm the properties derived in this section. In all four cases more members are labelled positive at $r_b$ than there are members of the positive class, so that recall is larger than precision and $C(r_b)$ is below the precision at the break-even point. For logistic regression on the Mammography data, twice as many regions are labelled positive as there are positives. Recall at $r_b$ agreed with equation \ref{eq:vrb} to within $0.004$ in all four cases. On the Adult data, the F1-score at $r_b$ is within 0.005 of its maximum, but on the Mammography data it is 0.11--0.13 lower, illustrating that the indistinguishability threshold and the F1-optimal threshold need not coincide.
 
